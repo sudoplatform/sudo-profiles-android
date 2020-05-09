@@ -1,0 +1,308 @@
+# this is an auto generated file. This will be overwritten
+query Ping {
+  ping
+}
+query GetSudo($id: ID!) {
+  getSudo(id: $id) {
+    id
+    claims {
+      name
+      version
+      algorithm
+      keyId
+      base64Data
+    }
+    objects {
+      name
+      version
+      algorithm
+      keyId
+      bucket
+      region
+      key
+    }
+    metadata {
+      name
+      value
+    }
+    createdAtEpochMs
+    updatedAtEpochMs
+    version
+    owner
+  }
+}
+query ListSudos($limit: Int, $nextToken: String) {
+  listSudos(limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      claims {
+        name
+        version
+        algorithm
+        keyId
+        base64Data
+      }
+      objects {
+        name
+        version
+        algorithm
+        keyId
+        bucket
+        region
+        key
+      }
+      metadata {
+        name
+        value
+      }
+      createdAtEpochMs
+      updatedAtEpochMs
+      version
+      owner
+    }
+    nextToken
+  }
+}
+mutation CreateSudo($input: CreateSudoInput!) {
+  createSudo(input: $input) {
+    id
+    claims {
+      name
+      version
+      algorithm
+      keyId
+      base64Data
+    }
+    objects {
+      name
+      version
+      algorithm
+      keyId
+      bucket
+      region
+      key
+    }
+    metadata {
+      name
+      value
+    }
+    createdAtEpochMs
+    updatedAtEpochMs
+    version
+    owner
+  }
+}
+mutation UpdateSudo($input: UpdateSudoInput!) {
+  updateSudo(input: $input) {
+    id
+    claims {
+      name
+      version
+      algorithm
+      keyId
+      base64Data
+    }
+    objects {
+      name
+      version
+      algorithm
+      keyId
+      bucket
+      region
+      key
+    }
+    metadata {
+      name
+      value
+    }
+    createdAtEpochMs
+    updatedAtEpochMs
+    version
+    owner
+  }
+}
+mutation DeleteSudo($input: DeleteSudoInput!) {
+  deleteSudo(input: $input) {
+    id
+    claims {
+      name
+      version
+      algorithm
+      keyId
+      base64Data
+    }
+    objects {
+      name
+      version
+      algorithm
+      keyId
+      bucket
+      region
+      key
+    }
+    metadata {
+      name
+      value
+    }
+    createdAtEpochMs
+    updatedAtEpochMs
+    version
+    owner
+  }
+}
+mutation GetOwnershipProof($input: GetOwnershipProofInput!) {
+  getOwnershipProof(input: $input) {
+    jwt
+  }
+}
+mutation RedeemToken($input: RedeemTokenInput!) {
+  redeemToken(input: $input) {
+    name
+    value
+  }
+}
+mutation InternalProcessCreateSudoEvent($input: ProcessCreateSudoEventInput!) {
+  internalProcessCreateSudoEvent(input: $input) {
+    id
+    claims {
+      name
+      version
+      algorithm
+      keyId
+      base64Data
+    }
+    objects {
+      name
+      version
+      algorithm
+      keyId
+      bucket
+      region
+      key
+    }
+    metadata {
+      name
+      value
+    }
+    createdAtEpochMs
+    updatedAtEpochMs
+    version
+    owner
+  }
+}
+mutation InternalProcessDeleteSudoEvent($input: ProcessDeleteSudoEventInput!) {
+  internalProcessDeleteSudoEvent(input: $input) {
+    id
+    claims {
+      name
+      version
+      algorithm
+      keyId
+      base64Data
+    }
+    objects {
+      name
+      version
+      algorithm
+      keyId
+      bucket
+      region
+      key
+    }
+    metadata {
+      name
+      value
+    }
+    createdAtEpochMs
+    updatedAtEpochMs
+    version
+    owner
+  }
+}
+subscription OnCreateSudo($owner: ID!) {
+  onCreateSudo(owner: $owner) {
+    id
+    claims {
+      name
+      version
+      algorithm
+      keyId
+      base64Data
+    }
+    objects {
+      name
+      version
+      algorithm
+      keyId
+      bucket
+      region
+      key
+    }
+    metadata {
+      name
+      value
+    }
+    createdAtEpochMs
+    updatedAtEpochMs
+    version
+    owner
+  }
+}
+subscription OnUpdateSudo($owner: ID!) {
+  onUpdateSudo(owner: $owner) {
+    id
+    claims {
+      name
+      version
+      algorithm
+      keyId
+      base64Data
+    }
+    objects {
+      name
+      version
+      algorithm
+      keyId
+      bucket
+      region
+      key
+    }
+    metadata {
+      name
+      value
+    }
+    createdAtEpochMs
+    updatedAtEpochMs
+    version
+    owner
+  }
+}
+subscription OnDeleteSudo($owner: ID!) {
+  onDeleteSudo(owner: $owner) {
+    id
+    claims {
+      name
+      version
+      algorithm
+      keyId
+      base64Data
+    }
+    objects {
+      name
+      version
+      algorithm
+      keyId
+      bucket
+      region
+      key
+    }
+    metadata {
+      name
+      value
+    }
+    createdAtEpochMs
+    updatedAtEpochMs
+    version
+    owner
+  }
+}

@@ -1,0 +1,149 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
+apply plugin: 'com.amazonaws.appsync'
+apply plugin: 'org.jetbrains.dokka'
+apply plugin: "org.sonarqube"
+apply plugin: 'jacoco'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 23
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArguments clearPackageData: 'true'
+    }
+
+    testOptions {
+        animationsDisabled = true
+
+        unitTests.all {
+            testLogging {
+                events "passed", "skipped", "failed", "standardOut", "standardError"
+                outputs.upToDateWhen {false}
+                showStandardStreams = true
+            }
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            testCoverageEnabled true
+        }
+    }
+
+    packagingOptions {
+        exclude("META-INF/*.kotlin_module")
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/java'
+        androidTest {
+            resources.srcDirs += ['../identity-system-test-config']
+            assets.srcDirs += ['../identity-system-test-config']
+        }
+        main {
+            resources {
+                srcDirs 'src/main/resources', 'src/test/resources/'
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.0'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.0"
+
+    implementation 'com.amazonaws:aws-android-sdk-cognitoidentityprovider:[2.16,)'
+    implementation 'com.amazonaws:aws-android-sdk-cognitoauth:[2.16,)'
+    implementation 'com.amazonaws:aws-android-sdk-core:[2.16,)'
+    implementation 'com.amazonaws:aws-android-sdk-appsync:[3.0,)'
+    implementation 'com.amazonaws:aws-android-sdk-s3:[2.16,)'
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.27.0'
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
+    testImplementation "org.powermock:powermock-module-junit4:2.0.2"
+    testImplementation "org.powermock:powermock-api-mockito2:2.0.2"
+    testImplementation 'org.json:json:20190722'
+
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'com.google.android.gms:play-services-safetynet:17.0.0'
+    androidTestImplementation 'com.google.android.gms:play-services-base:17.1.0'
+
+    implementation 'com.sudoplatform:sudouser:[7.0.1,)'
+    implementation 'com.sudoplatform:keymanager:[3.3,)'
+    implementation 'com.sudoplatform:sudologging:[1.0,)'
+    implementation 'com.sudoplatform:sudoconfigmanager:[1.2.2,)'
+    implementation 'com.sudoplatform:sudoapiclient:[1.2.1,)'
+}
+
+task jacocoTestReport(type: JacocoReport, dependsOn: "testDebugUnitTest") {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports"
+
+    classDirectories = fileTree(
+            dir: "${buildDir}/tmp/kotlin-classes/debug",
+            excludes: ['**/R.class',
+                       '**/R$*.class',
+                       '**/BuildConfig.*',
+                       '**/Manifest*.*']
+    )
+
+    sourceDirectories = files("${buildDir.parent}/sudoprofiles/src/main/java")
+    executionData = files("${buildDir}/jacoco/testDebugUnitTest.exec")
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+
+artifacts {
+    archives sourcesJar
+}
+
+dokka {
+    outputFormat = 'html'
+    outputDirectory = "$buildDir/javadoc"
+}
+
+apply plugin: 'maven'
+
+def props = new Properties()
+file("../secret.properties").withInputStream { props.load(it) }
+
+ext {
+    PUBLISH_GROUP_ID = 'com.sudoplatform'
+    PUBLISH_ARTIFACT_ID = 'sudoprofiles'
+    PUBLISH_DESCRIPTION = 'Profiles SDK for the Sudo Platform by Anonyome Labs.'
+    PUBLISH_PROJECT_URL = 'https://github.com/sudoplatform/sudo-profiles-android'
+    PUBLISH_PROJECT_SCM = 'scm:git:github.com/sudoplatform/sudo-profiles-android.git'
+    if (project.hasProperty('tag')) {
+        PUBLISH_VERSION = "$tag"
+    } else {
+        PUBLISH_VERSION = "0.0.0"
+    }
+}
+
+apply from: "${rootProject.projectDir}/publish-mavencentral.gradle"
