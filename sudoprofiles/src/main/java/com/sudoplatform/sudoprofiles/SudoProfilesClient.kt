@@ -8,7 +8,6 @@ package com.sudoplatform.sudoprofiles
 
 import android.content.Context
 import android.util.Base64
-import com.amazonaws.mobile.config.AWSConfiguration
 import com.amazonaws.mobileconnectors.appsync.AWSAppSyncClient
 import com.amazonaws.mobileconnectors.appsync.AppSyncSubscriptionCall
 import com.amazonaws.mobileconnectors.appsync.ConflictResolutionFailedException
@@ -20,7 +19,6 @@ import com.apollographql.apollo.exception.ApolloException
 import com.sudoplatform.sudoapiclient.ApiClientManager
 import com.sudoplatform.sudoconfigmanager.DefaultSudoConfigManager
 import com.sudoplatform.sudoprofiles.type.*
-import com.sudoplatform.sudouser.GraphQLAuthProvider
 import com.sudoplatform.sudouser.SudoUserClient
 import com.sudoplatform.sudouser.SymmetricKeyEncryptionAlgorithm
 import kotlinx.coroutines.Dispatchers
@@ -302,14 +300,10 @@ class DefaultSudoProfilesClient(
 ) : SudoProfilesClient {
 
     companion object {
-        private const val CONFIG_NAMESPACE_SUDO_SERVICE = "sudoService"
         private const val CONFIG_NAMESPACE_IDENTITY_SERVICE = "identityService"
 
         private const val CONFIG_REGION = "region"
-        private const val CONFIG_API_URL = "apiUrl"
         private const val CONFIG_BUCKET = "bucket"
-        private const val CONFIG_POOL_ID = "poolId"
-        private const val CONFIG_CLIENT_ID = "clientId"
 
         private const val GRAPHQL_ERROR_TYPE = "errorType"
         private const val GRAPHQL_ERROR_SUDO_NOT_FOUND = "sudoplatform.sudo.SudoNotFound"
@@ -370,36 +364,19 @@ class DefaultSudoProfilesClient(
         val configManager = DefaultSudoConfigManager(context, this.logger)
 
         @Suppress("UNCHECKED_CAST")
-        val sudoServiceConfig =
-            config?.opt(CONFIG_NAMESPACE_SUDO_SERVICE) as JSONObject? ?: configManager.getConfigSet(
-                CONFIG_NAMESPACE_SUDO_SERVICE
-            )
-
-        @Suppress("UNCHECKED_CAST")
         val identityServiceConfig =
             config?.opt(CONFIG_NAMESPACE_IDENTITY_SERVICE) as JSONObject?
                 ?: configManager.getConfigSet(CONFIG_NAMESPACE_IDENTITY_SERVICE)
 
-        require(
-            sudoServiceConfig != null
-                    && identityServiceConfig != null
-        ) { "Identity or Sudo service configuration is missing." }
+        require(identityServiceConfig != null) { "Identity service configuration is missing." }
 
-        val region = sudoServiceConfig[CONFIG_REGION] as String?
-        val apiUrl = sudoServiceConfig[CONFIG_API_URL] as String?
         val bucket = identityServiceConfig[CONFIG_BUCKET] as String?
-        val poolId = identityServiceConfig[CONFIG_POOL_ID] as String?
-        val clientId = identityServiceConfig[CONFIG_CLIENT_ID] as String?
+        val region = identityServiceConfig[CONFIG_REGION] as String?
 
-        require(
-            region != null
-                    && apiUrl != null
-                    && bucket != null
-                    && poolId != null
-                    && clientId != null
-        ) { "region or apiUrl or bucket or poolId or clientId was null." }
+        require(bucket != null && region != null) { "region or bucket was null." }
 
-        this.graphQLClient = graphQLClient ?: ApiClientManager.getClient(context,
+        this.graphQLClient = graphQLClient ?: ApiClientManager.getClient(
+            context,
             this.sudoUserClient
         )
 
@@ -1472,40 +1449,57 @@ class DefaultSudoProfilesClient(
             }.toMap().toMutableMap()
 
             if (processS3Object) {
-                // TODO: Use option parameter to determine whether to process S3 objects from
-                // cache or not.
                 for (obj in item.objects) {
-                    val data =
-                        this.s3Client.download(
-                            obj.key
-                        )
-
-                    val algorithmSpec =
-                        SymmetricKeyEncryptionAlgorithm.fromString(obj.algorithm)
-                    if (algorithmSpec != null) {
-                        val decryptedData =
-                            this.sudoUserClient.decrypt(
-                                obj.keyId,
-                                algorithmSpec,
-                                data
-                            )
-                        val array = obj.key.split("/").toTypedArray()
-                        val entry = blobCache.replace(
-                            decryptedData,
-                            array.last()
-                        )
-
-                        sudo.claims[obj.name] =
-                            Claim(
-                                obj.name,
-                                Claim.Visibility.PRIVATE,
-                                Claim.Value.BlobValue(entry.toURI())
-                            )
+                    // Check if we already have the S3 object in the cache. Return the cache entry
+                    // if asked to fetch from cache but otherwise download the S3 object.
+                    if (option == ListOption.CACHE_ONLY) {
+                        val objectId = this.getS3ObjectIdFromKey(obj.key())
+                        if (objectId != null) {
+                            val entry = blobCache.get(objectId)
+                            if (entry != null) {
+                                sudo.claims[obj.name] =
+                                    Claim(
+                                        obj.name,
+                                        Claim.Visibility.PRIVATE,
+                                        Claim.Value.BlobValue(entry.toURI())
+                                    )
+                            }
+                        } else {
+                            this.logger.error("Cannot determine the object ID from the key.")
+                        }
                     } else {
-                        throw ApiException(
-                            ApiErrorCode.BAD_DATA,
-                            "Unsupported algorithm found in secure S3 object."
-                        )
+                        val data =
+                            this.s3Client.download(
+                                obj.key
+                            )
+
+                        val algorithmSpec =
+                            SymmetricKeyEncryptionAlgorithm.fromString(obj.algorithm)
+                        if (algorithmSpec != null) {
+                            val decryptedData =
+                                this.sudoUserClient.decrypt(
+                                    obj.keyId,
+                                    algorithmSpec,
+                                    data
+                                )
+                            val array = obj.key.split("/").toTypedArray()
+                            val entry = blobCache.replace(
+                                decryptedData,
+                                array.last()
+                            )
+
+                            sudo.claims[obj.name] =
+                                Claim(
+                                    obj.name,
+                                    Claim.Visibility.PRIVATE,
+                                    Claim.Value.BlobValue(entry.toURI())
+                                )
+                        } else {
+                            throw ApiException(
+                                ApiErrorCode.BAD_DATA,
+                                "Unsupported algorithm found in secure S3 object."
+                            )
+                        }
                     }
                 }
             }
@@ -1558,5 +1552,10 @@ class DefaultSudoProfilesClient(
                 }
             })
         }
+
+    private fun getS3ObjectIdFromKey(key: String): String? {
+        val components = key.split("/")
+        return components.lastOrNull()
+    }
 
 }
