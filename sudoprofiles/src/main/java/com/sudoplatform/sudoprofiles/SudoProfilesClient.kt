@@ -257,6 +257,15 @@ interface SudoProfilesClient {
     fun subscribe(id: String, changeType: SudoSubscriber.ChangeType, subscriber: SudoSubscriber)
 
     /**
+     * Subscribes to be notified of new, updated and deleted Sudos. Blob data is not downloaded automatically
+     * so the caller is expected to use `listSudos` API if they need to access any associated blobs.
+     *
+     * @param id unique ID for the subscriber.
+     * @param subscriber subscriber to notify.
+     */
+    fun subscribe(id: String, subscriber: SudoSubscriber)
+
+    /**
      * Unsubscribes the specified subscriber so that it no longer receives notifications about
      * new, updated or deleted Sudos.
      *
@@ -920,6 +929,12 @@ class DefaultSudoProfilesClient(
                 )
             }
         }
+    }
+
+    override fun subscribe(id: String, subscriber: SudoSubscriber) {
+        this.subscribe(id, SudoSubscriber.ChangeType.CREATE, subscriber)
+        this.subscribe(id, SudoSubscriber.ChangeType.UPDATE, subscriber)
+        this.subscribe(id, SudoSubscriber.ChangeType.DELETE, subscriber)
     }
 
     override fun subscribe(
