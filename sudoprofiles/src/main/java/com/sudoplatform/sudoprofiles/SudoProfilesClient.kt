@@ -379,7 +379,8 @@ class DefaultSudoProfilesClient(
 
         require(identityServiceConfig != null) { "Identity service configuration is missing." }
 
-        val bucket = identityServiceConfig[CONFIG_BUCKET] as String?
+        val bucketConfig = identityServiceConfig[CONFIG_BUCKET]
+        val bucket = bucketConfig as String?
         val region = identityServiceConfig[CONFIG_REGION] as String?
 
         require(bucket != null && region != null) { "region or bucket was null." }
