@@ -1,0 +1,151 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Sudo - sudoprofiles</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">sudoprofiles</a>&nbsp;/&nbsp;<a href="../index.html">com.sudoplatform.sudoprofiles</a>&nbsp;/&nbsp;<a href="./index.html">Sudo</a><br/>
+<br/>
+<h1>Sudo</h1>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Sudo</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code>
+<p>Represents a Sudo.</p>
+<h3>Parameters</h3>
+<p><a name="id"></a>
+<code>id</code> - globally unique identifier of this Sudo. This is generated and set by Sudo service.</p>
+<p><a name="version"></a>
+<code>version</code> - current version of this Sudo.</p>
+<p><a name="createdAt"></a>
+<code>createdAt</code> - date and time at which this Sudo was created.</p>
+<p><a name="updatedAt"></a>
+<code>updatedAt</code> - date and time at which this Sudo was last updated.</p>
+<p><a name="claims"></a>
+<code>claims</code> - claims.</p>
+<p><a name="metadata"></a>
+<code>metadata</code> - arbitrary metadata set by the backend..</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Instantiates a Sudo.</p>
+<code><span class="identifier">Sudo</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.Sudo$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.String, java.net.URI)/title">title</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.Sudo$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.String, java.net.URI)/firstName">firstName</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.Sudo$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.String, java.net.URI)/lastName">lastName</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.Sudo$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.String, java.net.URI)/label">label</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.Sudo$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.String, java.net.URI)/notes">notes</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.Sudo$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.String, java.net.URI)/avatar">avatar</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/net/URI.html"><span class="identifier">URI</span></a><span class="symbol">?</span><span class="symbol">)</span></code>
+<p>Represents a Sudo.</p>
+<code><span class="identifier">Sudo</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.Sudo$<init>(kotlin.String, kotlin.Int, java.util.Date, java.util.Date, kotlin.collections.MutableMap((kotlin.String, com.sudoplatform.sudoprofiles.Claim)), kotlin.collections.MutableMap((kotlin.String, )))/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.Sudo$<init>(kotlin.String, kotlin.Int, java.util.Date, java.util.Date, kotlin.collections.MutableMap((kotlin.String, com.sudoplatform.sudoprofiles.Claim)), kotlin.collections.MutableMap((kotlin.String, )))/version">version</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;1<span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.Sudo$<init>(kotlin.String, kotlin.Int, java.util.Date, java.util.Date, kotlin.collections.MutableMap((kotlin.String, com.sudoplatform.sudoprofiles.Claim)), kotlin.collections.MutableMap((kotlin.String, )))/createdAt">createdAt</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/util/Date.html"><span class="identifier">Date</span></a>&nbsp;<span class="symbol">=</span>&nbsp;Date(0)<span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.Sudo$<init>(kotlin.String, kotlin.Int, java.util.Date, java.util.Date, kotlin.collections.MutableMap((kotlin.String, com.sudoplatform.sudoprofiles.Claim)), kotlin.collections.MutableMap((kotlin.String, )))/updatedAt">updatedAt</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/util/Date.html"><span class="identifier">Date</span></a>&nbsp;<span class="symbol">=</span>&nbsp;Date(0)<span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.Sudo$<init>(kotlin.String, kotlin.Int, java.util.Date, java.util.Date, kotlin.collections.MutableMap((kotlin.String, com.sudoplatform.sudoprofiles.Claim)), kotlin.collections.MutableMap((kotlin.String, )))/claims">claims</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-map/index.html"><span class="identifier">MutableMap</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">,</span>&nbsp;<a href="../-claim/index.html"><span class="identifier">Claim</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">=</span>&nbsp;mutableMapOf()<span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.Sudo$<init>(kotlin.String, kotlin.Int, java.util.Date, java.util.Date, kotlin.collections.MutableMap((kotlin.String, com.sudoplatform.sudoprofiles.Claim)), kotlin.collections.MutableMap((kotlin.String, )))/metadata">metadata</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-map/index.html"><span class="identifier">MutableMap</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">=</span>&nbsp;mutableMapOf()<span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="avatar.html">avatar</a></h4>
+</td>
+<td>
+<p>Avatar image URI.</p>
+<code><span class="keyword">var </span><span class="identifier">avatar</span><span class="symbol">: </span><a href="https://docs.oracle.com/javase/6/docs/api/java/net/URI.html"><span class="identifier">URI</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="claims.html">claims</a></h4>
+</td>
+<td>
+<p>claims.</p>
+<code><span class="keyword">var </span><span class="identifier">claims</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-map/index.html"><span class="identifier">MutableMap</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">,</span>&nbsp;<a href="../-claim/index.html"><span class="identifier">Claim</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="created-at.html">createdAt</a></h4>
+</td>
+<td>
+<p>date and time at which this Sudo was created.</p>
+<code><span class="keyword">var </span><span class="identifier">createdAt</span><span class="symbol">: </span><a href="https://docs.oracle.com/javase/6/docs/api/java/util/Date.html"><span class="identifier">Date</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="external-id.html">externalId</a></h4>
+</td>
+<td>
+<p>External ID associated with this Sudo.</p>
+<code><span class="keyword">val </span><span class="identifier">externalId</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="first-name.html">firstName</a></h4>
+</td>
+<td>
+<p>First name.</p>
+<code><span class="keyword">var </span><span class="identifier">firstName</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="id.html">id</a></h4>
+</td>
+<td>
+<p>globally unique identifier of this Sudo. This is generated and set by Sudo service.</p>
+<code><span class="keyword">var </span><span class="identifier">id</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="label.html">label</a></h4>
+</td>
+<td>
+<p>Label.</p>
+<code><span class="keyword">var </span><span class="identifier">label</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="last-name.html">lastName</a></h4>
+</td>
+<td>
+<p>Last name.</p>
+<code><span class="keyword">var </span><span class="identifier">lastName</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="metadata.html">metadata</a></h4>
+</td>
+<td>
+<p>arbitrary metadata set by the backend..</p>
+<code><span class="keyword">var </span><span class="identifier">metadata</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-map/index.html"><span class="identifier">MutableMap</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="notes.html">notes</a></h4>
+</td>
+<td>
+<p>Notes.</p>
+<code><span class="keyword">var </span><span class="identifier">notes</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="title.html">title</a></h4>
+</td>
+<td>
+<p>Title.</p>
+<code><span class="keyword">var </span><span class="identifier">title</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="updated-at.html">updatedAt</a></h4>
+</td>
+<td>
+<p>date and time at which this Sudo was last updated.</p>
+<code><span class="keyword">var </span><span class="identifier">updatedAt</span><span class="symbol">: </span><a href="https://docs.oracle.com/javase/6/docs/api/java/util/Date.html"><span class="identifier">Date</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="version.html">version</a></h4>
+</td>
+<td>
+<p>current version of this Sudo.</p>
+<code><span class="keyword">var </span><span class="identifier">version</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

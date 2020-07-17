@@ -1,0 +1,101 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>BlobCache - sudoprofiles</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">sudoprofiles</a>&nbsp;/&nbsp;<a href="../index.html">com.sudoplatform.sudoprofiles</a>&nbsp;/&nbsp;<a href="./index.html">BlobCache</a><br/>
+<br/>
+<h1>BlobCache</h1>
+<code><span class="keyword">class </span><span class="identifier">BlobCache</span></code>
+<p>Simple blob cache implementation that uses the file store.</p>
+<h3>Parameters</h3>
+<p><a name="containerURI"></a>
+<code>containerURI</code> - cache container URI.</p>
+<p><a name="idGenerator"></a>
+<code>idGenerator</code> - UUID generator. Mainly used for unit testing.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-entry/index.html">Entry</a></h4>
+</td>
+<td>
+<p>Cache entry.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Entry</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Simple blob cache implementation that uses the file store.</p>
+<code><span class="identifier">BlobCache</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.BlobCache$<init>(java.net.URI, com.sudoplatform.sudoprofiles.IdGenerator)/containerURI">containerURI</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/net/URI.html"><span class="identifier">URI</span></a><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.BlobCache$<init>(java.net.URI, com.sudoplatform.sudoprofiles.IdGenerator)/idGenerator">idGenerator</span><span class="symbol">:</span>&nbsp;<a href="../-id-generator/index.html"><span class="identifier">IdGenerator</span></a>&nbsp;<span class="symbol">=</span>&nbsp;DefaultIdGenerator()<span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="add.html">add</a></h4>
+</td>
+<td>
+<p>Adds a blob located at a specified URI to the cache.</p>
+<code><span class="keyword">fun </span><span class="identifier">add</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.BlobCache$add(java.net.URI)/fileURI">fileURI</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/net/URI.html"><span class="identifier">URI</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Entry</span></code>
+<p>Adds a blob to the cache.</p>
+<code><span class="keyword">fun </span><span class="identifier">add</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.BlobCache$add(kotlin.ByteArray)/data">data</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html"><span class="identifier">ByteArray</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Entry</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="count.html">count</a></h4>
+</td>
+<td>
+<p>Returns the number of entries in the cache.</p>
+<code><span class="keyword">fun </span><span class="identifier">count</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get.html">get</a></h4>
+</td>
+<td>
+<p>Retrieves a cache entry.</p>
+<code><span class="keyword">fun </span><span class="identifier">get</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.BlobCache$get(kotlin.String)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Entry</span><span class="symbol">?</span></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">get</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.BlobCache$get(java.net.URI)/uri">uri</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/net/URI.html"><span class="identifier">URI</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Entry</span><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="remove.html">remove</a></h4>
+</td>
+<td>
+<p>Removes a cache entry.</p>
+<code><span class="keyword">fun </span><span class="identifier">remove</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.BlobCache$remove(kotlin.String)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="replace.html">replace</a></h4>
+</td>
+<td>
+<p>Replaces a cache entry with the specified blob.</p>
+<code><span class="keyword">fun </span><span class="identifier">replace</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.BlobCache$replace(kotlin.ByteArray, kotlin.String)/data">data</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html"><span class="identifier">ByteArray</span></a><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.BlobCache$replace(kotlin.ByteArray, kotlin.String)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Entry</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="reset.html">reset</a></h4>
+</td>
+<td>
+<p>Removes all entries from the cache.</p>
+<code><span class="keyword">fun </span><span class="identifier">reset</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

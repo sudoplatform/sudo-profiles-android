@@ -1,0 +1,48 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Claim.Value - sudoprofiles</title>
+<link rel="stylesheet" href="../../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../../index.html">sudoprofiles</a>&nbsp;/&nbsp;<a href="../../index.html">com.sudoplatform.sudoprofiles</a>&nbsp;/&nbsp;<a href="../index.html">Claim</a>&nbsp;/&nbsp;<a href="./index.html">Value</a><br/>
+<br/>
+<h1>Value</h1>
+<code><span class="keyword">sealed</span> <span class="keyword">class </span><span class="identifier">Value</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code>
+<p>Claim value.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-blob-value/index.html">BlobValue</a></h4>
+</td>
+<td>
+<p>Blob value represented as a URI. Typically a file location of the blob.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">BlobValue</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Value</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-string-value/index.html">StringValue</a></h4>
+</td>
+<td>
+<p>String value.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">StringValue</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Value</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="to-raw.html">toRaw</a></h4>
+</td>
+<td>
+<p>Returns the unwrapped raw claim value.</p>
+<code><span class="keyword">fun </span><span class="identifier">toRaw</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

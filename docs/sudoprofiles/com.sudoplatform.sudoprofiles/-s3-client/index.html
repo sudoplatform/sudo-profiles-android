@@ -1,0 +1,78 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>S3Client - sudoprofiles</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">sudoprofiles</a>&nbsp;/&nbsp;<a href="../index.html">com.sudoplatform.sudoprofiles</a>&nbsp;/&nbsp;<a href="./index.html">S3Client</a><br/>
+<br/>
+<h1>S3Client</h1>
+<code><span class="keyword">interface </span><span class="identifier">S3Client</span></code>
+<p>S3 client wrapper protocol mainly used for providing an abstraction layer on top of
+AWS S3 SDK.</p>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="bucket.html">bucket</a></h4>
+</td>
+<td>
+<p>S3 bucket used by Sudo service for storing users' blobs.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">val </span><span class="identifier">bucket</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="region.html">region</a></h4>
+</td>
+<td>
+<p>AWS region hosting the S3 bucket.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">val </span><span class="identifier">region</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="delete.html">delete</a></h4>
+</td>
+<td>
+<p>Deletes a blob from AWS S3.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">delete</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.S3Client$delete(kotlin.String)/objectId">objectId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="download.html">download</a></h4>
+</td>
+<td>
+<p>Downloads a blob from AWS S3.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">download</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.S3Client$download(kotlin.String)/key">key</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html"><span class="identifier">ByteArray</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="upload.html">upload</a></h4>
+</td>
+<td>
+<p>Uploads a blob to AWS S3.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">upload</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.S3Client$upload(kotlin.ByteArray, kotlin.String)/data">data</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html"><span class="identifier">ByteArray</span></a><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.S3Client$upload(kotlin.ByteArray, kotlin.String)/objectId">objectId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="../-default-s3-client/index.html">DefaultS3Client</a></h4>
+</td>
+<td>
+<p>Default S3 client implementation.</p>
+<code><span class="keyword">class </span><span class="identifier">DefaultS3Client</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">S3Client</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

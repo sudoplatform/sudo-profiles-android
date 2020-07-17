@@ -1,0 +1,82 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>DefaultS3Client - sudoprofiles</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">sudoprofiles</a>&nbsp;/&nbsp;<a href="../index.html">com.sudoplatform.sudoprofiles</a>&nbsp;/&nbsp;<a href="./index.html">DefaultS3Client</a><br/>
+<br/>
+<h1>DefaultS3Client</h1>
+<code><span class="keyword">class </span><span class="identifier">DefaultS3Client</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-s3-client/index.html"><span class="identifier">S3Client</span></a></code>
+<p>Default S3 client implementation.</p>
+<h3>Parameters</h3>
+<p><a name="context"></a>
+<code>context</code> - Android app context.</p>
+<p><a name="sudoUserClient"></a>
+<code>sudoUserClient</code> - <a href="#">SudoUserClient</a> used for authenticating to AWS S3.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Default S3 client implementation.</p>
+<code><span class="identifier">DefaultS3Client</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultS3Client$<init>(android.content.Context, com.sudoplatform.sudouser.SudoUserClient, kotlin.String, kotlin.String, com.sudoplatform.sudologging.Logger, com.sudoplatform.sudoprofiles.IdGenerator)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultS3Client$<init>(android.content.Context, com.sudoplatform.sudouser.SudoUserClient, kotlin.String, kotlin.String, com.sudoplatform.sudologging.Logger, com.sudoplatform.sudoprofiles.IdGenerator)/sudoUserClient">sudoUserClient</span><span class="symbol">:</span>&nbsp;<span class="identifier">SudoUserClient</span><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultS3Client$<init>(android.content.Context, com.sudoplatform.sudouser.SudoUserClient, kotlin.String, kotlin.String, com.sudoplatform.sudologging.Logger, com.sudoplatform.sudoprofiles.IdGenerator)/region">region</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultS3Client$<init>(android.content.Context, com.sudoplatform.sudouser.SudoUserClient, kotlin.String, kotlin.String, com.sudoplatform.sudologging.Logger, com.sudoplatform.sudoprofiles.IdGenerator)/bucket">bucket</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultS3Client$<init>(android.content.Context, com.sudoplatform.sudouser.SudoUserClient, kotlin.String, kotlin.String, com.sudoplatform.sudologging.Logger, com.sudoplatform.sudoprofiles.IdGenerator)/logger">logger</span><span class="symbol">:</span>&nbsp;<span class="identifier">Logger</span>&nbsp;<span class="symbol">=</span>&nbsp;DefaultLogger.instance<span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultS3Client$<init>(android.content.Context, com.sudoplatform.sudouser.SudoUserClient, kotlin.String, kotlin.String, com.sudoplatform.sudologging.Logger, com.sudoplatform.sudoprofiles.IdGenerator)/idGenerator">idGenerator</span><span class="symbol">:</span>&nbsp;<a href="../-id-generator/index.html"><span class="identifier">IdGenerator</span></a>&nbsp;<span class="symbol">=</span>&nbsp;DefaultIdGenerator()<span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="bucket.html">bucket</a></h4>
+</td>
+<td>
+<p>S3 bucket used by Sudo service for storing users' blobs.</p>
+<code><span class="keyword">val </span><span class="identifier">bucket</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="region.html">region</a></h4>
+</td>
+<td>
+<p>AWS region hosting the S3 bucket.</p>
+<code><span class="keyword">val </span><span class="identifier">region</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="delete.html">delete</a></h4>
+</td>
+<td>
+<p>Deletes a blob from AWS S3.</p>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">delete</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultS3Client$delete(kotlin.String)/objectId">objectId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="download.html">download</a></h4>
+</td>
+<td>
+<p>Downloads a blob from AWS S3.</p>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">download</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultS3Client$download(kotlin.String)/key">key</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html"><span class="identifier">ByteArray</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="upload.html">upload</a></h4>
+</td>
+<td>
+<p>Uploads a blob to AWS S3.</p>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">upload</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultS3Client$upload(kotlin.ByteArray, kotlin.String)/data">data</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html"><span class="identifier">ByteArray</span></a><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultS3Client$upload(kotlin.ByteArray, kotlin.String)/objectId">objectId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

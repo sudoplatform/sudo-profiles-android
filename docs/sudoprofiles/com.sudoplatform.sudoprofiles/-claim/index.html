@@ -1,0 +1,84 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Claim - sudoprofiles</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">sudoprofiles</a>&nbsp;/&nbsp;<a href="../index.html">com.sudoplatform.sudoprofiles</a>&nbsp;/&nbsp;<a href="./index.html">Claim</a><br/>
+<br/>
+<h1>Claim</h1>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Claim</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code>
+<p>Represents a claim or identity attribute associated with a Sudo.</p>
+<h3>Parameters</h3>
+<p><a name="name"></a>
+<code>name</code> - Claim name.</p>
+<p><a name="visibility"></a>
+<code>visibility</code> - Claim visibility.</p>
+<p><a name="value"></a>
+<code>value</code> - Claim value.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-value/index.html">Value</a></h4>
+</td>
+<td>
+<p>Claim value.</p>
+<code><span class="keyword">sealed</span> <span class="keyword">class </span><span class="identifier">Value</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-visibility/index.html">Visibility</a></h4>
+</td>
+<td>
+<p>Claim visibility.</p>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">Visibility</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Represents a claim or identity attribute associated with a Sudo.</p>
+<code><span class="identifier">Claim</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.Claim$<init>(kotlin.String, com.sudoplatform.sudoprofiles.Claim.Visibility, com.sudoplatform.sudoprofiles.Claim.Value)/name">name</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.Claim$<init>(kotlin.String, com.sudoplatform.sudoprofiles.Claim.Visibility, com.sudoplatform.sudoprofiles.Claim.Value)/visibility">visibility</span><span class="symbol">:</span>&nbsp;<span class="identifier">Visibility</span><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.Claim$<init>(kotlin.String, com.sudoplatform.sudoprofiles.Claim.Visibility, com.sudoplatform.sudoprofiles.Claim.Value)/value">value</span><span class="symbol">:</span>&nbsp;<span class="identifier">Value</span><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="name.html">name</a></h4>
+</td>
+<td>
+<p>Claim name.</p>
+<code><span class="keyword">val </span><span class="identifier">name</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="value.html">value</a></h4>
+</td>
+<td>
+<p>Claim value.</p>
+<code><span class="keyword">val </span><span class="identifier">value</span><span class="symbol">: </span><span class="identifier">Value</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="visibility.html">visibility</a></h4>
+</td>
+<td>
+<p>Claim visibility.</p>
+<code><span class="keyword">val </span><span class="identifier">visibility</span><span class="symbol">: </span><span class="identifier">Visibility</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

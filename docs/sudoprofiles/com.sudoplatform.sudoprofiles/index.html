@@ -1,0 +1,213 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>com.sudoplatform.sudoprofiles - sudoprofiles</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">sudoprofiles</a>&nbsp;/&nbsp;<a href="./index.html">com.sudoplatform.sudoprofiles</a><br/>
+<br/>
+<h2>Package com.sudoplatform.sudoprofiles</h2>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-api-error-code/index.html">ApiErrorCode</a></h4>
+</td>
+<td>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">ApiErrorCode</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-api-result/index.html">ApiResult</a></h4>
+</td>
+<td>
+<p>Generic API result. The API can fail with an error or complete successfully.</p>
+<code><span class="keyword">sealed</span> <span class="keyword">class </span><span class="identifier">ApiResult</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-blob-cache/index.html">BlobCache</a></h4>
+</td>
+<td>
+<p>Simple blob cache implementation that uses the file store.</p>
+<code><span class="keyword">class </span><span class="identifier">BlobCache</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-claim/index.html">Claim</a></h4>
+</td>
+<td>
+<p>Represents a claim or identity attribute associated with a Sudo.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Claim</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-create-sudo-result/index.html">CreateSudoResult</a></h4>
+</td>
+<td>
+<p>Result returned by API for creating a new Sudo. The API can fail with an
+error or return the newly created Sudo.</p>
+<code><span class="keyword">sealed</span> <span class="keyword">class </span><span class="identifier">CreateSudoResult</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-default-id-generator/index.html">DefaultIdGenerator</a></h4>
+</td>
+<td>
+<p>Default ID generator implementation.</p>
+<code><span class="keyword">class </span><span class="identifier">DefaultIdGenerator</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-id-generator/index.html"><span class="identifier">IdGenerator</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-default-logger/index.html">DefaultLogger</a></h4>
+</td>
+<td>
+<p>Default logger.</p>
+<code><span class="keyword">class </span><span class="identifier">DefaultLogger</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-default-query-cache/index.html">DefaultQueryCache</a></h4>
+</td>
+<td>
+<p>Default query cache implementation.</p>
+<code><span class="keyword">class </span><span class="identifier">DefaultQueryCache</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-query-cache/index.html"><span class="identifier">QueryCache</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-default-s3-client/index.html">DefaultS3Client</a></h4>
+</td>
+<td>
+<p>Default S3 client implementation.</p>
+<code><span class="keyword">class </span><span class="identifier">DefaultS3Client</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-s3-client/index.html"><span class="identifier">S3Client</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-default-sudo-profiles-client/index.html">DefaultSudoProfilesClient</a></h4>
+</td>
+<td>
+<p>Default implementation of <a href="-sudo-profiles-client/index.html">SudoProfilesClient</a> interface.</p>
+<code><span class="keyword">class </span><span class="identifier">DefaultSudoProfilesClient</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-sudo-profiles-client/index.html"><span class="identifier">SudoProfilesClient</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-entitlement/index.html">Entitlement</a></h4>
+</td>
+<td>
+<p>Represents an entitlement related to using Sudo service APIs. Currently only entitlement that's used
+in Sudo service is "sudoplatform.sudo.max" to represent the maximum number of Sudos each user
+is allowed to provision.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Entitlement</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-get-ownership-proof-result/index.html">GetOwnershipProofResult</a></h4>
+</td>
+<td>
+<p>Result returned by API for getting a Sudo ownership proof. The API can
+failed with an error or return the Sudo ownership proof.</p>
+<code><span class="keyword">sealed</span> <span class="keyword">class </span><span class="identifier">GetOwnershipProofResult</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-id-generator/index.html">IdGenerator</a></h4>
+</td>
+<td>
+<p>Interface for generating universally unique identifiers (UUIDs).</p>
+<code><span class="keyword">interface </span><span class="identifier">IdGenerator</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-list-option/index.html">ListOption</a></h4>
+</td>
+<td>
+<p>Options for controlling the behaviour of <code>listSudos</code> API.</p>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">ListOption</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-list-sudos-result/index.html">ListSudosResult</a></h4>
+</td>
+<td>
+<p>Result returned by API for listing Sudos. The API can fail with an
+error or return the list of Sudos.</p>
+<code><span class="keyword">sealed</span> <span class="keyword">class </span><span class="identifier">ListSudosResult</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-query-cache/index.html">QueryCache</a></h4>
+</td>
+<td>
+<p>Wrapper interface for GraphQL client cache operations.</p>
+<code><span class="keyword">interface </span><span class="identifier">QueryCache</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-redeem-result/index.html">RedeemResult</a></h4>
+</td>
+<td>
+<p>Result returned by API for redeeming a token to grant additional entitlements.
+The API can failed with an error or return the resulting entitlements.</p>
+<code><span class="keyword">sealed</span> <span class="keyword">class </span><span class="identifier">RedeemResult</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-s3-client/index.html">S3Client</a></h4>
+</td>
+<td>
+<p>S3 client wrapper protocol mainly used for providing an abstraction layer on top of
+AWS S3 SDK.</p>
+<code><span class="keyword">interface </span><span class="identifier">S3Client</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-sudo/index.html">Sudo</a></h4>
+</td>
+<td>
+<p>Represents a Sudo.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Sudo</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-sudo-profiles-client/index.html">SudoProfilesClient</a></h4>
+</td>
+<td>
+<p>Interface encapsulating a library of functions for calling Sudo service and managing Sudos.</p>
+<code><span class="keyword">interface </span><span class="identifier">SudoProfilesClient</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-sudo-subscriber/index.html">SudoSubscriber</a></h4>
+</td>
+<td>
+<p>Subscriber for receiving notifications about new, updated or deleted Sudo.</p>
+<code><span class="keyword">interface </span><span class="identifier">SudoSubscriber</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-update-sudo-result/index.html">UpdateSudoResult</a></h4>
+</td>
+<td>
+<p>Result returned by API for updating a Sudo. The API can fail with an
+error or return the updated Sudo.</p>
+<code><span class="keyword">sealed</span> <span class="keyword">class </span><span class="identifier">UpdateSudoResult</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Exceptions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-api-exception/index.html">ApiException</a></h4>
+</td>
+<td>
+<p><a href="-sudo-profiles-client/index.html">SudoProfilesClient</a> exception with a specific error code and message.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">ApiException</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-exception/index.html"><span class="identifier">Exception</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

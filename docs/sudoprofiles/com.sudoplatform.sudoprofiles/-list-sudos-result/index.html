@@ -1,0 +1,36 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ListSudosResult - sudoprofiles</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">sudoprofiles</a>&nbsp;/&nbsp;<a href="../index.html">com.sudoplatform.sudoprofiles</a>&nbsp;/&nbsp;<a href="./index.html">ListSudosResult</a><br/>
+<br/>
+<h1>ListSudosResult</h1>
+<code><span class="keyword">sealed</span> <span class="keyword">class </span><span class="identifier">ListSudosResult</span></code>
+<p>Result returned by API for listing Sudos. The API can fail with an
+error or return the list of Sudos.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-failure/index.html">Failure</a></h4>
+</td>
+<td>
+<p>Encapsulates a failed list Sudos result.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Failure</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ListSudosResult</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-success/index.html">Success</a></h4>
+</td>
+<td>
+<p>Encapsulates a successful list Sudos result.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Success</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ListSudosResult</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

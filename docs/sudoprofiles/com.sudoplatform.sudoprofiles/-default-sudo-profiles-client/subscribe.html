@@ -1,0 +1,32 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>DefaultSudoProfilesClient.subscribe - sudoprofiles</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">sudoprofiles</a>&nbsp;/&nbsp;<a href="../index.html">com.sudoplatform.sudoprofiles</a>&nbsp;/&nbsp;<a href="index.html">DefaultSudoProfilesClient</a>&nbsp;/&nbsp;<a href="./subscribe.html">subscribe</a><br/>
+<br/>
+<h1>subscribe</h1>
+<a name="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$subscribe(kotlin.String, com.sudoplatform.sudoprofiles.SudoSubscriber)"></a>
+<code><span class="keyword">fun </span><span class="identifier">subscribe</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$subscribe(kotlin.String, com.sudoplatform.sudoprofiles.SudoSubscriber)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$subscribe(kotlin.String, com.sudoplatform.sudoprofiles.SudoSubscriber)/subscriber">subscriber</span><span class="symbol">:</span>&nbsp;<a href="../-sudo-subscriber/index.html"><span class="identifier">SudoSubscriber</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Subscribes to be notified of new, updated and deleted Sudos. Blob data is not downloaded automatically
+so the caller is expected to use <code>listSudos</code> API if they need to access any associated blobs.</p>
+<h3>Parameters</h3>
+<p><a name="id"></a>
+<code>id</code> - unique ID for the subscriber.</p>
+<p><a name="subscriber"></a>
+<code>subscriber</code> - subscriber to notify.</p>
+<a name="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$subscribe(kotlin.String, com.sudoplatform.sudoprofiles.SudoSubscriber.ChangeType, com.sudoplatform.sudoprofiles.SudoSubscriber)"></a>
+<code><span class="keyword">fun </span><span class="identifier">subscribe</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$subscribe(kotlin.String, com.sudoplatform.sudoprofiles.SudoSubscriber.ChangeType, com.sudoplatform.sudoprofiles.SudoSubscriber)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$subscribe(kotlin.String, com.sudoplatform.sudoprofiles.SudoSubscriber.ChangeType, com.sudoplatform.sudoprofiles.SudoSubscriber)/changeType">changeType</span><span class="symbol">:</span>&nbsp;<span class="identifier">ChangeType</span><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$subscribe(kotlin.String, com.sudoplatform.sudoprofiles.SudoSubscriber.ChangeType, com.sudoplatform.sudoprofiles.SudoSubscriber)/subscriber">subscriber</span><span class="symbol">:</span>&nbsp;<a href="../-sudo-subscriber/index.html"><span class="identifier">SudoSubscriber</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Subscribes to be notified of new, updated or deleted Sudos. Blob data is not downloaded automatically
+so the caller is expected to use <code>listSudos</code> API if they need to access any associated blobs.</p>
+<h3>Parameters</h3>
+<p><a name="id"></a>
+<code>id</code> - unique ID for the subscriber.</p>
+<p><a name="changeType"></a>
+<code>changeType</code> - change type to subscribe to.</p>
+<p><a name="subscriber"></a>
+<code>subscriber</code> - subscriber to notify.</p>
+</BODY>
+</HTML>

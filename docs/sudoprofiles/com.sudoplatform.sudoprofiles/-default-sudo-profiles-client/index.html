@@ -1,0 +1,161 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>DefaultSudoProfilesClient - sudoprofiles</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">sudoprofiles</a>&nbsp;/&nbsp;<a href="../index.html">com.sudoplatform.sudoprofiles</a>&nbsp;/&nbsp;<a href="./index.html">DefaultSudoProfilesClient</a><br/>
+<br/>
+<h1>DefaultSudoProfilesClient</h1>
+<code><span class="keyword">class </span><span class="identifier">DefaultSudoProfilesClient</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-sudo-profiles-client/index.html"><span class="identifier">SudoProfilesClient</span></a></code>
+<p>Default implementation of <a href="../-sudo-profiles-client/index.html">SudoProfilesClient</a> interface.</p>
+<h3>Parameters</h3>
+<p><a name="context"></a>
+<code>context</code> - Android app context.</p>
+<p><a name="sudoUserClient"></a>
+<code>sudoUserClient</code> - <code>SudoUserClient</code> instance required to issue authentication tokens and perform cryptographic operations.</p>
+<p><a name="blobContainerURI"></a>
+<code>blobContainerURI</code> - container URI to which large binary objects will be stored.</p>
+<p><a name="logger"></a>
+<code>logger</code> - logger used for logging messages.</p>
+<p><a name="config"></a>
+<code>config</code> - configuration parameters.</p>
+<p><a name="maxSudos"></a>
+<code>maxSudos</code> - maximum number of Sudos to cap the queries to. Defaults to 10.</p>
+<p><a name="graphQLClient"></a>
+<code>graphQLClient</code> - optional GraphQL client to use. Mainly used for unit testing.</p>
+<p><a name="s3Client"></a>
+<code>s3Client</code> - optional S3 client to use. Mainly used for unit testing.</p>
+<p><a name="queryCache"></a>
+<code>queryCache</code> - optional GraphQL query cache. Mainly used for unit testing.</p>
+<p><a name="idGenerator"></a>
+<code>idGenerator</code> - optional GUID generator to use. Mainly used for unit testing.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Default implementation of <a href="../-sudo-profiles-client/index.html">SudoProfilesClient</a> interface.</p>
+<code><span class="identifier">DefaultSudoProfilesClient</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$<init>(android.content.Context, com.sudoplatform.sudouser.SudoUserClient, java.net.URI, com.sudoplatform.sudologging.Logger, org.json.JSONObject, kotlin.Int, com.amazonaws.mobileconnectors.appsync.AWSAppSyncClient, com.sudoplatform.sudoprofiles.S3Client, com.sudoplatform.sudoprofiles.QueryCache, com.sudoplatform.sudoprofiles.IdGenerator)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$<init>(android.content.Context, com.sudoplatform.sudouser.SudoUserClient, java.net.URI, com.sudoplatform.sudologging.Logger, org.json.JSONObject, kotlin.Int, com.amazonaws.mobileconnectors.appsync.AWSAppSyncClient, com.sudoplatform.sudoprofiles.S3Client, com.sudoplatform.sudoprofiles.QueryCache, com.sudoplatform.sudoprofiles.IdGenerator)/sudoUserClient">sudoUserClient</span><span class="symbol">:</span>&nbsp;<span class="identifier">SudoUserClient</span><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$<init>(android.content.Context, com.sudoplatform.sudouser.SudoUserClient, java.net.URI, com.sudoplatform.sudologging.Logger, org.json.JSONObject, kotlin.Int, com.amazonaws.mobileconnectors.appsync.AWSAppSyncClient, com.sudoplatform.sudoprofiles.S3Client, com.sudoplatform.sudoprofiles.QueryCache, com.sudoplatform.sudoprofiles.IdGenerator)/blobContainerURI">blobContainerURI</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/net/URI.html"><span class="identifier">URI</span></a><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$<init>(android.content.Context, com.sudoplatform.sudouser.SudoUserClient, java.net.URI, com.sudoplatform.sudologging.Logger, org.json.JSONObject, kotlin.Int, com.amazonaws.mobileconnectors.appsync.AWSAppSyncClient, com.sudoplatform.sudoprofiles.S3Client, com.sudoplatform.sudoprofiles.QueryCache, com.sudoplatform.sudoprofiles.IdGenerator)/logger">logger</span><span class="symbol">:</span>&nbsp;<span class="identifier">Logger</span>&nbsp;<span class="symbol">=</span>&nbsp;DefaultLogger.instance<span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$<init>(android.content.Context, com.sudoplatform.sudouser.SudoUserClient, java.net.URI, com.sudoplatform.sudologging.Logger, org.json.JSONObject, kotlin.Int, com.amazonaws.mobileconnectors.appsync.AWSAppSyncClient, com.sudoplatform.sudoprofiles.S3Client, com.sudoplatform.sudoprofiles.QueryCache, com.sudoplatform.sudoprofiles.IdGenerator)/config">config</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/org/json/JSONObject.html"><span class="identifier">JSONObject</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$<init>(android.content.Context, com.sudoplatform.sudouser.SudoUserClient, java.net.URI, com.sudoplatform.sudologging.Logger, org.json.JSONObject, kotlin.Int, com.amazonaws.mobileconnectors.appsync.AWSAppSyncClient, com.sudoplatform.sudoprofiles.S3Client, com.sudoplatform.sudoprofiles.QueryCache, com.sudoplatform.sudoprofiles.IdGenerator)/maxSudos">maxSudos</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;10<span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$<init>(android.content.Context, com.sudoplatform.sudouser.SudoUserClient, java.net.URI, com.sudoplatform.sudologging.Logger, org.json.JSONObject, kotlin.Int, com.amazonaws.mobileconnectors.appsync.AWSAppSyncClient, com.sudoplatform.sudoprofiles.S3Client, com.sudoplatform.sudoprofiles.QueryCache, com.sudoplatform.sudoprofiles.IdGenerator)/graphQLClient">graphQLClient</span><span class="symbol">:</span>&nbsp;<span class="identifier">AWSAppSyncClient</span><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$<init>(android.content.Context, com.sudoplatform.sudouser.SudoUserClient, java.net.URI, com.sudoplatform.sudologging.Logger, org.json.JSONObject, kotlin.Int, com.amazonaws.mobileconnectors.appsync.AWSAppSyncClient, com.sudoplatform.sudoprofiles.S3Client, com.sudoplatform.sudoprofiles.QueryCache, com.sudoplatform.sudoprofiles.IdGenerator)/s3Client">s3Client</span><span class="symbol">:</span>&nbsp;<a href="../-s3-client/index.html"><span class="identifier">S3Client</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$<init>(android.content.Context, com.sudoplatform.sudouser.SudoUserClient, java.net.URI, com.sudoplatform.sudologging.Logger, org.json.JSONObject, kotlin.Int, com.amazonaws.mobileconnectors.appsync.AWSAppSyncClient, com.sudoplatform.sudoprofiles.S3Client, com.sudoplatform.sudoprofiles.QueryCache, com.sudoplatform.sudoprofiles.IdGenerator)/queryCache">queryCache</span><span class="symbol">:</span>&nbsp;<a href="../-query-cache/index.html"><span class="identifier">QueryCache</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$<init>(android.content.Context, com.sudoplatform.sudouser.SudoUserClient, java.net.URI, com.sudoplatform.sudologging.Logger, org.json.JSONObject, kotlin.Int, com.amazonaws.mobileconnectors.appsync.AWSAppSyncClient, com.sudoplatform.sudoprofiles.S3Client, com.sudoplatform.sudoprofiles.QueryCache, com.sudoplatform.sudoprofiles.IdGenerator)/idGenerator">idGenerator</span><span class="symbol">:</span>&nbsp;<a href="../-id-generator/index.html"><span class="identifier">IdGenerator</span></a>&nbsp;<span class="symbol">=</span>&nbsp;DefaultIdGenerator()<span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="version.html">version</a></h4>
+</td>
+<td>
+<p>Client version.</p>
+<code><span class="keyword">val </span><span class="identifier">version</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="create-sudo.html">createSudo</a></h4>
+</td>
+<td>
+<p>Creates a new Sudo.</p>
+<code><span class="keyword">fun </span><span class="identifier">createSudo</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$createSudo(com.sudoplatform.sudoprofiles.Sudo, kotlin.Function1((com.sudoplatform.sudoprofiles.CreateSudoResult, kotlin.Unit)))/sudo">sudo</span><span class="symbol">:</span>&nbsp;<a href="../-sudo/index.html"><span class="identifier">Sudo</span></a><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$createSudo(com.sudoplatform.sudoprofiles.Sudo, kotlin.Function1((com.sudoplatform.sudoprofiles.CreateSudoResult, kotlin.Unit)))/callback">callback</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><a href="../-create-sudo-result/index.html"><span class="identifier">CreateSudoResult</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="delete-sudo.html">deleteSudo</a></h4>
+</td>
+<td>
+<p>Deletes a Sudo.</p>
+<code><span class="keyword">fun </span><span class="identifier">deleteSudo</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$deleteSudo(com.sudoplatform.sudoprofiles.Sudo, kotlin.Function1((com.sudoplatform.sudoprofiles.ApiResult, kotlin.Unit)))/sudo">sudo</span><span class="symbol">:</span>&nbsp;<a href="../-sudo/index.html"><span class="identifier">Sudo</span></a><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$deleteSudo(com.sudoplatform.sudoprofiles.Sudo, kotlin.Function1((com.sudoplatform.sudoprofiles.ApiResult, kotlin.Unit)))/callback">callback</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><a href="../-api-result/index.html"><span class="identifier">ApiResult</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-ownership-proof.html">getOwnershipProof</a></h4>
+</td>
+<td>
+<p>Retrieves a signed owernship proof for the specified owner. The ownership proof JWT has the
+following payload.
+{
+"jti": "DBEEF4EB-F84A-4AB7-A45E-02B05B93F5A3",
+"owner": "cd73a478-23bd-4c70-8c2b-1403e2085845",
+"iss": "sudoplatform.sudoservice",
+"aud": "sudoplatform.virtualcardservice",
+"exp": 1578986266,
+"sub": "da17f346-cf49-4db4-98c2-862f85515fc4",
+"iat": 1578982666
+}</p>
+<code><span class="keyword">fun </span><span class="identifier">getOwnershipProof</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$getOwnershipProof(com.sudoplatform.sudoprofiles.Sudo, kotlin.String, kotlin.Function1((com.sudoplatform.sudoprofiles.GetOwnershipProofResult, kotlin.Unit)))/sudo">sudo</span><span class="symbol">:</span>&nbsp;<a href="../-sudo/index.html"><span class="identifier">Sudo</span></a><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$getOwnershipProof(com.sudoplatform.sudoprofiles.Sudo, kotlin.String, kotlin.Function1((com.sudoplatform.sudoprofiles.GetOwnershipProofResult, kotlin.Unit)))/audience">audience</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$getOwnershipProof(com.sudoplatform.sudoprofiles.Sudo, kotlin.String, kotlin.Function1((com.sudoplatform.sudoprofiles.GetOwnershipProofResult, kotlin.Unit)))/callback">callback</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><a href="../-get-ownership-proof-result/index.html"><span class="identifier">GetOwnershipProofResult</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="list-sudos.html">listSudos</a></h4>
+</td>
+<td>
+<p>Retrieves all Sudos owned by the signed in user.</p>
+<code><span class="keyword">fun </span><span class="identifier">listSudos</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$listSudos(com.sudoplatform.sudoprofiles.ListOption, kotlin.Function1((com.sudoplatform.sudoprofiles.ListSudosResult, kotlin.Unit)))/option">option</span><span class="symbol">:</span>&nbsp;<a href="../-list-option/index.html"><span class="identifier">ListOption</span></a><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$listSudos(com.sudoplatform.sudoprofiles.ListOption, kotlin.Function1((com.sudoplatform.sudoprofiles.ListSudosResult, kotlin.Unit)))/callback">callback</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><a href="../-list-sudos-result/index.html"><span class="identifier">ListSudosResult</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="redeem.html">redeem</a></h4>
+</td>
+<td>
+<p>Redeem a token to be granted additional entitlements.</p>
+<code><span class="keyword">fun </span><span class="identifier">redeem</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$redeem(kotlin.String, kotlin.String, kotlin.Function1((com.sudoplatform.sudoprofiles.RedeemResult, kotlin.Unit)))/token">token</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$redeem(kotlin.String, kotlin.String, kotlin.Function1((com.sudoplatform.sudoprofiles.RedeemResult, kotlin.Unit)))/type">type</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$redeem(kotlin.String, kotlin.String, kotlin.Function1((com.sudoplatform.sudoprofiles.RedeemResult, kotlin.Unit)))/callback">callback</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><a href="../-redeem-result/index.html"><span class="identifier">RedeemResult</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="reset.html">reset</a></h4>
+</td>
+<td>
+<p>Reset any internal state and cached content.</p>
+<code><span class="keyword">fun </span><span class="identifier">reset</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="subscribe.html">subscribe</a></h4>
+</td>
+<td>
+<p>Subscribes to be notified of new, updated and deleted Sudos. Blob data is not downloaded automatically
+so the caller is expected to use <code>listSudos</code> API if they need to access any associated blobs.</p>
+<code><span class="keyword">fun </span><span class="identifier">subscribe</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$subscribe(kotlin.String, com.sudoplatform.sudoprofiles.SudoSubscriber)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$subscribe(kotlin.String, com.sudoplatform.sudoprofiles.SudoSubscriber)/subscriber">subscriber</span><span class="symbol">:</span>&nbsp;<a href="../-sudo-subscriber/index.html"><span class="identifier">SudoSubscriber</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Subscribes to be notified of new, updated or deleted Sudos. Blob data is not downloaded automatically
+so the caller is expected to use <code>listSudos</code> API if they need to access any associated blobs.</p>
+<code><span class="keyword">fun </span><span class="identifier">subscribe</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$subscribe(kotlin.String, com.sudoplatform.sudoprofiles.SudoSubscriber.ChangeType, com.sudoplatform.sudoprofiles.SudoSubscriber)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$subscribe(kotlin.String, com.sudoplatform.sudoprofiles.SudoSubscriber.ChangeType, com.sudoplatform.sudoprofiles.SudoSubscriber)/changeType">changeType</span><span class="symbol">:</span>&nbsp;<span class="identifier">ChangeType</span><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$subscribe(kotlin.String, com.sudoplatform.sudoprofiles.SudoSubscriber.ChangeType, com.sudoplatform.sudoprofiles.SudoSubscriber)/subscriber">subscriber</span><span class="symbol">:</span>&nbsp;<a href="../-sudo-subscriber/index.html"><span class="identifier">SudoSubscriber</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="unsubscribe.html">unsubscribe</a></h4>
+</td>
+<td>
+<p>Unsubscribes the specified subscriber so that it no longer receives notifications about
+new, updated or deleted Sudos.</p>
+<code><span class="keyword">fun </span><span class="identifier">unsubscribe</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$unsubscribe(kotlin.String, com.sudoplatform.sudoprofiles.SudoSubscriber.ChangeType)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$unsubscribe(kotlin.String, com.sudoplatform.sudoprofiles.SudoSubscriber.ChangeType)/changeType">changeType</span><span class="symbol">:</span>&nbsp;<span class="identifier">ChangeType</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="unsubscribe-all.html">unsubscribeAll</a></h4>
+</td>
+<td>
+<p>Unsubscribe all subscribers from receiving notifications about new, updated or deleted Sudos.</p>
+<code><span class="keyword">fun </span><span class="identifier">unsubscribeAll</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="update-sudo.html">updateSudo</a></h4>
+</td>
+<td>
+<p>Updates a Sudo.</p>
+<code><span class="keyword">fun </span><span class="identifier">updateSudo</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$updateSudo(com.sudoplatform.sudoprofiles.Sudo, kotlin.Function1((com.sudoplatform.sudoprofiles.UpdateSudoResult, kotlin.Unit)))/sudo">sudo</span><span class="symbol">:</span>&nbsp;<a href="../-sudo/index.html"><span class="identifier">Sudo</span></a><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.DefaultSudoProfilesClient$updateSudo(com.sudoplatform.sudoprofiles.Sudo, kotlin.Function1((com.sudoplatform.sudoprofiles.UpdateSudoResult, kotlin.Unit)))/callback">callback</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><a href="../-update-sudo-result/index.html"><span class="identifier">UpdateSudoResult</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

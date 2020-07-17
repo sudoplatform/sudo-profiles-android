@@ -1,0 +1,53 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>QueryCache - sudoprofiles</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">sudoprofiles</a>&nbsp;/&nbsp;<a href="../index.html">com.sudoplatform.sudoprofiles</a>&nbsp;/&nbsp;<a href="./index.html">QueryCache</a><br/>
+<br/>
+<h1>QueryCache</h1>
+<code><span class="keyword">interface </span><span class="identifier">QueryCache</span></code>
+<p>Wrapper interface for GraphQL client cache operations.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-api-result/index.html">ApiResult</a></h4>
+</td>
+<td>
+<p>Generic API result. The API can fail with an error or complete successfully.</p>
+<code><span class="keyword">sealed</span> <span class="keyword">class </span><span class="identifier">ApiResult</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="add.html">add</a></h4>
+</td>
+<td>
+<p>Adds a new item to the AppSync's query cache.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">add</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.QueryCache$add(, )/query">query</span><span class="symbol">:</span>&nbsp;<span class="identifier">&lt;ERROR CLASS&gt;</span><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.QueryCache$add(, )/item">item</span><span class="symbol">:</span>&nbsp;<span class="identifier">&lt;ERROR CLASS&gt;</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ApiResult</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="../-default-query-cache/index.html">DefaultQueryCache</a></h4>
+</td>
+<td>
+<p>Default query cache implementation.</p>
+<code><span class="keyword">class </span><span class="identifier">DefaultQueryCache</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">QueryCache</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

@@ -1,0 +1,36 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>UpdateSudoResult - sudoprofiles</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">sudoprofiles</a>&nbsp;/&nbsp;<a href="../index.html">com.sudoplatform.sudoprofiles</a>&nbsp;/&nbsp;<a href="./index.html">UpdateSudoResult</a><br/>
+<br/>
+<h1>UpdateSudoResult</h1>
+<code><span class="keyword">sealed</span> <span class="keyword">class </span><span class="identifier">UpdateSudoResult</span></code>
+<p>Result returned by API for updating a Sudo. The API can fail with an
+error or return the updated Sudo.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-failure/index.html">Failure</a></h4>
+</td>
+<td>
+<p>Encapsulates a failed Sudo update result.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Failure</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">UpdateSudoResult</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-success/index.html">Success</a></h4>
+</td>
+<td>
+<p>Encapsulates a successful Sudo update result.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Success</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">UpdateSudoResult</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
