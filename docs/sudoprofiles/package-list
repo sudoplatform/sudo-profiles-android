@@ -2,3 +2,4 @@ $dokka.format:html
 $dokka.linkExtension:html
 
 com.sudoplatform.sudoprofiles
+com.sudoplatform.sudoprofiles.exceptions

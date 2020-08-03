@@ -15,6 +15,7 @@ import com.amazonaws.regions.Region
 import com.amazonaws.services.s3.AmazonS3Client
 import com.amazonaws.services.s3.model.DeleteObjectRequest
 import com.sudoplatform.sudologging.Logger
+import com.sudoplatform.sudoprofiles.exceptions.S3Exception
 import com.sudoplatform.sudouser.SudoUserClient
 import java.io.File
 import java.io.FileOutputStream
@@ -44,6 +45,7 @@ interface S3Client {
      * @param objectId Unique ID for the blob.
      * @return AWS S3 key representing the location of the blob.
      */
+    @Throws(S3Exception::class)
     suspend fun upload(data: ByteArray, objectId: String): String
 
     /**
@@ -51,6 +53,7 @@ interface S3Client {
      *
      * @param key AWS S3 key representing the location of the blob.
      */
+    @Throws(S3Exception::class)
     suspend fun download(key: String): ByteArray
 
     /**
@@ -117,7 +120,7 @@ class DefaultS3Client (
             }
 
             override fun onError(id: Int, e: Exception?) {
-                throw ApiException(ApiErrorCode.S3_ERROR, "S3 upload failed: $e")
+                throw S3Exception.UploadException(e?.message, cause = e)
             }
         })
     }
@@ -141,7 +144,7 @@ class DefaultS3Client (
             }
 
             override fun onError(id: Int, e: Exception?) {
-                throw ApiException(ApiErrorCode.S3_ERROR, "S3 download failed: $e")
+                throw S3Exception.DownloadException(e?.message, cause = e)
             }
         })
     }

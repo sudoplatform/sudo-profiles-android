@@ -190,5 +190,4 @@ data class Sudo(
         this.notes = notes
         this.avatar = avatar
     }
-
 }

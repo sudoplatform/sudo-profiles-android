@@ -1,0 +1,102 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SudoProfilesClient.Builder - sudoprofiles</title>
+<link rel="stylesheet" href="../../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../../index.html">sudoprofiles</a>&nbsp;/&nbsp;<a href="../../index.html">com.sudoplatform.sudoprofiles</a>&nbsp;/&nbsp;<a href="../index.html">SudoProfilesClient</a>&nbsp;/&nbsp;<a href="./index.html">Builder</a><br/>
+<br/>
+<h1>Builder</h1>
+<code><span class="keyword">class </span><span class="identifier">Builder</span></code>
+<p>Builder used to construct <a href="../index.html">SudoProfilesClient</a>.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Builder used to construct <a href="../index.html">SudoProfilesClient</a>.</p>
+<code><span class="identifier">Builder</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.SudoProfilesClient.Builder$<init>(android.content.Context, com.sudoplatform.sudouser.SudoUserClient, java.net.URI)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.SudoProfilesClient.Builder$<init>(android.content.Context, com.sudoplatform.sudouser.SudoUserClient, java.net.URI)/sudoUserClient">sudoUserClient</span><span class="symbol">:</span>&nbsp;<span class="identifier">SudoUserClient</span><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.SudoProfilesClient.Builder$<init>(android.content.Context, com.sudoplatform.sudouser.SudoUserClient, java.net.URI)/blobContainerURI">blobContainerURI</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/net/URI.html"><span class="identifier">URI</span></a><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="build.html">build</a></h4>
+</td>
+<td>
+<p>Constructs and returns an <a href="../index.html">SudoProfilesClient</a>.</p>
+<code><span class="keyword">fun </span><span class="identifier">build</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../index.html"><span class="identifier">SudoProfilesClient</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="se-config.html">seConfig</a></h4>
+</td>
+<td>
+<p>Provide the Configuration Parameters</p>
+<code><span class="keyword">fun </span><span class="identifier">seConfig</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.SudoProfilesClient.Builder$seConfig(org.json.JSONObject)/config">config</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/org/json/JSONObject.html"><span class="identifier">JSONObject</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Builder</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="set-graph-q-l-client.html">setGraphQLClient</a></h4>
+</td>
+<td>
+<p>Provide an <a href="#">AWSAppSyncClient</a> for the <a href="../index.html">SudoProfilesClient</a>. If this is not
+supplied, an <a href="#">AWSAppSyncClient</a> will be obtained from <a href="#">ApiClientManager</a>.</p>
+<code><span class="keyword">fun </span><span class="identifier">setGraphQLClient</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.SudoProfilesClient.Builder$setGraphQLClient(com.amazonaws.mobileconnectors.appsync.AWSAppSyncClient)/graphQLClient">graphQLClient</span><span class="symbol">:</span>&nbsp;<span class="identifier">AWSAppSyncClient</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Builder</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="set-id-generator.html">setIdGenerator</a></h4>
+</td>
+<td>
+<p>Provide an <a href="../../-id-generator/index.html">IdGenerator</a> to use.  If a value is not supplied
+a default implementation will be provided.</p>
+<code><span class="keyword">fun </span><span class="identifier">setIdGenerator</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.SudoProfilesClient.Builder$setIdGenerator(com.sudoplatform.sudoprofiles.IdGenerator)/idGenerator">idGenerator</span><span class="symbol">:</span>&nbsp;<a href="../../-id-generator/index.html"><span class="identifier">IdGenerator</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Builder</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="set-logger.html">setLogger</a></h4>
+</td>
+<td>
+<p>Provide the implementation of the <a href="#">Logger</a> used for logging. If a value is not supplied
+a default implementation will be used.</p>
+<code><span class="keyword">fun </span><span class="identifier">setLogger</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.SudoProfilesClient.Builder$setLogger(com.sudoplatform.sudologging.Logger)/logger">logger</span><span class="symbol">:</span>&nbsp;<span class="identifier">Logger</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Builder</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="set-max-sudos.html">setMaxSudos</a></h4>
+</td>
+<td>
+<p>Provide the maximum number of Sudos to cap the queries to.  If a value is not supplied
+a default of 10 will be set.</p>
+<code><span class="keyword">fun </span><span class="identifier">setMaxSudos</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.SudoProfilesClient.Builder$setMaxSudos(kotlin.Int)/maxSudos">maxSudos</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Builder</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="set-query-cache.html">setQueryCache</a></h4>
+</td>
+<td>
+<p>Provide an <a href="../../-query-cache/index.html">QueryCache</a> to use.  If a value is not supplied
+a default implementation will be provided.</p>
+<code><span class="keyword">fun </span><span class="identifier">setQueryCache</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.SudoProfilesClient.Builder$setQueryCache(com.sudoplatform.sudoprofiles.QueryCache)/queryCache">queryCache</span><span class="symbol">:</span>&nbsp;<a href="../../-query-cache/index.html"><span class="identifier">QueryCache</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Builder</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="set-s3-client.html">setS3Client</a></h4>
+</td>
+<td>
+<p>Provide an <a href="../../-s3-client/index.html">S3Client</a> to use for AWS S3 related operations.  If a value is not supplied
+a default implementation will be used.</p>
+<code><span class="keyword">fun </span><span class="identifier">setS3Client</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.SudoProfilesClient.Builder$setS3Client(com.sudoplatform.sudoprofiles.S3Client)/s3Client">s3Client</span><span class="symbol">:</span>&nbsp;<a href="../../-s3-client/index.html"><span class="identifier">S3Client</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Builder</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

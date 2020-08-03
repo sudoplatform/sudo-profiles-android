@@ -8,44 +8,20 @@ package com.sudoplatform.sudoprofiles
 
 import com.amazonaws.mobileconnectors.appsync.AWSAppSyncClient
 import com.amazonaws.mobileconnectors.appsync.fetcher.AppSyncResponseFetchers
-import com.apollographql.apollo.GraphQLCall
-import com.apollographql.apollo.api.Response
-import com.apollographql.apollo.exception.ApolloException
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
+import com.sudoplatform.sudoprofiles.exceptions.SudoProfileException.Companion.toSudoProfileException
+import com.sudoplatform.sudoprofiles.extensions.enqueue
 
 /**
  * Wrapper interface for GraphQL client cache operations.
  */
 interface QueryCache {
-
-    /**
-     * Generic API result. The API can fail with an error or complete successfully.
-     */
-    sealed class ApiResult {
-        /**
-         * Encapsulates a successful API result.
-         *
-         */
-        data class Success(val description: String = "API completed successfully.") : ApiResult()
-
-        /**
-         * Encapsulates a failed API result.
-         *
-         * @param error [Throwable] encapsulating the error detail.
-         */
-        data class Failure(val error: Throwable) : ApiResult()
-    }
-
     /**
      * Adds a new item to the AppSync's query cache.
      *
      * @param query query to update.
      * @param item a new item to add to the cache.
-     * @return API result.
      */
-    suspend fun add(query: ListSudosQuery, item: ListSudosQuery.Item): ApiResult
-
+    suspend fun add(query: ListSudosQuery, item: ListSudosQuery.Item)
 }
 
 /**
@@ -55,43 +31,40 @@ interface QueryCache {
  */
 class DefaultQueryCache(private val graphQLClient: AWSAppSyncClient): QueryCache {
 
-    override suspend fun add(query: ListSudosQuery, item: ListSudosQuery.Item): QueryCache.ApiResult = suspendCoroutine { cont ->
-        this.graphQLClient.query(query)
+    override suspend fun add(query: ListSudosQuery, item: ListSudosQuery.Item) {
+
+        val sudos = this.graphQLClient.query(query)
             .responseFetcher(AppSyncResponseFetchers.CACHE_ONLY)
-            .enqueue(object : GraphQLCall.Callback<ListSudosQuery.Data>() {
-                override fun onResponse(response: Response<ListSudosQuery.Data>) {
-                    val items: MutableList<ListSudosQuery.Item> = mutableListOf()
+            .enqueue()
 
-                    val existingItems = response.data()?.listSudos()?.items()
-                    if (existingItems != null) {
-                        items.addAll(existingItems)
-                    }
+        if(sudos.hasErrors()) {
+            throw sudos.errors().first().toSudoProfileException()
+        }
 
-                    items.add(item)
+        val items: MutableList<ListSudosQuery.Item> = mutableListOf()
 
-                    val data =
-                        ListSudosQuery.Data(
-                            ListSudosQuery.ListSudos(
-                                "ModelSudoConnection",
-                                items,
-                                null
-                            )
-                        )
+        val existingItems = sudos.data()?.listSudos()?.items()
+        if (existingItems != null) {
+            items.addAll(existingItems)
+        }
 
-                    // Currently `GraphQLStoreOperation.Callback` is not public so we have to assume the cache update succeeds and completes
-                    // quickly.
-                    this@DefaultQueryCache.graphQLClient.store.write(
-                        query,
-                        data
-                    ).enqueue(null)
+        items.add(item)
 
-                    cont.resume(QueryCache.ApiResult.Success())
-                }
+        val data =
+            ListSudosQuery.Data(
+                ListSudosQuery.ListSudos(
+                    "ModelSudoConnection",
+                    items,
+                    null
+                )
+            )
 
-                override fun onFailure(e: ApolloException) {
-                    cont.resume(QueryCache.ApiResult.Failure(e))
-                }
-            })
+        // Currently `GraphQLStoreOperation.Callback` is not public so we have to assume the cache update succeeds and completes
+        // quickly.
+        this@DefaultQueryCache.graphQLClient.store.write(
+            query,
+            data
+        ).enqueue(null)
+
     }
-
 }

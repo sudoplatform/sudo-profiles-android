@@ -9,8 +9,10 @@
 <br/>
 <h1>getOwnershipProof</h1>
 <a name="com.sudoplatform.sudoprofiles.SudoProfilesClient$getOwnershipProof(com.sudoplatform.sudoprofiles.Sudo, kotlin.String, kotlin.Function1((com.sudoplatform.sudoprofiles.GetOwnershipProofResult, kotlin.Unit)))"></a>
-<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">getOwnershipProof</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.SudoProfilesClient$getOwnershipProof(com.sudoplatform.sudoprofiles.Sudo, kotlin.String, kotlin.Function1((com.sudoplatform.sudoprofiles.GetOwnershipProofResult, kotlin.Unit)))/sudo">sudo</span><span class="symbol">:</span>&nbsp;<a href="../-sudo/index.html"><span class="identifier">Sudo</span></a><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.SudoProfilesClient$getOwnershipProof(com.sudoplatform.sudoprofiles.Sudo, kotlin.String, kotlin.Function1((com.sudoplatform.sudoprofiles.GetOwnershipProofResult, kotlin.Unit)))/audience">audience</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.SudoProfilesClient$getOwnershipProof(com.sudoplatform.sudoprofiles.Sudo, kotlin.String, kotlin.Function1((com.sudoplatform.sudoprofiles.GetOwnershipProofResult, kotlin.Unit)))/callback">callback</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><a href="../-get-ownership-proof-result/index.html"><span class="identifier">GetOwnershipProofResult</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
-<p>Retrieves a signed owernship proof for the specified owner. The ownership proof JWT has the
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><s><span class="identifier">getOwnershipProof</span></s><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.SudoProfilesClient$getOwnershipProof(com.sudoplatform.sudoprofiles.Sudo, kotlin.String, kotlin.Function1((com.sudoplatform.sudoprofiles.GetOwnershipProofResult, kotlin.Unit)))/sudo">sudo</span><span class="symbol">:</span>&nbsp;<a href="../-sudo/index.html"><span class="identifier">Sudo</span></a><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.SudoProfilesClient$getOwnershipProof(com.sudoplatform.sudoprofiles.Sudo, kotlin.String, kotlin.Function1((com.sudoplatform.sudoprofiles.GetOwnershipProofResult, kotlin.Unit)))/audience">audience</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.SudoProfilesClient$getOwnershipProof(com.sudoplatform.sudoprofiles.Sudo, kotlin.String, kotlin.Function1((com.sudoplatform.sudoprofiles.GetOwnershipProofResult, kotlin.Unit)))/callback">callback</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><a href="../-get-ownership-proof-result/index.html"><span class="identifier">GetOwnershipProofResult</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code><br/>
+<strong>Deprecated:</strong> This is deprecated and will be removed in the future.<br/>
+<br/>
+<p>Retrieves a signed ownership proof for the specified owner. The ownership proof JWT has the
 following payload.
 {
 "jti": "DBEEF4EB-F84A-4AB7-A45E-02B05B93F5A3",
@@ -31,5 +33,28 @@ proof is issued, i.e. the user. "aud" is the target audience of the proof.</p>
 <code>audience</code> - target audience for this proof.</p>
 <p><a name="callback"></a>
 <code>callback</code> - callback for returning get ownership proof result or error.</p>
+<a name="com.sudoplatform.sudoprofiles.SudoProfilesClient$getOwnershipProof(com.sudoplatform.sudoprofiles.Sudo, kotlin.String)"></a>
+<code><span class="keyword">abstract</span> <span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">getOwnershipProof</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.SudoProfilesClient$getOwnershipProof(com.sudoplatform.sudoprofiles.Sudo, kotlin.String)/sudo">sudo</span><span class="symbol">:</span>&nbsp;<a href="../-sudo/index.html"><span class="identifier">Sudo</span></a><span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.SudoProfilesClient$getOwnershipProof(com.sudoplatform.sudoprofiles.Sudo, kotlin.String)/audience">audience</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>Retrieves a signed ownership proof for the specified owner. The ownership proof JWT has the
+following payload.
+{
+"jti": "DBEEF4EB-F84A-4AB7-A45E-02B05B93F5A3",
+"owner": "cd73a478-23bd-4c70-8c2b-1403e2085845",
+"iss": "sudoplatform.sudoservice",
+"aud": "sudoplatform.virtualcardservice",
+"exp": 1578986266,
+"sub": "da17f346-cf49-4db4-98c2-862f85515fc4",
+"iat": 1578982666
+}</p>
+<p>"owner" is an unique ID of an identity managed by the issuing serivce. In case of Sudo
+service this represents unique reference to a Sudo. "sub" is the subject to which this
+proof is issued, i.e. the user. "aud" is the target audience of the proof.</p>
+<h3>Parameters</h3>
+<p><a name="sudo"></a>
+<code>sudo</code> - Sudo to generated an ownership proof for.</p>
+<p><a name="audience"></a>
+<code>audience</code> - target audience for this proof.</p>
+<p><strong>Return</strong><br/>
+String: The JWT</p>
 </BODY>
 </HTML>

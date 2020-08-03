@@ -97,7 +97,9 @@ internal class SubscriptionManager<T> {
             // If the subscription was disconnected then remove all subscribers.
             if (state == SudoSubscriber.ConnectionState.DISCONNECTED) {
                 this.subscribers.clear()
-                this.watcher?.cancel()
+                if (watcher?.isCanceled == false) {
+                    this.watcher?.cancel()
+                }
                 this.watcher = null
             }
         }

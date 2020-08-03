@@ -1,0 +1,121 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SudoProfileException - sudoprofiles</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">sudoprofiles</a>&nbsp;/&nbsp;<a href="../index.html">com.sudoplatform.sudoprofiles.exceptions</a>&nbsp;/&nbsp;<a href="./index.html">SudoProfileException</a><br/>
+<br/>
+<h1>SudoProfileException</h1>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">SudoProfileException</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-runtime-exception/index.html"><span class="identifier">RuntimeException</span></a></code>
+<h3>Exceptions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-conditional-check-failed-exception/index.html">ConditionalCheckFailedException</a></h4>
+</td>
+<td>
+<p>Exception for GraphQl call when there is a Version mismatch.  This can occur if
+another process has updated a DB entry while you are working on that entry.</p>
+<code><span class="keyword">class </span><span class="identifier">ConditionalCheckFailedException</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">SudoProfileException</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-failed-exception/index.html">FailedException</a></h4>
+</td>
+<td>
+<p>Exception for wrapping exceptions such as <code>ApolloException</code> and all other <code>Exceptions</code></p>
+<code><span class="keyword">class </span><span class="identifier">FailedException</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">SudoProfileException</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-graph-ql-exception/index.html">GraphQlException</a></h4>
+</td>
+<td>
+<p>Exception for GraphQl call when the call itself is successful but there
+is an Error returned that is unmapped.</p>
+<code><span class="keyword">class </span><span class="identifier">GraphQlException</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">SudoProfileException</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-internal-server-exception/index.html">InternalServerException</a></h4>
+</td>
+<td>
+<p>Exception for GraphQl call when a <code>ServerError</code> is returned</p>
+<code><span class="keyword">class </span><span class="identifier">InternalServerException</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">SudoProfileException</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-policy-failed-exception/index.html">PolicyFailedException</a></h4>
+</td>
+<td>
+<p>Exception for GraphQl call when policy failed</p>
+<code><span class="keyword">class </span><span class="identifier">PolicyFailedException</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">SudoProfileException</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-sudo-not-found-exception/index.html">SudoNotFoundException</a></h4>
+</td>
+<td>
+<p>Exception for GraphQl call when Sudo Not Found</p>
+<code><span class="keyword">class </span><span class="identifier">SudoNotFoundException</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">SudoProfileException</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-unsupported-algorithm-exception/index.html">UnsupportedAlgorithmException</a></h4>
+</td>
+<td>
+<p>Exception for when processing secure claim</p>
+<code><span class="keyword">class </span><span class="identifier">UnsupportedAlgorithmException</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">SudoProfileException</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<code><span class="identifier">SudoProfileException</span><span class="symbol">(</span><span class="identifier" id="com.sudoplatform.sudoprofiles.exceptions.SudoProfileException$<init>(kotlin.String, kotlin.Throwable)/message">message</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="com.sudoplatform.sudoprofiles.exceptions.SudoProfileException$<init>(kotlin.String, kotlin.Throwable)/cause">cause</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html"><span class="identifier">Throwable</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="to-api-exception.html">toApiException</a></h4>
+</td>
+<td>
+<p>Convert from a <a href="./index.html">SudoProfileException</a> to a <a href="../-api-exception/index.html">ApiException</a> for backwards compatibility</p>
+<code><span class="keyword">fun </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-exception/index.html"><span class="identifier">Exception</span></a><span class="symbol">.</span><span class="identifier">toApiException</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../-api-exception/index.html"><span class="identifier">ApiException</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="to-sudo-profile-exception.html">toSudoProfileException</a></h4>
+</td>
+<td>
+<p>Convert from a GraphQL <a href="#">Error</a> into a custom exception of type <a href="./index.html">SudoProfileException</a></p>
+<code><span class="keyword">fun </span><span class="identifier">Error</span><span class="symbol">.</span><span class="identifier">toSudoProfileException</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">SudoProfileException</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="../-s3-exception/index.html">S3Exception</a></h4>
+</td>
+<td>
+<code><span class="keyword">sealed</span> <span class="keyword">class </span><span class="identifier">S3Exception</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">SudoProfileException</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
