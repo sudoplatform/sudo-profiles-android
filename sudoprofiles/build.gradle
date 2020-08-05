@@ -13,7 +13,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 28
         versionCode 1
-        versionName "3.0.7"
+        versionName "3.1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments clearPackageData: 'true'
@@ -135,6 +135,17 @@ dokka {
     outputDirectory = "$buildDir/javadoc"
 }
 
+// Kotlin Lint
+apply plugin: 'org.jmailen.kotlinter'
+
+kotlinter {
+    ignoreFailures = false
+    reporters = ['checkstyle', 'plain']
+    experimentalRules = false
+    fileBatchSize = 30
+}
+
+
 apply plugin: 'maven'
 
 def props = new Properties()
@@ -153,9 +164,7 @@ ext {
     }
 }
 
-if (project.hasProperty("tag")) {
-    apply from: "${rootProject.projectDir}/publish-mavencentral.gradle"
-} else {
-    // Snapshot publishing
-    apply from: "${rootProject.projectDir}/publish-snapshot-android.gradle"
+// Internal publishing
+if (project.file("${rootProject.projectDir}/util/publish-internal-android.gradle").exists()) {
+    apply from: "${rootProject.projectDir}/util/publish-internal-android.gradle"
 }
