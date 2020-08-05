@@ -39,6 +39,14 @@ allprojects {
                     password = nexusPassword
                 }
             }
+            maven {
+                name = "android-releases"
+                url = "https://repo.tools.anonyome.com/repository/android-releases/"
+                credentials {
+                    username = nexusUsername
+                    password = nexusPassword
+                }
+            }
         }
         jcenter()
     }
