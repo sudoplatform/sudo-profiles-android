@@ -151,24 +151,20 @@ apply plugin: 'maven'
 def props = new Properties()
 file("../secret.properties").withInputStream { props.load(it) }
 
-// Setup common publishing variables
 ext {
-    projectGroup = 'com.sudoplatform'
-    projectArtifact = project.name
-    projectDescription = 'Profiles SDK for the Sudo Platform by Anonyome Labs.'
-    projectUrl = 'https://github.com/sudoplatform/sudo-profiles-android'
-    projectSCM = 'scm:git:github.com/sudoplatform/sudo-profiles-android.git'
-    if (project.findProperty("tag")) {
-        projectVersion = "$tag"
+    PUBLISH_GROUP_ID = 'com.sudoplatform'
+    PUBLISH_ARTIFACT_ID = 'sudoprofiles'
+    PUBLISH_DESCRIPTION = 'Profiles SDK for the Sudo Platform by Anonyome Labs.'
+    PUBLISH_PROJECT_URL = 'https://github.com/sudoplatform/sudo-profiles-android'
+    PUBLISH_PROJECT_SCM = 'scm:git:github.com/sudoplatform/sudo-profiles-android.git'
+    if (project.hasProperty('tag')) {
+        PUBLISH_VERSION = "$tag"
     } else {
-        projectVersion = project.android.defaultConfig.versionName
+        PUBLISH_VERSION = "0.0.0"
     }
 }
 
-if(project.findProperty("tag") &&
-        project.file("${rootProject.projectDir}/util/publish-mavencentral.gradle").exists()) {
-    apply from: "${rootProject.projectDir}/util/publish-mavencentral.gradle"
-}
-else if (project.file("${rootProject.projectDir}/util/publish-internal-android.gradle").exists()) {
+// Internal publishing
+if (project.file("${rootProject.projectDir}/util/publish-internal-android.gradle").exists()) {
     apply from: "${rootProject.projectDir}/util/publish-internal-android.gradle"
 }
