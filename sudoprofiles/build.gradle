@@ -135,17 +135,6 @@ dokka {
     outputDirectory = "$buildDir/javadoc"
 }
 
-// Kotlin Lint
-apply plugin: 'org.jmailen.kotlinter'
-
-kotlinter {
-    ignoreFailures = false
-    reporters = ['checkstyle', 'plain']
-    experimentalRules = false
-    fileBatchSize = 30
-}
-
-
 apply plugin: 'maven'
 
 def props = new Properties()

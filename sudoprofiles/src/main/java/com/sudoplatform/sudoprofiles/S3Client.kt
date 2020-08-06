@@ -69,7 +69,7 @@ interface S3Client {
  * Default S3 client implementation.
  *
  * @param context Android app context.
- * @param sudoUserClient [SudoUserClient] used for authenticating to AWS S3.
+ * @param sudoUserClient [com.sudoplatform.sudouser.SudoUserClient] used for authenticating to AWS S3.
  */
 class DefaultS3Client (
     context: Context,

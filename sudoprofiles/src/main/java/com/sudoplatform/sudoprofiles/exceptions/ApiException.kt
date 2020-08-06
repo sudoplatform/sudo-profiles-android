@@ -64,7 +64,7 @@ enum class ApiErrorCode {
 }
 
 /**
- * [SudoProfilesClient] exception with a specific error code and message.
+ * [com.sudoplatform.sudoprofiles.SudoProfilesClient] exception with a specific error code and message.
  *
  * @param code error code.
  * @param message error message.
