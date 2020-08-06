@@ -25,6 +25,8 @@ buildscript {
     }
 }
 
+apply plugin: 'io.codearte.nexus-staging'
+
 allprojects {
     repositories {
         mavenLocal()
