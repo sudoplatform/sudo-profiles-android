@@ -103,8 +103,7 @@ class DefaultS3Client (
 
         val file = File(objectId)
         val tmpFile = File.createTempFile(file.name, ".tmp")
-        val fos = FileOutputStream(tmpFile)
-        fos.write(data)
+        FileOutputStream(tmpFile).use { it.write(data) }
 
         val observer = transferUtility.upload(key, tmpFile)
         observer.setTransferListener(object : TransferListener {

@@ -1,5 +1,6 @@
-$dokka.format:html
+$dokka.format:html-v1
 $dokka.linkExtension:html
 
 com.sudoplatform.sudoprofiles
 com.sudoplatform.sudoprofiles.exceptions
+

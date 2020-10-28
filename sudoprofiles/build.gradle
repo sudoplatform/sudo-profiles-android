@@ -5,15 +5,16 @@ apply plugin: 'com.amazonaws.appsync'
 apply plugin: 'org.jetbrains.dokka'
 apply plugin: "org.sonarqube"
 apply plugin: 'jacoco'
+apply plugin: "org.owasp.dependencycheck"
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 30
 
     defaultConfig {
         minSdkVersion 23
-        targetSdkVersion 28
+        targetSdkVersion 30
         versionCode 1
-        versionName "3.1.4"
+        versionName "3.1.7"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments clearPackageData: 'true'
@@ -78,7 +79,7 @@ dependencies {
     implementation "com.amazonaws:aws-android-sdk-s3:$aws_version"
 
     // Sudo Platform
-    implementation 'com.sudoplatform:sudouser:8.0.5'
+    implementation 'com.sudoplatform:sudouser:8.0.7'
     implementation 'com.sudoplatform:sudokeymanager:[3.4.2,)'
     implementation 'com.sudoplatform:sudologging:[1.0,)'
     implementation 'com.sudoplatform:sudoconfigmanager:[1.2.2,)'
@@ -130,10 +131,84 @@ artifacts {
     archives sourcesJar
 }
 
-dokka {
-    outputFormat = 'html'
-    outputDirectory = "$buildDir/javadoc"
+// Dokka documentation generation
+apply plugin: 'org.jetbrains.dokka'
+
+dokkaHtml {
+    outputDirectory.set(project.file("$buildDir/javadoc"))
+    dokkaSourceSets {
+        configureEach {
+            jdkVersion.set(8)
+            skipEmptyPackages.set(true)
+        }
+    }
 }
+
+// Returns a list of `configurations` which should not be scanned for vulnerabilities
+def getConfigurationsToSkip = { configs ->
+    configs.findAll {
+        it.name.startsWithAny("androidTest", "test", "lint") ||
+                it.name.contains("AndroidTest") ||
+                it.name.contains("UnitTest")
+    }.collect {
+        it.name
+    }
+}
+
+tasks.register("printConfigurationsToSkip") {
+    group = "OWASP dependency-check"
+    description = "Print the configurations which are skipped when scanning for vulnerable dependencies"
+    doLast {
+        println "Configurations to skip when scanning for vulnerable dependencies:"
+        println getConfigurationsToSkip(configurations).join("\n")
+    }
+}
+
+afterEvaluate {
+    // NOTE: this must be within `afterEvaluate` to ensure all the configurations have been created before filtering them
+    dependencyCheck {
+        suppressionFile file("../dependency-suppression.xml").toString()
+        failBuildOnCVSS 0
+        skipConfigurations = getConfigurationsToSkip(configurations)
+    }
+}
+
+
+// https://github.com/cookpad/license-tools-plugin
+apply plugin: "com.cookpad.android.licensetools"
+licenseTools {
+    licensesYaml = file("licenses.yml")
+    ignoredGroups = ["com.nhaarman:mockito-kotlin", "com.anonyome", "com.sudoplatform"]
+    ignoredProjects = ["org.mockito"]
+}
+
+@Grab('org.yaml:snakeyaml:1.17') // Yaml parser
+import org.yaml.snakeyaml.Yaml
+
+task checkLicenseHaveRequiredFields {
+    description = "Check every license entry has the mandatory fields"
+    group = "verification"
+    doLast {
+        def mandatoryFields = ["artifact", "name", "copyrightHolder", "url"]
+        Yaml parser = new Yaml()
+        def licenses = parser.load((file("licenses.yml") as File).text)
+        def errors = new StringBuilder()
+        licenses.each { artifact ->
+            mandatoryFields.each { field ->
+                if (artifact[field] == null) {
+                    errors.append("License entry '${artifact.artifact}' is missing required element `$field`\n")
+                }
+            }
+            if (artifact["license"] == null && artifact["licenseUrl" == null]) {
+                errors.append("License entry '${artifact.artifact}' must have one of [license,licenseUrl]\n")
+            }
+        }
+        if (errors.length() > 0) {
+            throw new GradleException("Missing license elements:\n$errors")
+        }
+    }
+}
+checkLicenses.finalizedBy checkLicenseHaveRequiredFields
 
 apply plugin: 'maven'
 
