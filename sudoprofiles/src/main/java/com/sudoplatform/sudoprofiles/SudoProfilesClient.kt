@@ -544,7 +544,7 @@ class DefaultSudoProfilesClient constructor(
         private const val CONFIG_BUCKET = "bucket"
     }
 
-    override val version: String = "3.0.6"
+    override val version: String = "3.1.8"
 
     /**
      * GraphQL client used for calling Sudo service API.
