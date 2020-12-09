@@ -59,8 +59,7 @@ enum class ApiErrorCode {
     /**
      * The API call failed due to the user having insufficient entitlements.
      */
-    POLICY_ERROR
-
+    INSUFFICIENT_ENTITLEMENTS_ERROR
 }
 
 /**

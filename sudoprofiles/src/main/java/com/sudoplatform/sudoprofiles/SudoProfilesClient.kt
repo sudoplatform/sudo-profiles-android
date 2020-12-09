@@ -787,7 +787,7 @@ class DefaultSudoProfilesClient constructor(
                 sudo.updatedAt = Date(output.updatedAtEpochMs().toLong())
 
                 val item = mapSudo(output)
-                this.queryCache.add(this.defaultQuery, item)
+                this.queryCache.replace(this.defaultQuery, item)
 
                 return sudo
             } else {
@@ -1499,6 +1499,7 @@ class DefaultSudoProfilesClient constructor(
 
             return SecureClaimInput
                 .builder()
+                .version(1)
                 .name(name)
                 .keyId(keyId)
                 .algorithm(algorithm.toString())

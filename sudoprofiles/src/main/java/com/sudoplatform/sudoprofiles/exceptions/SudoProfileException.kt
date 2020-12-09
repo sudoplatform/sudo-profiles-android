@@ -8,7 +8,7 @@ open class SudoProfileException(message: String? = null, cause: Throwable? = nul
     companion object {
         private const val GRAPHQL_ERROR_TYPE = "errorType"
         private const val GRAPHQL_ERROR_SUDO_NOT_FOUND = "sudoplatform.sudo.SudoNotFound"
-        private const val GRAPHQL_ERROR_POLICY_ERROR = "sudoplatform.PolicyFailed"
+        private const val GRAPHQL_ERROR_INSUFFICIENT_ENTITLEMENTS_ERROR = "sudoplatform.InsufficientEntitlementsError"
         private const val GRAPHQL_ERROR_CONDITIONAL_CHECK_FAILED =
             "DynamoDB:ConditionalCheckFailedException"
         private const val GRAPHQL_ERROR_SERVER_ERROR = "sudoplatform.sudo.ServerError"
@@ -20,8 +20,8 @@ open class SudoProfileException(message: String? = null, cause: Throwable? = nul
             return when (this) {
                 // GraphQl Exceptions
                 is SudoNotFoundException -> ApiException(ApiErrorCode.SUDO_NOT_FOUND, "${this.localizedMessage}")
-                is PolicyFailedException -> ApiException(ApiErrorCode.POLICY_ERROR, "${this.localizedMessage}")
-                is ConditionalCheckFailedException -> ApiException(ApiErrorCode.VERSION_MISMATCH, "${this.localizedMessage}")
+                is InsufficientEntitlementsException -> ApiException(ApiErrorCode.INSUFFICIENT_ENTITLEMENTS_ERROR, "${this.localizedMessage}")
+                is VersionMismatchException -> ApiException(ApiErrorCode.VERSION_MISMATCH, "${this.localizedMessage}")
                 is InternalServerException -> ApiException(ApiErrorCode.SERVER_ERROR, "${this.localizedMessage ?: "Internal server error occurred."}")
                 is GraphQlException -> ApiException(ApiErrorCode.GRAPHQL_ERROR, "${this.localizedMessage}")
                 // Other Exceptions
@@ -41,8 +41,8 @@ open class SudoProfileException(message: String? = null, cause: Throwable? = nul
 
             return when (this.customAttributes()[GRAPHQL_ERROR_TYPE]) {
                 GRAPHQL_ERROR_SUDO_NOT_FOUND -> SudoNotFoundException(this.message())
-                GRAPHQL_ERROR_POLICY_ERROR -> PolicyFailedException(this.message())
-                GRAPHQL_ERROR_CONDITIONAL_CHECK_FAILED -> ConditionalCheckFailedException(this.message())
+                GRAPHQL_ERROR_INSUFFICIENT_ENTITLEMENTS_ERROR -> InsufficientEntitlementsException(this.message())
+                GRAPHQL_ERROR_CONDITIONAL_CHECK_FAILED -> VersionMismatchException(this.message())
                 GRAPHQL_ERROR_SERVER_ERROR -> InternalServerException(this.message())
                 else -> GraphQlException(this.message())
             }
@@ -56,16 +56,16 @@ open class SudoProfileException(message: String? = null, cause: Throwable? = nul
         SudoProfileException(message = message, cause = cause)
 
     /**
-     * Exception for GraphQl call when policy failed
+     * Exception for GraphQl call when insufficient entitlements
      */
-    class PolicyFailedException(message: String? = null, cause: Throwable? = null) :
+    class InsufficientEntitlementsException(message: String? = null, cause: Throwable? = null) :
         SudoProfileException(message = message, cause = cause)
 
     /**
      * Exception for GraphQl call when there is a Version mismatch.  This can occur if
      * another process has updated a DB entry while you are working on that entry.
      */
-    class ConditionalCheckFailedException(message: String? = null, cause: Throwable? = null) :
+    class VersionMismatchException(message: String? = null, cause: Throwable? = null) :
         SudoProfileException(message = message, cause = cause)
 
     /**

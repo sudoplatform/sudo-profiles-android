@@ -16,12 +16,12 @@ import com.sudoplatform.sudoprofiles.extensions.enqueue
  */
 interface QueryCache {
     /**
-     * Adds a new item to the AppSync's query cache.
+     * Adds a new item or replace an existing item in AppSync's query cache.
      *
      * @param query query to update.
-     * @param item a new item to add to the cache.
+     * @param item item to add or replace.
      */
-    suspend fun add(query: ListSudosQuery, item: ListSudosQuery.Item)
+    suspend fun replace(query: ListSudosQuery, item: ListSudosQuery.Item)
 }
 
 /**
@@ -31,7 +31,7 @@ interface QueryCache {
  */
 class DefaultQueryCache(private val graphQLClient: AWSAppSyncClient): QueryCache {
 
-    override suspend fun add(query: ListSudosQuery, item: ListSudosQuery.Item) {
+    override suspend fun replace(query: ListSudosQuery, item: ListSudosQuery.Item) {
 
         val sudos = this.graphQLClient.query(query)
             .responseFetcher(AppSyncResponseFetchers.CACHE_ONLY)
@@ -45,7 +45,7 @@ class DefaultQueryCache(private val graphQLClient: AWSAppSyncClient): QueryCache
 
         val existingItems = sudos.data()?.listSudos()?.items()
         if (existingItems != null) {
-            items.addAll(existingItems)
+            items.addAll(existingItems.filter { it.id() != item.id() })
         }
 
         items.add(item)
