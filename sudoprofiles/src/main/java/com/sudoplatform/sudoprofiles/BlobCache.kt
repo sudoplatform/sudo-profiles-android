@@ -6,34 +6,35 @@
 
 package com.sudoplatform.sudoprofiles
 
+import android.net.Uri
+import androidx.core.net.toFile
 import java.io.File
 import java.io.FileOutputStream
-import java.net.URI
 
 /**
  * Simple blob cache implementation that uses the file store.
  *
- * @param containerURI cache container URI.
+ * @param containerUri cache container Uri.
  * @param idGenerator UUID generator. Mainly used for unit testing.
  */
-class BlobCache(containerURI: URI,
+class BlobCache(containerUri: Uri,
                 private val idGenerator: IdGenerator = DefaultIdGenerator()) {
 
     /**
      * Cache entry.
      *
-     * @param containerURL cache container URI.
+     * @param containerURL cache container Uri.
      * @param id entry ID.
      */
-    data class Entry(val containerURL: URI, val id: String) {
+    data class Entry(val containerURL: Uri, val id: String) {
 
         /**
-         * Returns the URI representation of this entry.
+         * Returns the Uri representation of this entry.
          *
-         * @return URI representation of this entry.
+         * @return Uri representation of this entry.
          */
-        fun toURI(): URI {
-            return URI("${this.containerURL}/${this.id}").normalize()
+        fun toUri(): Uri {
+            return Uri.parse("${this.containerURL}/${this.id}").normalizeScheme()
         }
 
         /**
@@ -42,7 +43,7 @@ class BlobCache(containerURI: URI,
          * @return blob as `ByteArray`.
          */
         fun load(): ByteArray {
-            val file = File(this.toURI())
+            val file = this.toUri().normalizeScheme().toFile()
             return file.readBytes()
         }
 
@@ -51,23 +52,23 @@ class BlobCache(containerURI: URI,
     /**
      * Cache container URI.
      */
-    private val containerURI: URI = containerURI.normalize()
+    private val containerUri: Uri = containerUri
 
     /**
-     * Adds a blob located at a specified URI to the cache.
+     * Adds a blob located at a specified Uri to the cache.
      *
-     * @param fileURI Blob URI.
+     * @param fileUri Blob Uri.
      * @return newly created cache entry.
      */
-    fun add(fileURI: URI): Entry {
-        val file = File(fileURI)
+    fun add(fileUri: Uri): Entry {
+        val file = fileUri.normalizeScheme().toFile()
 
         val id = this.idGenerator.generateId()
-        val newFile = File("${this.containerURI.path}/$id")
+        val newFile = File("${this.containerUri.path}/$id")
 
         file.copyTo(newFile)
 
-        return Entry(this.containerURI, id)
+        return Entry(this.containerUri, id)
     }
 
     /**
@@ -78,10 +79,10 @@ class BlobCache(containerURI: URI,
      */
     fun add(data: ByteArray): Entry {
         val id = this.idGenerator.generateId()
-        val file = File("${this.containerURI.path}/$id")
+        val file = File("${this.containerUri.path}/$id")
         val fos = FileOutputStream(file, false)
         fos.write(data)
-        return Entry(this.containerURI, id)
+        return Entry(this.containerUri, id)
     }
 
     /**
@@ -90,7 +91,7 @@ class BlobCache(containerURI: URI,
      * @param id cache entry ID.
      */
     fun remove(id: String) {
-        val file = File("${this.containerURI.path}/$id")
+        val file = File("${this.containerUri.path}/$id")
         file.delete()
     }
 
@@ -102,7 +103,7 @@ class BlobCache(containerURI: URI,
      * @return updated cache entry.
      */
     fun replace(data: ByteArray, id: String): Entry {
-        val file = File("${this.containerURI.path}/$id")
+        val file = File("${this.containerUri.path}/$id")
 
         val parent = File(file.parent)
         if (!parent.exists()) {
@@ -111,7 +112,7 @@ class BlobCache(containerURI: URI,
 
         val fos = FileOutputStream(file, false)
         fos.write(data)
-        return Entry(this.containerURI, id)
+        return Entry(this.containerUri, id)
     }
 
     /**
@@ -122,9 +123,9 @@ class BlobCache(containerURI: URI,
      */
     fun get(id: String): Entry? {
         var entry: Entry? = null
-        val file = File("${this.containerURI.path}/$id")
+        val file = File("${this.containerUri.path}/$id")
         if (file.exists()) {
-            entry = Entry(this.containerURI, id)
+            entry = Entry(this.containerUri, id)
         }
         return entry
     }
@@ -132,15 +133,17 @@ class BlobCache(containerURI: URI,
     /**
      * Retrieves a cache entry.
      *
-     * @param uri cache entry URI.
+     * @param uri cache entry Uri.
      * @return cache entry.
      */
-    fun get(uri: URI): Entry? {
+    fun get(uri: Uri): Entry? {
         var entry: Entry? = null
-        if (uri.path.startsWith(this.containerURI.path)) {
-            val file = File(uri)
+        val uriPath = uri.path
+        val containerUriPath = containerUri.path
+        if (uriPath != null && containerUriPath != null && uriPath.startsWith(containerUriPath)) {
+            val file = uri.normalizeScheme().toFile()
             if (file.exists()) {
-                entry = Entry(this.containerURI, file.name)
+                entry = Entry(this.containerUri, file.name)
             }
         }
         return entry
@@ -150,9 +153,12 @@ class BlobCache(containerURI: URI,
      * Removes all entries from the cache.
      */
     fun reset() {
-        val files = File(this.containerURI).listFiles()
-        for (file in files) {
-            file.deleteRecursively()
+
+        val files = this.containerUri.normalizeScheme().toFile().listFiles()
+        if (files != null) {
+            for (file in files) {
+                file.deleteRecursively()
+            }
         }
     }
 
@@ -162,7 +168,7 @@ class BlobCache(containerURI: URI,
      * @return number of entries in the cache.
      */
     fun count(): Int {
-        return File(this.containerURI).listFiles().size
+        return this.containerUri.normalizeScheme().toFile().listFiles().size
     }
 
 }

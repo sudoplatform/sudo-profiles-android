@@ -7,7 +7,7 @@
 package com.sudoplatform.sudoprofiles
 
 import java.io.Serializable
-import java.net.URI
+import android.net.Uri
 import java.util.*
 
 /**
@@ -32,9 +32,10 @@ data class Claim(
         data class StringValue(val value: String) : Value()
 
         /**
-         * Blob value represented as a URI. Typically a file location of the blob.
+         * Blob value represented as a Uri. Typically a file location of the blob.
+         *
          */
-        data class BlobValue(val value: URI) : Value()
+        data class BlobValue(val value: Uri) : Value()
 
         /**
          * Returns the unwrapped raw claim value.
@@ -158,8 +159,8 @@ data class Sudo(
     /**
      * Avatar image URI.
      */
-    var avatar: URI?
-        get() = this.claims[AVATAR]?.value?.toRaw() as? URI
+    var avatar: Uri?
+        get() = this.claims[AVATAR]?.value?.toRaw() as? Uri
         set(value) {
             if (value != null) {
                 val claim = Claim(AVATAR, Claim.Visibility.PRIVATE, Claim.Value.BlobValue(value))
@@ -182,7 +183,7 @@ data class Sudo(
      * @param notes notes.
      * @param avatar avatar image URI.
      */
-    constructor(title: String?, firstName: String?, lastName: String?, label: String?, notes: String?, avatar: URI?): this() {
+    constructor(title: String?, firstName: String?, lastName: String?, label: String?, notes: String?, avatar: Uri?): this() {
         this.title = title
         this.firstName = firstName
         this.lastName = lastName

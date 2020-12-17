@@ -7,7 +7,9 @@
 package com.sudoplatform.sudoprofiles
 
 import android.content.Context
+import android.net.Uri
 import android.util.Base64
+import androidx.core.net.toFile
 import com.amazonaws.mobileconnectors.appsync.AWSAppSyncClient
 import com.amazonaws.mobileconnectors.appsync.AppSyncSubscriptionCall
 import com.amazonaws.mobileconnectors.appsync.fetcher.AppSyncResponseFetchers
@@ -20,7 +22,6 @@ import com.sudoplatform.sudouser.SudoUserClient
 import com.sudoplatform.sudouser.SymmetricKeyEncryptionAlgorithm
 import org.json.JSONObject
 import java.io.File
-import java.net.URI
 import java.util.*
 import com.sudoplatform.sudologging.Logger
 import com.sudoplatform.sudoprofiles.exceptions.*
@@ -178,7 +179,7 @@ interface SudoProfilesClient {
          */
         fun builder(context: Context,
                     sudoUserClient: SudoUserClient,
-                    blobContainerURI: URI) =
+                    blobContainerURI: Uri) =
             Builder(
                 context,
                 sudoUserClient,
@@ -191,7 +192,7 @@ interface SudoProfilesClient {
     class Builder(
         private val context: Context,
         private val sudoUserClient: SudoUserClient,
-        private val blobContainerURI: URI
+        private val blobContainerURI: Uri
     ) {
         private var logger: Logger = DefaultLogger.instance
         private var config: JSONObject? = null
@@ -528,7 +529,7 @@ interface SudoProfilesClient {
 class DefaultSudoProfilesClient constructor(
     private val context: Context,
     private val sudoUserClient: SudoUserClient,
-    blobContainerURI: URI,
+    blobContainerURI: Uri,
     private val logger: Logger = DefaultLogger.instance,
     config: JSONObject? = null,
     maxSudos: Int = 10,
@@ -699,7 +700,7 @@ class DefaultSudoProfilesClient constructor(
                 if(claim.visibility === Claim.Visibility.PRIVATE) {
                     when (claim.value) {
                         is Claim.Value.BlobValue -> {
-                            val file = File(claim.value.value)
+                            val file = claim.value.value.normalizeScheme().toFile()
                             val data = file.readBytes()
 
                             val cacheEntry =
@@ -712,7 +713,7 @@ class DefaultSudoProfilesClient constructor(
                                 sudo.claims[name] = Claim(
                                     name,
                                     claim.visibility,
-                                    Claim.Value.BlobValue(cacheEntry.toURI())
+                                    Claim.Value.BlobValue(cacheEntry.toUri())
                                 )
 
                                 val algorithm =
@@ -1607,7 +1608,7 @@ class DefaultSudoProfilesClient constructor(
                                     Claim(
                                         obj.name,
                                         Claim.Visibility.PRIVATE,
-                                        Claim.Value.BlobValue(entry.toURI())
+                                        Claim.Value.BlobValue(entry.toUri())
                                     )
                             }
                         } else {
@@ -1638,7 +1639,7 @@ class DefaultSudoProfilesClient constructor(
                                 Claim(
                                     obj.name,
                                     Claim.Visibility.PRIVATE,
-                                    Claim.Value.BlobValue(entry.toURI())
+                                    Claim.Value.BlobValue(entry.toUri())
                                 )
                         } else {
                             throw SudoProfileException.UnsupportedAlgorithmException("Unsupported algorithm found in secure S3 object.")
