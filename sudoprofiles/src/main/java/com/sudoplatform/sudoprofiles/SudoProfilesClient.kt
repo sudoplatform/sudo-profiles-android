@@ -507,6 +507,13 @@ interface SudoProfilesClient {
     fun unsubscribe(id: String, changeType: SudoSubscriber.ChangeType)
 
     /**
+     * Unsubscribes the specified subscriber so that it no longer receives change notifications.
+     *
+     * @param id unique ID for the subscriber.
+     */
+    fun unsubscribe(id: String)
+
+    /**
      * Unsubscribe all subscribers from receiving notifications about new, updated or deleted Sudos.
      */
     fun unsubscribeAll()
@@ -1131,6 +1138,13 @@ class DefaultSudoProfilesClient constructor(
                 this.onDeleteSudoSubscriptionManager.removeSubscriber(id)
             }
         }
+    }
+
+    override fun unsubscribe(id: String) {
+        this.logger.info("Unsubscribing from all Sudo change notifications.")
+        this.unsubscribe(id, SudoSubscriber.ChangeType.CREATE)
+        this.unsubscribe(id, SudoSubscriber.ChangeType.DELETE)
+        this.unsubscribe(id, SudoSubscriber.ChangeType.UPDATE)
     }
 
     override fun unsubscribeAll() {
