@@ -19,135 +19,14 @@ import com.sudoplatform.sudoapiclient.ApiClientManager
 import com.sudoplatform.sudoconfigmanager.DefaultSudoConfigManager
 import com.sudoplatform.sudoprofiles.type.*
 import com.sudoplatform.sudouser.SudoUserClient
-import com.sudoplatform.sudouser.SymmetricKeyEncryptionAlgorithm
 import org.json.JSONObject
-import java.io.File
 import java.util.*
 import com.sudoplatform.sudologging.Logger
 import com.sudoplatform.sudoprofiles.exceptions.*
-import com.sudoplatform.sudoprofiles.exceptions.SudoProfileException.Companion.toApiException
 import com.sudoplatform.sudoprofiles.exceptions.SudoProfileException.Companion.toSudoProfileException
 import com.sudoplatform.sudoprofiles.extensions.enqueue
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
-
-/**
- * Generic API result. The API can fail with an error or complete successfully.
- */
-sealed class ApiResult {
-    /**
-     * Encapsulates a successful API result.
-     *
-     */
-    data class Success(val description: String = "API completed successfully.") : ApiResult()
-
-    /**
-     * Encapsulates a failed API result.
-     *
-     * @param error [Throwable] encapsulating the error detail.
-     */
-    data class Failure(val error: Throwable) : ApiResult()
-}
-
-/**
- * Result returned by API for creating a new Sudo. The API can fail with an
- * error or return the newly created Sudo.
- */
-sealed class CreateSudoResult {
-    /**
-     * Encapsulates a successful Sudo creation result.
-     *
-     * @param sudo newly created Sudo.
-     */
-    data class Success(val sudo: Sudo) : CreateSudoResult()
-
-    /**
-     * Encapsulates a failed Sudo creation result.
-     *
-     * @param error [Throwable] encapsulating the error detail.
-     */
-    data class Failure(val error: Throwable) : CreateSudoResult()
-}
-
-/**
- * Result returned by API for updating a Sudo. The API can fail with an
- * error or return the updated Sudo.
- */
-sealed class UpdateSudoResult {
-    /**
-     * Encapsulates a successful Sudo update result.
-     *
-     * @param sudo updated Sudo.
-     */
-    data class Success(val sudo: Sudo) : UpdateSudoResult()
-
-    /**
-     * Encapsulates a failed Sudo update result.
-     *
-     * @param error [Throwable] encapsulating the error detail.
-     */
-    data class Failure(val error: Throwable) : UpdateSudoResult()
-}
-
-/**
- * Result returned by API for listing Sudos. The API can fail with an
- * error or return the list of Sudos.
- */
-sealed class ListSudosResult {
-    /**
-     * Encapsulates a successful list Sudos result.
-     *
-     * @param sudos list of Sudos owned by the currently signed in user.
-     */
-    data class Success(val sudos: List<Sudo>) : ListSudosResult()
-
-    /**
-     * Encapsulates a failed list Sudos result.
-     *
-     * @param error [Throwable] encapsulating the error detail.
-     */
-    data class Failure(val error: Throwable) : ListSudosResult()
-}
-
-/**
- * Result returned by API for getting a Sudo ownership proof. The API can
- * failed with an error or return the Sudo ownership proof.
- */
-sealed class GetOwnershipProofResult {
-    /**
-     * Encapsulates a successful get ownership proof result.
-     *
-     * @param jwt ownership proof in form of a JWT.
-     */
-    data class Success(val jwt: String) : GetOwnershipProofResult()
-
-    /**
-     * Encapsulates a failed get ownership proof result.
-     *
-     * @param error [Throwable] encapsulating the error detail.
-     */
-    data class Failure(val error: Throwable) : GetOwnershipProofResult()
-}
-
-/**
- * Result returned by API for redeeming a token to grant additional entitlements.
- * The API can failed with an error or return the resulting entitlements.
- */
-sealed class RedeemResult {
-    /**
-     * Encapsulates a successful redeem result.
-     *
-     * @param entitlements resulting entitlements.
-     */
-    data class Success(val entitlements: List<Entitlement>) : RedeemResult()
-
-    /**
-     * Encapsulates a failed redeem result.
-     *
-     * @param error [Throwable] encapsulating the error detail.
-     */
-    data class Failure(val error: Throwable) : RedeemResult()
-}
 
 /**
  * Options for controlling the behaviour of `listSudos` API.
@@ -161,7 +40,12 @@ enum class ListOption {
     /**
      * Fetches Sudos from the backend and ignores any cached entries.
      */
-    REMOTE_ONLY
+    REMOTE_ONLY,
+
+    /**
+     * Returns Sudos from the local cache if cache is not empty otherwise fetch from the backend.
+     */
+    RETURN_CACHED_ELSE_FETCH
 }
 
 /**
@@ -201,7 +85,7 @@ interface SudoProfilesClient {
         private var s3Client: S3Client? = null
         private var queryCache: QueryCache? = null
         private var idGenerator: IdGenerator = DefaultIdGenerator()
-
+        private var cryptoProvider: CryptoProvider? = null
 
         /**
          * Provide the implementation of the [Logger] used for logging. If a value is not supplied
@@ -244,6 +128,11 @@ interface SudoProfilesClient {
          */
         fun setIdGenerator(idGenerator: IdGenerator) = also { this.idGenerator = idGenerator }
 
+        /**
+         * Provide a [CryptoProvider] to use.  If a value is not supplied
+         * a default implementation will be provided.
+         */
+        fun setCryptoProvider(cryptoProvider: CryptoProvider) = also { this.cryptoProvider = cryptoProvider }
 
         /**
          * Constructs and returns an [SudoProfilesClient].
@@ -278,7 +167,8 @@ interface SudoProfilesClient {
                     DefaultS3Client(this.context, this.sudoUserClient, region, bucket),
                 this.queryCache ?:
                     DefaultQueryCache(graphQLClient),
-                this.idGenerator
+                this.idGenerator,
+                this.cryptoProvider
             )
         }
     }
@@ -287,18 +177,6 @@ interface SudoProfilesClient {
      * Client version.
      */
     val version: String
-
-    /**
-     * Creates a new Sudo.
-     *
-     * @param sudo Sudo to create.
-     * @param callback callback for returning Sudo creation result or error.
-     */
-    @Deprecated(
-        message="This is deprecated and will be removed in the future.",
-        replaceWith = ReplaceWith("createSudo(sudo)")
-    )
-    fun createSudo(sudo: Sudo, callback: (CreateSudoResult) -> Unit)
 
     /**
      * Creates a new Sudo
@@ -313,18 +191,6 @@ interface SudoProfilesClient {
      * Updates a Sudo.
      *
      * @param sudo Sudo to update.
-     * @param callback callback for returning Sudo update result or error.
-     */
-    @Deprecated(
-        message="This is deprecated and will be removed in the future.",
-        replaceWith = ReplaceWith("updateSudo(sudo)")
-    )
-    fun updateSudo(sudo: Sudo, callback: (UpdateSudoResult) -> Unit)
-
-    /**
-     * Updates a Sudo.
-     *
-     * @param sudo Sudo to update.
      * @return Sudo: The updated Sudo
      */
     @Throws(SudoProfileException::class)
@@ -334,34 +200,10 @@ interface SudoProfilesClient {
      * Deletes a Sudo.
      *
      * @param sudo Sudo to delete.
-     * @param callback callback for returning Sudo deletion result or error.
-     */
-    @Deprecated(
-        message="This is deprecated and will be removed in the future.",
-        replaceWith = ReplaceWith("deleteSudo(sudo)")
-    )
-    fun deleteSudo(sudo: Sudo, callback: (ApiResult) -> Unit)
-
-    /**
-     * Deletes a Sudo.
-     *
-     * @param sudo Sudo to delete.
      * @return void
      */
     @Throws(SudoProfileException::class)
     suspend fun deleteSudo(sudo: Sudo)
-
-    /**
-     * Retrieves all Sudos owned by the signed in user.
-     *
-     * @param option: option for controlling the behaviour of this API. Refer to `ListOption` enum.
-     * @param callback callback for returning list Sudos result or error.
-     */
-    @Deprecated(
-        message="This is deprecated and will be removed in the future.",
-        replaceWith = ReplaceWith("listSudos(option)")
-    )
-    fun listSudos(option: ListOption, callback: (ListSudosResult) -> Unit)
 
     /**
      * Retrieves all Sudos owned by the signed in user.
@@ -396,51 +238,10 @@ interface SudoProfilesClient {
      *
      *  @param sudo Sudo to generated an ownership proof for.
      *  @param audience target audience for this proof.
-     *  @param callback callback for returning get ownership proof result or error.
-     */
-    @Deprecated(
-        message="This is deprecated and will be removed in the future.",
-        replaceWith = ReplaceWith("getOwnershipProof(sudo, audience)")
-    )
-    fun getOwnershipProof(sudo: Sudo, audience: String, callback: (GetOwnershipProofResult) -> Unit)
-
-    /**
-     * Retrieves a signed ownership proof for the specified owner. The ownership proof JWT has the
-     * following payload.
-     * {
-     *  "jti": "DBEEF4EB-F84A-4AB7-A45E-02B05B93F5A3",
-     *  "owner": "cd73a478-23bd-4c70-8c2b-1403e2085845",
-     *  "iss": "sudoplatform.sudoservice",
-     *  "aud": "sudoplatform.virtualcardservice",
-     *  "exp": 1578986266,
-     *  "sub": "da17f346-cf49-4db4-98c2-862f85515fc4",
-     *  "iat": 1578982666
-     *  }
-     *
-     *  "owner" is an unique ID of an identity managed by the issuing serivce. In case of Sudo
-     *  service this represents unique reference to a Sudo. "sub" is the subject to which this
-     *  proof is issued, i.e. the user. "aud" is the target audience of the proof.
-     *
-     *  @param sudo Sudo to generated an ownership proof for.
-     *  @param audience target audience for this proof.
      *  @return String: The JWT
      */
     @Throws(SudoProfileException::class)
     suspend fun getOwnershipProof(sudo: Sudo, audience: String): String
-
-
-    /**
-     * Redeem a token to be granted additional entitlements.
-     *
-     * @param token Token.
-     * @param type Token type. Currently only valid value is "entitlements" but this maybe extended in future.
-     * @param callback callback for returning redeem result or error.
-     */
-    @Deprecated(
-        message="This is deprecated and will be removed in the future.",
-        replaceWith = ReplaceWith("redeem(token, type)")
-    )
-    fun redeem(token: String, type: String, callback: (RedeemResult) -> Unit)
 
     /**
      * Redeem a token to be granted additional entitlements.
@@ -459,34 +260,7 @@ interface SudoProfilesClient {
      * @param changeType change type to subscribe to.
      * @param subscriber subscriber to notify.
      */
-    @Deprecated(
-        message="This is deprecated and will be removed in the future.",
-        replaceWith = ReplaceWith("subscribeAsync(id, changeType, subscriber)")
-    )
-    fun subscribe(id: String, changeType: SudoSubscriber.ChangeType, subscriber: SudoSubscriber)
-
-    /**
-     * Subscribes to be notified of new, updated or deleted Sudos. Blob data is not downloaded automatically
-     * so the caller is expected to use `listSudos` API if they need to access any associated blobs.
-     *
-     * @param id unique ID for the subscriber.
-     * @param changeType change type to subscribe to.
-     * @param subscriber subscriber to notify.
-     */
     suspend fun subscribeAsync(id: String, changeType: SudoSubscriber.ChangeType, subscriber: SudoSubscriber)
-
-    /**
-     * Subscribes to be notified of new, updated and deleted Sudos. Blob data is not downloaded automatically
-     * so the caller is expected to use `listSudos` API if they need to access any associated blobs.
-     *
-     * @param id unique ID for the subscriber.
-     * @param subscriber subscriber to notify.
-     */
-    @Deprecated(
-        message="This is deprecated and will be removed in the future.",
-        replaceWith = ReplaceWith("subscribeAsync(id, subscriber)")
-    )
-    fun subscribe(id: String, subscriber: SudoSubscriber)
 
     /**
      * Subscribes to be notified of new, updated and deleted Sudos. Blob data is not downloaded automatically
@@ -517,6 +291,38 @@ interface SudoProfilesClient {
      * Unsubscribe all subscribers from receiving notifications about new, updated or deleted Sudos.
      */
     fun unsubscribeAll()
+
+    /**
+     * Generate an encryption key to use for encrypting Sudo claims. Any existing keys are not removed
+     * to be able to decrypt existing claims but new claims will be encrypted using the newly generated
+     * key.
+     *
+     * @return String: unique ID of the generated key.
+     */
+    fun generateEncryptionKey(): String
+
+    /**
+     * Get the current (most recently generated) symmetric key ID used for encryption.
+     *
+     * @return String: symmetric key ID.
+     */
+    fun getSymmetricKeyId(): String?
+
+    /**
+     * Import encryption keys to use for encrypting and decrypting Sudo claims. All existing keys
+     * will be removed before the new keys are imported.
+     *
+     * @param keys keys to import.
+     * @param currentKeyId ID of the key to use for encrypting new claims.
+     */
+    fun importEncryptionKeys(keys: List<EncryptionKey>, currentKeyId: String)
+
+    /**
+     * Export encryption keys used for encrypting and decrypting Sudo claims.
+     *
+     * @return List<EncryptionKey>: Encryption keys.
+     */
+    fun exportEncryptionKeys(): List<EncryptionKey>
 }
 
 /**
@@ -543,13 +349,17 @@ class DefaultSudoProfilesClient constructor(
     graphQLClient: AWSAppSyncClient? = null,
     s3Client: S3Client? = null,
     queryCache: QueryCache? = null,
-    idGenerator: IdGenerator = DefaultIdGenerator()
+    idGenerator: IdGenerator = DefaultIdGenerator(),
+    cryptoProvider: CryptoProvider? = null
 ) : SudoProfilesClient {
 
     companion object {
         private const val CONFIG_NAMESPACE_IDENTITY_SERVICE = "identityService"
         private const val CONFIG_REGION = "region"
         private const val CONFIG_BUCKET = "bucket"
+
+
+        private const val DEFAULT_KEY_NAMESPACE = "ss"
     }
 
     override val version: String = "3.1.8"
@@ -583,6 +393,11 @@ class DefaultSudoProfilesClient constructor(
      * GraphQL client query cache.
      */
     private val queryCache: QueryCache
+
+    /**
+     * [CryptoProvider] to use for cryptographic operations.
+     */
+    private val cryptoProvider: CryptoProvider
 
     /**
      * Subscription manager for Sudo creation events.
@@ -623,6 +438,12 @@ class DefaultSudoProfilesClient constructor(
         this.s3Client =
             s3Client ?: DefaultS3Client(this.context, this.sudoUserClient, region, bucket)
 
+        this.cryptoProvider = cryptoProvider ?: DefaultCryptoProvider(DEFAULT_KEY_NAMESPACE, context)
+
+        if (this.cryptoProvider.getSymmetricKeyId() == null) {
+            this.cryptoProvider.generateEncryptionKey()
+        }
+
         this.idGenerator = idGenerator
 
         this.blobCache = BlobCache(blobContainerURI, this.idGenerator)
@@ -640,7 +461,7 @@ class DefaultSudoProfilesClient constructor(
     {
         this.logger.info("Creating a Sudo.")
 
-        val keyId = this.sudoUserClient.getSymmetricKeyId()
+        val keyId = this.cryptoProvider.getSymmetricKeyId()
         require(keyId != null) { "Symmetric key missing." }
 
         try {
@@ -678,25 +499,13 @@ class DefaultSudoProfilesClient constructor(
         }
     }
 
-    override fun createSudo(sudo: Sudo, callback: (CreateSudoResult) -> Unit) {
-        CoroutineScope(IO).launch {
-            try {
-                val response = createSudo(sudo)
-                callback(CreateSudoResult.Success(response))
-            }
-            catch(e: Exception){
-                callback(CreateSudoResult.Failure(e.toApiException()))
-            }
-        }
-    }
-
     override suspend fun updateSudo(sudo: Sudo) : Sudo {
         this.logger.info("Updating a Sudo.")
 
         val sudoId = sudo.id
         require(sudoId != null) { "Sudo ID was null." }
 
-        val keyId = this.sudoUserClient.getSymmetricKeyId()
+        val keyId = this.cryptoProvider.getSymmetricKeyId()
         require(keyId != null) { "Symmetric key missing." }
 
         try {
@@ -726,7 +535,7 @@ class DefaultSudoProfilesClient constructor(
                                 val algorithm =
                                     SymmetricKeyEncryptionAlgorithm.AES_CBC_PKCS7PADDING
                                 val encrypted =
-                                    this.sudoUserClient.encrypt(
+                                    this.cryptoProvider.encrypt(
                                         keyId,
                                         algorithm,
                                         data
@@ -757,7 +566,6 @@ class DefaultSudoProfilesClient constructor(
                         is Claim.Value.StringValue -> {
                             secureClaims.add(
                                 this.createSecureString(
-                                    this.sudoUserClient,
                                     name,
                                     claim.value.value
                                 )
@@ -806,18 +614,6 @@ class DefaultSudoProfilesClient constructor(
         }
     }
 
-    override fun updateSudo(sudo: Sudo, callback: (UpdateSudoResult) -> Unit) {
-        CoroutineScope(IO).launch {
-            try {
-                val response = updateSudo(sudo)
-                callback(UpdateSudoResult.Success(response))
-            }
-            catch(e: Exception){
-                callback(UpdateSudoResult.Failure(e.toApiException()))
-            }
-        }
-    }
-
     override suspend fun deleteSudo(sudo: Sudo) {
         this.logger.info("Deleting a Sudo.")
 
@@ -849,18 +645,6 @@ class DefaultSudoProfilesClient constructor(
         }
     }
 
-    override fun deleteSudo(sudo: Sudo, callback: (ApiResult) -> Unit) {
-        CoroutineScope(IO).launch {
-            try {
-                deleteSudo(sudo)
-                callback(ApiResult.Success())
-            }
-            catch(e: Exception){
-                callback(ApiResult.Failure(e.toApiException()))
-            }
-        }
-    }
-
     override suspend fun listSudos(option: ListOption) : List<Sudo> {
         this.logger.info("Listing Sudos.")
 
@@ -871,6 +655,9 @@ class DefaultSudoProfilesClient constructor(
                 }
                 ListOption.REMOTE_ONLY -> {
                     AppSyncResponseFetchers.NETWORK_ONLY
+                }
+                ListOption.RETURN_CACHED_ELSE_FETCH -> {
+                    AppSyncResponseFetchers.CACHE_FIRST
                 }
             }
 
@@ -901,23 +688,12 @@ class DefaultSudoProfilesClient constructor(
         }
     }
 
-    override fun listSudos(option: ListOption, callback: (ListSudosResult) -> Unit) {
-        CoroutineScope(IO).launch {
-            try {
-                val response = listSudos(option)
-                callback(ListSudosResult.Success(response))
-            }
-            catch(e: Exception){
-                callback(ListSudosResult.Failure(e.toApiException()))
-            }
-        }
-    }
-
     override fun reset() {
         this.logger.info("Resetting client.")
 
         this.graphQLClient.clearCaches()
         this.blobCache.reset()
+        this.cryptoProvider.reset()
     }
 
     override suspend fun getOwnershipProof(sudo: Sudo, audience: String) : String {
@@ -955,22 +731,6 @@ class DefaultSudoProfilesClient constructor(
 
         } catch (e: Exception) {
             throw e.toFailedExceptionOrThrow()
-        }
-    }
-
-    override fun getOwnershipProof(
-        sudo: Sudo,
-        audience: String,
-        callback: (GetOwnershipProofResult) -> Unit
-    ) {
-        CoroutineScope(IO).launch {
-            try {
-                var response = getOwnershipProof(sudo, audience)
-                callback(GetOwnershipProofResult.Success(response))
-            }
-            catch(e: Exception){
-                callback(GetOwnershipProofResult.Failure(e.toApiException()))
-            }
         }
     }
 
@@ -1012,40 +772,10 @@ class DefaultSudoProfilesClient constructor(
         }
     }
 
-    override fun redeem(token: String, type: String, callback: (RedeemResult) -> Unit) {
-        CoroutineScope(IO).launch {
-            try {
-                var response = redeem(token, type)
-                callback(RedeemResult.Success(response))
-            }
-            catch(e: Exception){
-                callback(RedeemResult.Failure(e.toApiException()))
-            }
-        }
-    }
-
-    override fun subscribe(id: String, subscriber: SudoSubscriber) {
-        CoroutineScope(IO).launch {
-            subscribeAsync(id, SudoSubscriber.ChangeType.CREATE, subscriber)
-            subscribeAsync(id, SudoSubscriber.ChangeType.UPDATE, subscriber)
-            subscribeAsync(id, SudoSubscriber.ChangeType.DELETE, subscriber)
-        }
-    }
-
     override suspend fun subscribeAsync(id: String, subscriber: SudoSubscriber) {
         this.subscribeAsync(id, SudoSubscriber.ChangeType.CREATE, subscriber)
         this.subscribeAsync(id, SudoSubscriber.ChangeType.UPDATE, subscriber)
         this.subscribeAsync(id, SudoSubscriber.ChangeType.DELETE, subscriber)
-    }
-
-    override fun subscribe(
-        id: String,
-        changeType: SudoSubscriber.ChangeType,
-        subscriber: SudoSubscriber
-    ) {
-        CoroutineScope(IO).launch {
-            subscribeAsync(id, changeType, subscriber)
-        }
     }
 
     override suspend fun subscribeAsync(
@@ -1153,6 +883,22 @@ class DefaultSudoProfilesClient constructor(
         this.onCreateSudoSubscriptionManager.removeAllSubscribers()
         this.onUpdateSudoSubscriptionManager.removeAllSubscribers()
         this.onDeleteSudoSubscriptionManager.removeAllSubscribers()
+    }
+
+    override fun generateEncryptionKey(): String {
+        return this.cryptoProvider.generateEncryptionKey()
+    }
+
+    override fun getSymmetricKeyId(): String? {
+        return this.cryptoProvider.getSymmetricKeyId()
+    }
+
+    override fun importEncryptionKeys(keys: List<EncryptionKey>, currentKeyId: String) {
+        this.cryptoProvider.importEncryptionKeys(keys, currentKeyId)
+    }
+
+    override fun exportEncryptionKeys(): List<EncryptionKey> {
+        return this.cryptoProvider.exportEncryptionKeys()
     }
 
     private fun executeUpdateSudoSubscriptionWatcher() {
@@ -1498,15 +1244,14 @@ class DefaultSudoProfilesClient constructor(
     }
 
     private fun createSecureString(
-        client: SudoUserClient,
         name: String,
         value: String
     ): SecureClaimInput {
-        val keyId = client.getSymmetricKeyId()
+        val keyId = this.cryptoProvider.getSymmetricKeyId()
 
         if (keyId != null) {
             val algorithm = SymmetricKeyEncryptionAlgorithm.AES_CBC_PKCS7PADDING
-            val encryptedData = this.sudoUserClient.encrypt(
+            val encryptedData = this.cryptoProvider.encrypt(
                 keyId,
                 algorithm,
                 value.toByteArray()
@@ -1526,7 +1271,6 @@ class DefaultSudoProfilesClient constructor(
     }
 
     private fun processSecureClaim(
-        client: SudoUserClient,
         name: String,
         keyId: String,
         algorithm: String,
@@ -1537,7 +1281,7 @@ class DefaultSudoProfilesClient constructor(
 
         if (algorithmSpec != null) {
             val value = String(
-                client.decrypt(
+                this.cryptoProvider.decrypt(
                     keyId,
                     algorithmSpec,
                     Base64.decode(base64Data, Base64.DEFAULT)
@@ -1597,7 +1341,6 @@ class DefaultSudoProfilesClient constructor(
             sudo.claims = item.claims()
                 .map {
                     it.name() to this.processSecureClaim(
-                        this.sudoUserClient,
                         it.name(),
                         it.keyId(),
                         it.algorithm(),
@@ -1638,7 +1381,7 @@ class DefaultSudoProfilesClient constructor(
                             SymmetricKeyEncryptionAlgorithm.fromString(obj.algorithm)
                         if (algorithmSpec != null) {
                             val decryptedData =
-                                this.sudoUserClient.decrypt(
+                                this.cryptoProvider.decrypt(
                                     obj.keyId,
                                     algorithmSpec,
                                     data

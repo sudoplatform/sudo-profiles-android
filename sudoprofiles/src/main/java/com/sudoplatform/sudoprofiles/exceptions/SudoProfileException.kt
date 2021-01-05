@@ -14,25 +14,6 @@ open class SudoProfileException(message: String? = null, cause: Throwable? = nul
         private const val GRAPHQL_ERROR_SERVER_ERROR = "sudoplatform.sudo.ServerError"
 
         /**
-         * Convert from a [SudoProfileException] to a [ApiException] for backwards compatibility
-         */
-        fun Exception.toApiException(): ApiException {
-            return when (this) {
-                // GraphQl Exceptions
-                is SudoNotFoundException -> ApiException(ApiErrorCode.SUDO_NOT_FOUND, "${this.localizedMessage}")
-                is InsufficientEntitlementsException -> ApiException(ApiErrorCode.INSUFFICIENT_ENTITLEMENTS_ERROR, "${this.localizedMessage}")
-                is VersionMismatchException -> ApiException(ApiErrorCode.VERSION_MISMATCH, "${this.localizedMessage}")
-                is InternalServerException -> ApiException(ApiErrorCode.SERVER_ERROR, "${this.localizedMessage ?: "Internal server error occurred."}")
-                is GraphQlException -> ApiException(ApiErrorCode.GRAPHQL_ERROR, "${this.localizedMessage}")
-                // Other Exceptions
-                is S3Exception.UploadException -> ApiException(ApiErrorCode.S3_ERROR, "S3 upload failed: ${this.localizedMessage}")
-                is S3Exception.DownloadException -> ApiException(ApiErrorCode.S3_ERROR, "S3 download failed: ${this.localizedMessage}")
-                is UnsupportedAlgorithmException -> ApiException(ApiErrorCode.BAD_DATA, "Unsupported algorithm found in secure claim.")
-                else -> ApiException(ApiErrorCode.FATAL_ERROR, "${this.localizedMessage}")
-            }
-        }
-
-        /**
         * Convert from a GraphQL [Error] into a custom exception of type [SudoProfileException]
         */
         fun Error.toSudoProfileException(): SudoProfileException {
