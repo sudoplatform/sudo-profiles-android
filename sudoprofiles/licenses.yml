@@ -525,3 +525,15 @@
   license: Android Software Development Kit License
   licenseUrl: https://developer.android.com/studio/terms.html
   url: https://developers.google.com/android/guides/releases
+- artifact: com.squareup.okio:okio:+
+  name: Okio
+  copyrightHolder: Square, Inc
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: https://github.com/square/okio/
+- artifact: androidx.annotation:annotation-experimental:+
+  name: Experimental annotation
+  copyrightHolder: Google
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: https://developer.android.com/jetpack/androidx
