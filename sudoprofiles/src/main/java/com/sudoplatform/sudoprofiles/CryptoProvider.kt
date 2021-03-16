@@ -154,7 +154,7 @@ class DefaultCryptoProvider(private val keyNamespace: String, context: Context) 
     }
 
     private val keyManager: KeyManagerInterface =
-        KeyManagerFactory(context).createAndroidKeyManager()
+        KeyManagerFactory(context).createAndroidKeyManager(this.keyNamespace)
 
     override fun encrypt(
         keyId: String,
@@ -193,12 +193,12 @@ class DefaultCryptoProvider(private val keyNamespace: String, context: Context) 
         val symmetricKeyId = this.getSymmetricKeyId()
         if (symmetricKeyId != null) {
             this.keyManager.deleteSymmetricKey(symmetricKeyId)
-            this.keyManager.deletePassword(this.namespace(KEY_NAME_SYMMETRIC_KEY_ID))
+            this.keyManager.deletePassword(KEY_NAME_SYMMETRIC_KEY_ID)
         }
 
         // Generate and store symmetric key ID.
         val keyId = UUID.randomUUID().toString().toUpperCase(Locale.US)
-        this.keyManager.addPassword(keyId.toByteArray(), this.namespace(KEY_NAME_SYMMETRIC_KEY_ID))
+        this.keyManager.addPassword(keyId.toByteArray(), KEY_NAME_SYMMETRIC_KEY_ID)
 
         // Generate symmetric key for encrypting secrets.
         this.keyManager.generateSymmetricKey(keyId)
@@ -207,7 +207,7 @@ class DefaultCryptoProvider(private val keyNamespace: String, context: Context) 
     }
 
     override fun getSymmetricKeyId(): String? {
-        return this.keyManager.getPassword(namespace(KEY_NAME_SYMMETRIC_KEY_ID))
+        return this.keyManager.getPassword(KEY_NAME_SYMMETRIC_KEY_ID)
             ?.toString(Charsets.UTF_8)
     }
 
@@ -218,7 +218,7 @@ class DefaultCryptoProvider(private val keyNamespace: String, context: Context) 
             this.keyManager.addSymmetricKey(Base64.decode(key.key, Base64.DEFAULT), key.id)
         }
 
-        this.keyManager.addPassword(currentKeyId.toByteArray(), this.namespace(KEY_NAME_SYMMETRIC_KEY_ID))
+        this.keyManager.addPassword(currentKeyId.toByteArray(), KEY_NAME_SYMMETRIC_KEY_ID)
     }
 
     override fun exportEncryptionKeys(): List<EncryptionKey> {
@@ -236,16 +236,6 @@ class DefaultCryptoProvider(private val keyNamespace: String, context: Context) 
 
     override fun reset() {
         this.keyManager.removeAllKeys()
-    }
-
-    /**
-     * Namespace the name (key name, parameter name etc).
-     *
-     * @param name name to convert.
-     * @return name prefixed with namespace.
-     */
-    private fun namespace(name: String): String {
-        return this.keyNamespace + "." + name
     }
 
 }
