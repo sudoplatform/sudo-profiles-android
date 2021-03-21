@@ -298,11 +298,6 @@
   license: The Apache Software License, Version 2.0
   licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
   url: http://developer.android.com/tools/extras/support-library.html
-- artifact: com.amazonaws:aws-android-sdk-cognitoauth:2.22.2
-  name: AWS SDK for Android - Amazon Cognito Auth
-  copyrightHolder: Amazon
-  license: Amazon Software License
-  url: http://aws.amazon.com/sdkforandroid
 - artifact: com.amazonaws:aws-android-sdk-cognitoauth:2.16.12
   name: AWS SDK for Android - Amazon Cognito Auth
   copyrightHolder: Amazon
@@ -506,12 +501,6 @@
   license: Bouncy Castle Licence
   licenseUrl: http://www.bouncycastle.org/licence.html
   url: http://www.bouncycastle.org/java.html
-- artifact: androidx.concurrent:concurrent-futures:+
-  name: AndroidX Futures
-  copyrightHolder: Google
-  license: The Apache Software License, Version 2.0
-  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
-  url: https://developer.android.com/topic/libraries/architecture/index.html
 - artifact: org.bouncycastle:bcpkix-jdk15to18:+
   name: Bouncy Castle PKIX, CMS, EAC, TSP, PKCS, OCSP, CMP, and CRMF APIs
   copyrightHolder: The JSR-330 Expert Group
@@ -530,8 +519,3 @@
   license: Bouncy Castle Licence
   licenseUrl: http://www.bouncycastle.org/licence.html
   url: http://www.bouncycastle.org/java.html
-- artifact: com.google.guava:listenablefuture:+
-  name: Guava ListenableFuture only
-  copyrightHolder: The Guava Authors
-  license: The Apache Software License, Version 2.0
-  url: https://github.com/google/guava
