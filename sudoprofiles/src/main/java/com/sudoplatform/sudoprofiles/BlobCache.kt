@@ -8,6 +8,7 @@ package com.sudoplatform.sudoprofiles
 
 import android.net.Uri
 import androidx.core.net.toFile
+import com.sudoplatform.sudoprofiles.exceptions.SudoProfileException
 import java.io.File
 import java.io.FileOutputStream
 
@@ -104,8 +105,7 @@ class BlobCache(containerUri: Uri,
      */
     fun replace(data: ByteArray, id: String): Entry {
         val file = File("${this.containerUri.path}/$id")
-
-        val parent = File(file.parent)
+        val parent = File(file.parent!!) // Must have a parent per construction
         if (!parent.exists()) {
             parent.mkdirs()
         }
@@ -168,7 +168,7 @@ class BlobCache(containerUri: Uri,
      * @return number of entries in the cache.
      */
     fun count(): Int {
-        return this.containerUri.normalizeScheme().toFile().listFiles().size
+        return this.containerUri.normalizeScheme().toFile().listFiles()?.size ?: 0
     }
 
 }
