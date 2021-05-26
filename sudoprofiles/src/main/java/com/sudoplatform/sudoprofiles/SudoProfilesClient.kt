@@ -55,6 +55,7 @@ interface SudoProfilesClient {
 
     companion object {
         private const val CONFIG_NAMESPACE_IDENTITY_SERVICE = "identityService"
+        private const val CONFIG_NAMESPACE_SUDO_SERVICE = "sudoService"
         private const val CONFIG_REGION = "region"
         private const val CONFIG_BUCKET = "bucket"
 
@@ -150,10 +151,23 @@ interface SudoProfilesClient {
             val identityServiceConfig =
                 this.config?.opt(CONFIG_NAMESPACE_IDENTITY_SERVICE) as JSONObject?
                     ?: configManager.getConfigSet(CONFIG_NAMESPACE_IDENTITY_SERVICE)
+                    ?: throw SudoProfileException.InvalidConfigException()
 
-            val bucketConfig = identityServiceConfig?.get(CONFIG_BUCKET)
-            val bucket = bucketConfig as String
-            val region = identityServiceConfig.get(CONFIG_REGION) as String
+            val sudoServiceConfig =
+                config?.opt(CONFIG_NAMESPACE_SUDO_SERVICE) as JSONObject?
+                    ?: configManager.getConfigSet(CONFIG_NAMESPACE_SUDO_SERVICE)
+                    ?: throw SudoProfileException.SudoServiceConfigNotFoundException()
+
+            val bucket =
+                sudoServiceConfig?.opt(CONFIG_BUCKET) as String? ?: identityServiceConfig?.opt(
+                    CONFIG_BUCKET
+                ) as String?
+                ?: throw SudoProfileException.InvalidConfigException("Bucket name missing.")
+            val region =
+                sudoServiceConfig.opt(CONFIG_REGION) as String? ?: identityServiceConfig.opt(
+                    CONFIG_REGION
+                ) as String?
+                ?: throw SudoProfileException.InvalidConfigException("Region missing.")
 
             return DefaultSudoProfilesClient(
                 this.context,
@@ -355,6 +369,7 @@ class DefaultSudoProfilesClient constructor(
 
     companion object {
         private const val CONFIG_NAMESPACE_IDENTITY_SERVICE = "identityService"
+        private const val CONFIG_NAMESPACE_SUDO_SERVICE = "sudoService"
         private const val CONFIG_REGION = "region"
         private const val CONFIG_BUCKET = "bucket"
 
@@ -424,9 +439,17 @@ class DefaultSudoProfilesClient constructor(
 
         require(identityServiceConfig != null) { "Identity service configuration is missing." }
 
-        val bucketConfig = identityServiceConfig[CONFIG_BUCKET]
-        val bucket = bucketConfig as String?
-        val region = identityServiceConfig[CONFIG_REGION] as String?
+        val sudoServiceConfig =
+            config?.opt(CONFIG_NAMESPACE_SUDO_SERVICE) as JSONObject?
+                ?: configManager.getConfigSet(CONFIG_NAMESPACE_SUDO_SERVICE)
+                ?: throw SudoProfileException.SudoServiceConfigNotFoundException()
+
+        val bucket =
+            sudoServiceConfig?.opt(CONFIG_BUCKET) as String? ?: identityServiceConfig?.opt(
+                CONFIG_BUCKET
+            ) as String?
+            ?: throw SudoProfileException.InvalidConfigException("Bucket name missing.")
+        val region = sudoServiceConfig.opt(CONFIG_REGION) as String? ?: identityServiceConfig.opt(CONFIG_REGION) as String?
 
         require(bucket != null && region != null) { "region or bucket was null." }
 

@@ -32,4 +32,48 @@
         </notes>
         <cve>CVE-2020-28052</cve>
     </suppress>
+    <suppress until="2021-06-30">
+        <notes><![CDATA[
+            Ignore false positives on Kotlin 1.4.30 which are matching on the 1.4.0-milestone1
+            build due to a bug in the dependency checker tool.
+            See: https://github.com/jeremylong/DependencyCheck/issues/2785
+            ]]></notes>
+        <cve>CVE-2020-15824</cve>
+        <cve>CVE-2020-29582</cve>
+    </suppress>
+    <suppress until="2021-06-30">
+        <notes><![CDATA[
+        file name: kotlin-analysis-intellij-1.4.32.jar (shaded: org.jetbrains.intellij.deps:log4j:1.2.17.1)
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.jetbrains\.intellij\.deps/log4j@.*$</packageUrl>
+        <cpe>cpe:/a:apache:log4j</cpe>
+    </suppress>
+    <suppress until="2021-06-30">
+        <notes><![CDATA[
+        file name: kotlin-analysis-intellij-1.4.30.jar (shaded: com.google.guava:guava:29.0-jre)
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.google\.guava/guava@.*$</packageUrl>
+        <cve>CVE-2020-8908</cve>
+    </suppress>
+    <suppress until="2021-06-30"> 
+        <notes><![CDATA[
+        file name: kotlin-analysis-intellij-1.4.30.jar (shaded: log4j:log4j:1.2.17)
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/log4j/log4j@.*$</packageUrl>
+        <cve>CVE-2019-17571</cve>
+    </suppress>
+    <suppress until="2021-06-30">
+        <notes><![CDATA[
+        file name: kotlin-analysis-intellij-1.4.30.jar (shaded: log4j:log4j:1.2.17)
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/log4j/log4j@.*$</packageUrl>
+        <cve>CVE-2020-9488</cve>
+    </suppress>
+    <suppress until="2021-06-30">
+        <notes><![CDATA[
+        file name: bcprov-jdk15to18-1.66.jar
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.bouncycastle/bcprov\-jdk15to18@.*$</packageUrl>
+        <cve>CVE-2020-28052</cve>
+    </suppress>    
 </suppressions>

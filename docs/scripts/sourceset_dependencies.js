@@ -1,1 +1,1 @@
-sourceset_dependencies = '{":sudoprofiles:dokkaHtml/debug": [], ":sudoprofiles:dokkaHtml/main": [], ":sudoprofiles:dokkaHtml/release": []}'
+sourceset_dependencies='{":sudoprofiles:dokkaHtml/debug":[],":sudoprofiles:dokkaHtml/main":[],":sudoprofiles:dokkaHtml/release":[]}'

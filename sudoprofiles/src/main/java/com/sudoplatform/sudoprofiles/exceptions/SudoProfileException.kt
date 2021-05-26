@@ -74,4 +74,18 @@ open class SudoProfileException(message: String? = null, cause: Throwable? = nul
     class UnsupportedAlgorithmException(message: String? = null, cause: Throwable? = null) :
         SudoProfileException(message = message, cause = cause)
 
+    /**
+     * Exception for indicating the configuration related to Sudo Service is not found.
+     * This may indicate that Sudo Service is not deployed into your runtime instance or the config
+     * file that you are using is invalid..
+     */
+    class SudoServiceConfigNotFoundException(message: String? = null, cause: Throwable? = null) :
+        SudoProfileException(message = message, cause = cause)
+
+    /**
+     * Exception for indicating the configuration of the client was invalid.
+     */
+    class InvalidConfigException(message: String? = null, cause: Throwable? = null) :
+        SudoProfileException(message = message, cause = cause)
+
 }
