@@ -1333,7 +1333,6 @@ class DefaultSudoProfilesClient constructor(
                             val cacheEntry =
                                 this.blobCache.get(claim.value.value)
                             if (cacheEntry != null) {
-                                this.s3Client.delete(cacheEntry.id)
                                 this.blobCache.remove(cacheEntry.id)
                             }
                         }
