@@ -258,15 +258,6 @@ interface SudoProfilesClient {
     suspend fun getOwnershipProof(sudo: Sudo, audience: String): String
 
     /**
-     * Redeem a token to be granted additional entitlements.
-     *
-     * @param token Token.
-     * @param type Token type. Currently only valid value is "entitlements" but this maybe extended in future.
-     * @return List<Entitlement>: A list of entitlements
-     */
-    suspend fun redeem(token: String, type: String): List<Entitlement>
-
-    /**
      * Subscribes to be notified of new, updated or deleted Sudos. Blob data is not downloaded automatically
      * so the caller is expected to use `listSudos` API if they need to access any associated blobs.
      *
@@ -754,44 +745,6 @@ class DefaultSudoProfilesClient constructor(
 
         } catch (e: Exception) {
             throw e.toFailedExceptionOrThrow()
-        }
-    }
-
-    override suspend fun redeem(token: String, type: String) : List<Entitlement> {
-        this.logger.info("Redeeming a token.")
-
-        try {
-            val input = RedeemTokenInput
-                .builder()
-                .token(token)
-                .type(type)
-                .build()
-
-            val mutation = RedeemTokenMutation
-                .builder()
-                .input(input)
-                .build()
-
-            val response = this.graphQLClient.mutate(mutation)
-                .enqueue()
-
-            if(response.hasErrors()) {
-                throw response.errors().first().toSudoProfileException()
-            }
-
-            val output = response.data()?.redeemToken
-            if (output != null) {
-                return output.map {
-                    Entitlement(
-                        it.name(),
-                        it.value()
-                    )
-                }
-            } else {
-                throw SudoProfileException.FailedException("Mutation succeeded but output was null.")
-            }
-        } catch (e: Exception) {
-           throw e.toFailedExceptionOrThrow()
         }
     }
 
