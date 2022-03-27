@@ -359,16 +359,14 @@ class DefaultSudoProfilesClient constructor(
 ) : SudoProfilesClient {
 
     companion object {
-        private const val CONFIG_NAMESPACE_IDENTITY_SERVICE = "identityService"
         private const val CONFIG_NAMESPACE_SUDO_SERVICE = "sudoService"
         private const val CONFIG_REGION = "region"
         private const val CONFIG_BUCKET = "bucket"
 
-
         private const val DEFAULT_KEY_NAMESPACE = "ss"
     }
 
-    override val version: String = "7.0.1"
+    override val version: String = "8.0.0"
 
     /**
      * GraphQL client used for calling Sudo service API.
@@ -421,28 +419,14 @@ class DefaultSudoProfilesClient constructor(
     private val onDeleteSudoSubscriptionManager: SubscriptionManager<OnDeleteSudoSubscription.Data>
 
     init {
-        val configManager = DefaultSudoConfigManager(context, this.logger)
-
-        @Suppress("UNCHECKED_CAST")
-        val identityServiceConfig =
-            config?.opt(CONFIG_NAMESPACE_IDENTITY_SERVICE) as JSONObject?
-                ?: configManager.getConfigSet(CONFIG_NAMESPACE_IDENTITY_SERVICE)
-
-        require(identityServiceConfig != null) { "Identity service configuration is missing." }
-
         val sudoServiceConfig =
             config?.opt(CONFIG_NAMESPACE_SUDO_SERVICE) as JSONObject?
-                ?: configManager.getConfigSet(CONFIG_NAMESPACE_SUDO_SERVICE)
+                ?: DefaultSudoConfigManager(context, this.logger).getConfigSet(CONFIG_NAMESPACE_SUDO_SERVICE)
                 ?: throw SudoProfileException.SudoServiceConfigNotFoundException()
 
         val bucket =
-            sudoServiceConfig?.opt(CONFIG_BUCKET) as String? ?: identityServiceConfig?.opt(
-                CONFIG_BUCKET
-            ) as String?
-            ?: throw SudoProfileException.InvalidConfigException("Bucket name missing.")
-        val region = sudoServiceConfig.opt(CONFIG_REGION) as String? ?: identityServiceConfig.opt(CONFIG_REGION) as String?
-
-        require(bucket != null && region != null) { "region or bucket was null." }
+            sudoServiceConfig?.opt(CONFIG_BUCKET) as String? ?: throw SudoProfileException.InvalidConfigException("Bucket name missing.")
+        val region = sudoServiceConfig.opt(CONFIG_REGION) as String? ?: throw SudoProfileException.InvalidConfigException("Region missing.")
 
         this.graphQLClient = graphQLClient ?: ApiClientManager.getClient(
             context,
