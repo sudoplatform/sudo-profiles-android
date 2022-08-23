@@ -6,7 +6,8 @@
 
 package com.sudoplatform.sudoprofiles
 
-import java.util.*
+import java.util.Locale
+import java.util.UUID
 
 /**
  * Interface for generating universally unique identifiers (UUIDs).
@@ -28,7 +29,7 @@ interface IdGenerator {
 class DefaultIdGenerator: IdGenerator {
 
     override fun generateId(): String {
-        return UUID.randomUUID().toString().toUpperCase(Locale.ROOT)
+        return UUID.randomUUID().toString().uppercase(Locale.ROOT)
     }
 
 }

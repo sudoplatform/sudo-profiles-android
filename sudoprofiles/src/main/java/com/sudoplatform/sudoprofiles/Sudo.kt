@@ -1,5 +1,5 @@
-/**
- * Copyright © 2020 Anonyome Labs, Inc. All rights reserved.
+/*
+ * Copyright © 2022 Anonyome Labs, Inc. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -8,13 +8,13 @@ package com.sudoplatform.sudoprofiles
 
 import java.io.Serializable
 import android.net.Uri
-import java.util.*
+import java.util.Date
 
 /**
  * Represents a claim or identity attribute associated with a Sudo.
- * @param name Claim name.
- * @param visibility Claim visibility.
- * @param value Claim value.
+ * @property name [String] Claim name.
+ * @property visibility [Visibility] Claim visibility.
+ * @property value [Value] Claim value.
  */
 data class Claim(
     val name: String,
@@ -42,7 +42,7 @@ data class Claim(
          *
          * @return raw claim value.
          */
-        fun toRaw(): Any? {
+        fun toRaw(): Any {
             return when (this) {
                 is StringValue -> this.value
                 is BlobValue -> this.value

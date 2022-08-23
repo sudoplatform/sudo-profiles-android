@@ -1,5 +1,5 @@
-/**
- * Copyright © 2020 Anonyome Labs, Inc. All rights reserved.
+/*
+ * Copyright © 2022 Anonyome Labs, Inc. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -17,15 +17,21 @@ import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.exception.ApolloException
 import com.sudoplatform.sudoapiclient.ApiClientManager
 import com.sudoplatform.sudoconfigmanager.DefaultSudoConfigManager
-import com.sudoplatform.sudoprofiles.type.*
+import com.sudoplatform.sudoprofiles.type.CreateSudoInput
 import com.sudoplatform.sudouser.SudoUserClient
 import org.json.JSONObject
-import java.util.*
+import java.util.Date
 import com.sudoplatform.sudologging.Logger
-import com.sudoplatform.sudoprofiles.exceptions.*
+import com.sudoplatform.sudoprofiles.exceptions.SudoProfileException
 import com.sudoplatform.sudoprofiles.exceptions.SudoProfileException.Companion.toSudoProfileException
 import com.sudoplatform.sudoprofiles.extensions.enqueue
-import kotlinx.coroutines.*
+import com.sudoplatform.sudoprofiles.type.DeleteSudoInput
+import com.sudoplatform.sudoprofiles.type.UpdateSudoInput
+import com.sudoplatform.sudoprofiles.type.GetOwnershipProofInput
+import com.sudoplatform.sudoprofiles.type.SecureClaimInput
+import com.sudoplatform.sudoprofiles.type.SecureS3ObjectInput
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.Dispatchers.IO
 
 /**
@@ -159,7 +165,7 @@ interface SudoProfilesClient {
                     ?: throw SudoProfileException.SudoServiceConfigNotFoundException()
 
             val bucket =
-                sudoServiceConfig?.opt(CONFIG_BUCKET) as String? ?: identityServiceConfig?.opt(
+                sudoServiceConfig.opt(CONFIG_BUCKET) as String? ?: identityServiceConfig.opt(
                     CONFIG_BUCKET
                 ) as String?
                 ?: throw SudoProfileException.InvalidConfigException("Bucket name missing.")
@@ -425,7 +431,7 @@ class DefaultSudoProfilesClient constructor(
                 ?: throw SudoProfileException.SudoServiceConfigNotFoundException()
 
         val bucket =
-            sudoServiceConfig?.opt(CONFIG_BUCKET) as String? ?: throw SudoProfileException.InvalidConfigException("Bucket name missing.")
+            sudoServiceConfig.opt(CONFIG_BUCKET) as String? ?: throw SudoProfileException.InvalidConfigException("Bucket name missing.")
         val region = sudoServiceConfig.opt(CONFIG_REGION) as String? ?: throw SudoProfileException.InvalidConfigException("Region missing.")
 
         this.graphQLClient = graphQLClient ?: ApiClientManager.getClient(

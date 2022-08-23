@@ -1,3 +1,9 @@
+/*
+ * Copyright © 2022 Anonyome Labs, Inc. All rights reserved.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 package com.sudoplatform.sudoprofiles.exceptions
 
 import com.apollographql.apollo.api.Error
@@ -87,5 +93,4 @@ open class SudoProfileException(message: String? = null, cause: Throwable? = nul
      */
     class InvalidConfigException(message: String? = null, cause: Throwable? = null) :
         SudoProfileException(message = message, cause = cause)
-
 }

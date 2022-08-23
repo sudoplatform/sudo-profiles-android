@@ -1,5 +1,5 @@
-/**
- * Copyright © 2020 Anonyome Labs, Inc. All rights reserved.
+/*
+ * Copyright © 2022 Anonyome Labs, Inc. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -170,5 +170,4 @@ class BlobCache(containerUri: Uri,
     fun count(): Int {
         return this.containerUri.normalizeScheme().toFile().listFiles()?.size ?: 0
     }
-
 }

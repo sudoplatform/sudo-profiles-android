@@ -1,5 +1,5 @@
-/**
- * Copyright © 2020 Anonyome Labs, Inc. All rights reserved.
+/*
+ * Copyright © 2022 Anonyome Labs, Inc. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -13,8 +13,8 @@ import java.io.Serializable
  * in Sudo service is "sudoplatform.sudo.max" to represent the maximum number of Sudos each user
  * is allowed to provision.
  *
- * @param name entitlement name, e.g "sudoplatform.sudo.max" for maximum number of Sudos.
- * @param value entitlement value.
+ * @property name [String] entitlement name, e.g "sudoplatform.sudo.max" for maximum number of Sudos.
+ * @property value [Int] entitlement value.
  */
 data class Entitlement (
     val name: String,

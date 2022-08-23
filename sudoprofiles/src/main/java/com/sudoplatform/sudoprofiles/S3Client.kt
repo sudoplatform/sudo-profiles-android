@@ -1,5 +1,5 @@
-/**
- * Copyright © 2020 Anonyome Labs, Inc. All rights reserved.
+/*
+ * Copyright © 2022 Anonyome Labs, Inc. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -156,5 +156,4 @@ class DefaultS3Client (
         val request = DeleteObjectRequest(this.bucket, key)
         this.amazonS3Client.deleteObject(request)
     }
-
 }

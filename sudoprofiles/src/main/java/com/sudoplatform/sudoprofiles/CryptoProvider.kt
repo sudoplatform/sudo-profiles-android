@@ -1,5 +1,5 @@
-/**
- * Copyright © 2020 Anonyome Labs, Inc. All rights reserved.
+/*
+ * Copyright © 2022 Anonyome Labs, Inc. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -8,12 +8,12 @@ package com.sudoplatform.sudoprofiles
 
 import android.content.Context
 import android.util.Base64
-import com.sudoplatform.sudokeymanager.KeyComponents
 import com.sudoplatform.sudokeymanager.KeyManagerFactory
 import com.sudoplatform.sudokeymanager.KeyManagerInterface
 import com.sudoplatform.sudokeymanager.KeyType
 import java.io.Serializable
-import java.util.*
+import java.util.Locale
+import java.util.UUID
 
 /**
  * Exported encryption key.
@@ -237,5 +237,4 @@ class DefaultCryptoProvider(private val keyNamespace: String, context: Context) 
     override fun reset() {
         this.keyManager.removeAllKeys()
     }
-
 }
