@@ -17,6 +17,7 @@ import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.exception.ApolloException
 import com.sudoplatform.sudoapiclient.ApiClientManager
 import com.sudoplatform.sudoconfigmanager.DefaultSudoConfigManager
+import com.sudoplatform.sudokeymanager.AndroidSQLiteStore
 import com.sudoplatform.sudoprofiles.type.CreateSudoInput
 import com.sudoplatform.sudouser.SudoUserClient
 import org.json.JSONObject
@@ -93,6 +94,12 @@ interface SudoProfilesClient {
         private var queryCache: QueryCache? = null
         private var idGenerator: IdGenerator = DefaultIdGenerator()
         private var cryptoProvider: CryptoProvider? = null
+        private var namespace: String? = DEFAULT_KEY_NAMESPACE
+        private var databaseName: String? = AndroidSQLiteStore.DEFAULT_DATABASE_NAME
+
+        companion object {
+            private const val DEFAULT_KEY_NAMESPACE = "ss"
+        }
 
         /**
          * Provide the implementation of the [Logger] used for logging. If a value is not supplied
@@ -103,7 +110,23 @@ interface SudoProfilesClient {
         /**
          * Provide the Configuration Parameters
          */
-        fun seConfig(config: JSONObject) = also { this.config = config }
+        fun setConfig(config: JSONObject) = also { this.config = config }
+
+        /**
+         * Provide the namespace to use for internal data and cryptographic keys. This should be unique
+         * per client per app to avoid name conflicts between multiple clients. If a value is not supplied
+         * a default value will be used.
+         */
+        fun setNamespace(namespace: String) = also {
+            this.namespace = namespace
+        }
+
+        /**
+         * Provide the database name to use for exportable key store database.
+         */
+        fun setDatabaseName(databaseName: String) = also {
+            this.databaseName = databaseName
+        }
 
         /**
          * Provide the maximum number of Sudos to cap the queries to.  If a value is not supplied
@@ -188,7 +211,9 @@ interface SudoProfilesClient {
                 this.queryCache ?:
                     DefaultQueryCache(graphQLClient),
                 this.idGenerator,
-                this.cryptoProvider
+                this.cryptoProvider,
+                this.namespace ?: DEFAULT_KEY_NAMESPACE,
+                this.databaseName ?: AndroidSQLiteStore.DEFAULT_DATABASE_NAME
             )
         }
     }
@@ -349,6 +374,8 @@ interface SudoProfilesClient {
  * @param s3Client optional S3 client to use. Mainly used for unit testing.
  * @param queryCache optional GraphQL query cache. Mainly used for unit testing.
  * @param idGenerator optional GUID generator to use. Mainly used for unit testing.
+ * @param namespace namespace to use for internal data and cryptographic keys. This should be unique
+ * @param databaseName database name to use for the exportable key store database.
  */
 class DefaultSudoProfilesClient constructor(
     private val context: Context,
@@ -361,7 +388,9 @@ class DefaultSudoProfilesClient constructor(
     s3Client: S3Client? = null,
     queryCache: QueryCache? = null,
     idGenerator: IdGenerator = DefaultIdGenerator(),
-    cryptoProvider: CryptoProvider? = null
+    cryptoProvider: CryptoProvider? = null,
+    private val namespace: String = DEFAULT_KEY_NAMESPACE,
+    private val databaseName: String = AndroidSQLiteStore.DEFAULT_DATABASE_NAME
 ) : SudoProfilesClient {
 
     companion object {
@@ -372,7 +401,7 @@ class DefaultSudoProfilesClient constructor(
         private const val DEFAULT_KEY_NAMESPACE = "ss"
     }
 
-    override val version: String = "8.0.0"
+    override val version: String = "9.0.0"
 
     /**
      * GraphQL client used for calling Sudo service API.
@@ -442,7 +471,7 @@ class DefaultSudoProfilesClient constructor(
         this.s3Client =
             s3Client ?: DefaultS3Client(this.context, this.sudoUserClient, region, bucket)
 
-        this.cryptoProvider = cryptoProvider ?: DefaultCryptoProvider(DEFAULT_KEY_NAMESPACE, context)
+        this.cryptoProvider = cryptoProvider ?: DefaultCryptoProvider(this.namespace, this.databaseName, context)
 
         if (this.cryptoProvider.getSymmetricKeyId() == null) {
             this.cryptoProvider.generateEncryptionKey()

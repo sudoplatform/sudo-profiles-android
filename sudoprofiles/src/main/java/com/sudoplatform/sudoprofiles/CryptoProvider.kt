@@ -146,7 +146,7 @@ interface CryptoProvider {
 /**
  * Default [CryptoProvider] implementation.
  */
-class DefaultCryptoProvider(private val keyNamespace: String, context: Context) : CryptoProvider {
+class DefaultCryptoProvider(private val keyNamespace: String, private val databaseName: String, context: Context) : CryptoProvider {
 
     companion object {
         private const val KEY_NAME_SYMMETRIC_KEY_ID = "symmetricKeyId"
@@ -154,7 +154,7 @@ class DefaultCryptoProvider(private val keyNamespace: String, context: Context) 
     }
 
     private val keyManager: KeyManagerInterface =
-        KeyManagerFactory(context).createAndroidKeyManager(this.keyNamespace)
+        KeyManagerFactory(context).createAndroidKeyManager(this.keyNamespace, this.databaseName)
 
     override fun encrypt(
         keyId: String,
