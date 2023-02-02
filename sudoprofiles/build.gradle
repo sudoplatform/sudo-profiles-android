@@ -22,7 +22,7 @@ android {
         minSdkVersion 24
         targetSdkVersion 31
         versionCode 1
-        versionName "9.0.0"
+        versionName "10.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments clearPackageData: 'true'
@@ -93,10 +93,10 @@ dependencies {
 
     // Sudo Platform
     implementation "com.sudoplatform:sudokeymanager:5.0.0"
-    implementation 'com.sudoplatform:sudologging:2.0.1'
-    implementation "com.sudoplatform:sudoconfigmanager:3.0.1"
-    implementation 'com.sudoplatform:sudouser:12.0.2'
-    implementation 'com.sudoplatform:sudoapiclient:4.0.0'
+    implementation 'com.sudoplatform:sudologging:2.1.0'
+    implementation "com.sudoplatform:sudoconfigmanager:4.0.0"
+    implementation 'com.sudoplatform:sudouser:13.0.1'
+    implementation 'com.sudoplatform:sudoapiclient:5.0.1'
 
     // Testing
     testImplementation 'junit:junit:4.13.2'
@@ -109,13 +109,13 @@ dependencies {
     testImplementation 'org.powermock:powermock-api-mockito2:2.0.9'
     testImplementation 'org.json:json:20220320'
     testImplementation 'org.robolectric:robolectric:4.9'
-    androidTestImplementation 'androidx.test:runner:1.4.0'
+    androidTestImplementation 'androidx.test:runner:1.5.2'
     androidTestImplementation 'androidx.test:rules:1.4.0'
     androidTestImplementation 'androidx.test:monitor:1.5.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     androidTestImplementation 'com.google.android.gms:play-services-safetynet:17.0.1'
     androidTestImplementation 'com.google.android.gms:play-services-base:17.6.0'
-    androidTestImplementation "com.sudoplatform:sudoentitlements:4.0.0"
+    androidTestImplementation "com.sudoplatform:sudoentitlements:5.0.1"
 }
 
 task jacocoTestReport(type: JacocoReport, dependsOn: "testDebugUnitTest") {

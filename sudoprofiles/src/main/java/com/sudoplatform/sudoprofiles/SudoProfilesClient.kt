@@ -401,7 +401,7 @@ class DefaultSudoProfilesClient constructor(
         private const val DEFAULT_KEY_NAMESPACE = "ss"
     }
 
-    override val version: String = "9.0.0"
+    override val version: String = "10.0.0"
 
     /**
      * GraphQL client used for calling Sudo service API.
@@ -1308,6 +1308,7 @@ class DefaultSudoProfilesClient constructor(
                                 this.blobCache.remove(cacheEntry.id)
                             }
                         }
+                        else -> {}
                     }
                 }
                 else -> {
