@@ -18,7 +18,7 @@ buildscript {
         // in the individual module build.gradle files
         classpath "org.owasp:dependency-check-gradle:6.5.3"
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:$dokka_version"
-        classpath "org.jmailen.gradle:kotlinter-gradle:3.9.0"
+        classpath "org.jmailen.gradle:kotlinter-gradle:3.12.0"
         classpath "com.amazonaws:aws-android-sdk-appsync-gradle-plugin:$appsync_version"
         classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.3"
         classpath "com.cookpad.android.licensetools:license-tools-plugin:1.7.0"
