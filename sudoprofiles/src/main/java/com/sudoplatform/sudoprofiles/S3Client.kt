@@ -20,6 +20,7 @@ import com.sudoplatform.sudouser.SudoUserClient
 import java.io.File
 import java.io.FileOutputStream
 import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 /**
@@ -108,9 +109,20 @@ class DefaultS3Client (
         val observer = transferUtility.upload(key, tmpFile)
         observer.setTransferListener(object : TransferListener {
             override fun onStateChanged(id: Int, state: TransferState?) {
-                if (TransferState.COMPLETED == state) {
-                    this@DefaultS3Client.logger.info("S3 upload completed successfully.")
-                    cont.resume(key)
+                when (state) {
+                    TransferState.COMPLETED -> {
+                        this@DefaultS3Client.logger.info("S3 upload completed successfully.")
+                        cont.resume(key)
+                    }
+                    TransferState.CANCELED -> {
+                        this@DefaultS3Client.logger.error("S3 upload was cancelled.")
+                        cont.resumeWithException(S3Exception.UploadException("Upload was cancelled."))
+                    }
+                    TransferState.FAILED -> {
+                        this@DefaultS3Client.logger.error("S3 upload failed.")
+                        cont.resumeWithException(S3Exception.UploadException("Upload failed."))
+                    }
+                    else -> this@DefaultS3Client.logger.info("S3 upload state changed: ${state}.")
                 }
             }
 
@@ -119,7 +131,7 @@ class DefaultS3Client (
             }
 
             override fun onError(id: Int, e: Exception?) {
-                throw S3Exception.UploadException(e?.message, cause = e)
+                cont.resumeWithException(S3Exception.UploadException(e?.message, cause = e))
             }
         })
     }
@@ -132,9 +144,20 @@ class DefaultS3Client (
         val observer = transferUtility.download(this.bucket, key, tmpFile)
         observer.setTransferListener(object : TransferListener {
             override fun onStateChanged(id: Int, state: TransferState?) {
-                if (TransferState.COMPLETED == state) {
-                    this@DefaultS3Client.logger.info("S3 download completed successfully.")
-                    cont.resume(tmpFile.readBytes())
+                when (state) {
+                    TransferState.COMPLETED -> {
+                        this@DefaultS3Client.logger.info("S3 download completed successfully.")
+                        cont.resume(tmpFile.readBytes())
+                    }
+                    TransferState.CANCELED -> {
+                        this@DefaultS3Client.logger.error("S3 download was cancelled.")
+                        cont.resumeWithException(S3Exception.DownloadException("Download was cancelled."))
+                    }
+                    TransferState.FAILED -> {
+                        this@DefaultS3Client.logger.error("S3 download failed.")
+                        cont.resumeWithException(S3Exception.DownloadException("Download failed."))
+                    }
+                    else -> this@DefaultS3Client.logger.info("S3 download state changed: ${state}.")
                 }
             }
 
@@ -143,7 +166,7 @@ class DefaultS3Client (
             }
 
             override fun onError(id: Int, e: Exception?) {
-                throw S3Exception.DownloadException(e?.message, cause = e)
+                cont.resumeWithException(S3Exception.DownloadException(e?.message, cause = e))
             }
         })
     }
