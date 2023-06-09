@@ -8,7 +8,6 @@ package com.sudoplatform.sudoprofiles
 
 import android.net.Uri
 import androidx.core.net.toFile
-import com.sudoplatform.sudoprofiles.exceptions.SudoProfileException
 import java.io.File
 import java.io.FileOutputStream
 
@@ -18,8 +17,10 @@ import java.io.FileOutputStream
  * @param containerUri cache container Uri.
  * @param idGenerator UUID generator. Mainly used for unit testing.
  */
-class BlobCache(containerUri: Uri,
-                private val idGenerator: IdGenerator = DefaultIdGenerator()) {
+class BlobCache(
+    containerUri: Uri,
+    private val idGenerator: IdGenerator = DefaultIdGenerator()
+) {
 
     /**
      * Cache entry.
@@ -47,7 +48,6 @@ class BlobCache(containerUri: Uri,
             val file = this.toUri().normalizeScheme().toFile()
             return file.readBytes()
         }
-
     }
 
     /**
@@ -153,7 +153,6 @@ class BlobCache(containerUri: Uri,
      * Removes all entries from the cache.
      */
     fun reset() {
-
         val files = this.containerUri.normalizeScheme().toFile().listFiles()
         if (files != null) {
             for (file in files) {

@@ -63,7 +63,6 @@ interface S3Client {
      * @param objectId AWS S3 key representing the location of the blob.
      */
     suspend fun delete(objectId: String)
-
 }
 
 /**
@@ -72,14 +71,14 @@ interface S3Client {
  * @param context Android app context.
  * @param sudoUserClient [com.sudoplatform.sudouser.SudoUserClient] used for authenticating to AWS S3.
  */
-class DefaultS3Client (
+class DefaultS3Client(
     context: Context,
     sudoUserClient: SudoUserClient,
     override val region: String,
     override val bucket: String,
     private val logger: Logger = DefaultLogger.instance,
     private val idGenerator: IdGenerator = DefaultIdGenerator()
-): S3Client {
+) : S3Client {
 
     private val transferUtility: TransferUtility
 
@@ -100,7 +99,7 @@ class DefaultS3Client (
         this.logger.info("Uploading a blob to S3.")
 
         val identityId = this.credentialsProvider.identityId
-        val key = "$identityId/${objectId}"
+        val key = "$identityId/$objectId"
 
         val file = File(objectId)
         val tmpFile = File.createTempFile(file.name, ".tmp")
@@ -122,7 +121,7 @@ class DefaultS3Client (
                         this@DefaultS3Client.logger.error("S3 upload failed.")
                         cont.resumeWithException(S3Exception.UploadException("Upload failed."))
                     }
-                    else -> this@DefaultS3Client.logger.info("S3 upload state changed: ${state}.")
+                    else -> this@DefaultS3Client.logger.info("S3 upload state changed: $state.")
                 }
             }
 
@@ -157,12 +156,14 @@ class DefaultS3Client (
                         this@DefaultS3Client.logger.error("S3 download failed.")
                         cont.resumeWithException(S3Exception.DownloadException("Download failed."))
                     }
-                    else -> this@DefaultS3Client.logger.info("S3 download state changed: ${state}.")
+                    else -> this@DefaultS3Client.logger.info("S3 download state changed: $state.")
                 }
             }
 
             override fun onProgressChanged(id: Int, bytesCurrent: Long, bytesTotal: Long) {
-                this@DefaultS3Client.logger.debug("S3 download progress changed: id=$id, bytesCurrent=$bytesCurrent, bytesTotal=$bytesTotal")
+                this@DefaultS3Client.logger.debug(
+                    "S3 download progress changed: id=$id, bytesCurrent=$bytesCurrent, bytesTotal=$bytesTotal"
+                )
             }
 
             override fun onError(id: Int, e: Exception?) {
@@ -175,7 +176,7 @@ class DefaultS3Client (
         this.logger.info("Deleting a blob from S3.")
 
         val identityId = this.credentialsProvider.identityId
-        val key = "$identityId/${objectId}"
+        val key = "$identityId/$objectId"
         val request = DeleteObjectRequest(this.bucket, key)
         this.amazonS3Client.deleteObject(request)
     }

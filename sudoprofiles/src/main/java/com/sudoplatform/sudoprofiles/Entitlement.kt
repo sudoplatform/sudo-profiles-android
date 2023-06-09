@@ -16,7 +16,7 @@ import java.io.Serializable
  * @property name [String] entitlement name, e.g "sudoplatform.sudo.max" for maximum number of Sudos.
  * @property value [Int] entitlement value.
  */
-data class Entitlement (
+data class Entitlement(
     val name: String,
     val value: Int
-): Serializable
+) : Serializable

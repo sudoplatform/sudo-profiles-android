@@ -29,15 +29,14 @@ interface QueryCache {
  *
  * @param graphQLClient AppSync client holding the query cache.
  */
-class DefaultQueryCache(private val graphQLClient: AWSAppSyncClient): QueryCache {
+class DefaultQueryCache(private val graphQLClient: AWSAppSyncClient) : QueryCache {
 
     override suspend fun replace(query: ListSudosQuery, item: ListSudosQuery.Item) {
-
         val sudos = this.graphQLClient.query(query)
             .responseFetcher(AppSyncResponseFetchers.CACHE_ONLY)
             .enqueue()
 
-        if(sudos.hasErrors()) {
+        if (sudos.hasErrors()) {
             throw sudos.errors().first().toSudoProfileException()
         }
 
@@ -65,6 +64,5 @@ class DefaultQueryCache(private val graphQLClient: AWSAppSyncClient): QueryCache
             query,
             data
         ).enqueue(null)
-
     }
 }

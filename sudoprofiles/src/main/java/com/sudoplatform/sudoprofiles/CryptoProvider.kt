@@ -62,7 +62,6 @@ enum class SymmetricKeyEncryptionAlgorithm(private val stringValue: String) {
 
             return value
         }
-
     }
 
     override fun toString(): String {
@@ -70,7 +69,6 @@ enum class SymmetricKeyEncryptionAlgorithm(private val stringValue: String) {
             AES_CBC_PKCS7PADDING -> return this.stringValue
         }
     }
-
 }
 
 /**
@@ -197,7 +195,7 @@ class DefaultCryptoProvider(private val keyNamespace: String, private val databa
         }
 
         // Generate and store symmetric key ID.
-        val keyId = UUID.randomUUID().toString().toUpperCase(Locale.US)
+        val keyId = UUID.randomUUID().toString().uppercase(Locale.US)
         this.keyManager.addPassword(keyId.toByteArray(), KEY_NAME_SYMMETRIC_KEY_ID)
 
         // Generate symmetric key for encrypting secrets.

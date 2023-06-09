@@ -42,6 +42,9 @@
     <div>
     </div>
     <div class="pull-right d-flex">
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":sudoprofiles:dokkaHtml/release">androidJvm</button>
+        </div>
         <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
         <div id="searchBar"></div>
     </div>
@@ -51,262 +54,266 @@
         <div id="sideMenu"></div>
     </div>
     <div id="main">
-<div class="main-content" id="content" pageIds="sudoprofiles::com.sudoplatform.sudoprofiles/DefaultSudoProfilesClient///PointingToDeclaration//-1029766263">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="sudoprofiles::com.sudoplatform.sudoprofiles/DefaultSudoProfilesClient///PointingToDeclaration//-1029766263">
   <div class="breadcrumbs"><a href="../../../index.html">sudoprofiles</a><span class="delimiter">/</span><a href="../index.html">com.sudoplatform.sudoprofiles</a><span class="delimiter">/</span><span class="current">DefaultSudoProfilesClient</span></div>
   <div class="cover ">
     <h1 class="cover"><span>Default</span><wbr></wbr><span>Sudo</span><wbr></wbr><span>Profiles</span><wbr></wbr><span><span>Client</span></span></h1>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">DefaultSudoProfilesClient</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">context<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a><span class="token punctuation">, </span></span><span class="parameter ">sudoUserClient<span class="token operator">: </span><span data-unresolved-link="com.sudoplatform.sudouser/SudoUserClient///PointingToDeclaration/">SudoUserClient</span><span class="token punctuation">, </span></span><span class="parameter ">blobContainerURI<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/net/Uri.html">Uri</a><span class="token punctuation">, </span></span><span class="parameter ">logger<span class="token operator">: </span><span data-unresolved-link="com.sudoplatform.sudologging/Logger///PointingToDeclaration/">Logger</span><span class="token operator"> = </span>DefaultLogger.instance<span class="token punctuation">, </span></span><span class="parameter ">config<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/org/json/JSONObject.html">JSONObject</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">maxSudos<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">10</span><span class="token punctuation">, </span></span><span class="parameter ">graphQLClient<span class="token operator">: </span><span data-unresolved-link="com.amazonaws.mobileconnectors.appsync/AWSAppSyncClient///PointingToDeclaration/">AWSAppSyncClient</span><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">s3Client<span class="token operator">: </span><a href="../-s3-client/index.html">S3Client</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">queryCache<span class="token operator">: </span><a href="../-query-cache/index.html">QueryCache</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">idGenerator<span class="token operator">: </span><a href="../-id-generator/index.html">IdGenerator</a><span class="token operator"> = </span>DefaultIdGenerator()<span class="token punctuation">, </span></span><span class="parameter ">cryptoProvider<span class="token operator">: </span><a href="../-crypto-provider/index.html">CryptoProvider</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">namespace<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator"> = </span>DEFAULT_KEY_NAMESPACE<span class="token punctuation">, </span></span><span class="parameter ">databaseName<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator"> = </span>AndroidSQLiteStore.DEFAULT_DATABASE_NAME</span></span><span class="token punctuation">)</span> : <a href="../-sudo-profiles-client/index.html">SudoProfilesClient</a></div><p class="paragraph">Default implementation of <a href="../-sudo-profiles-client/index.html">SudoProfilesClient</a> interface.</p></div></div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">DefaultSudoProfilesClient</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">context<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a><span class="token punctuation">, </span></span><span class="parameter ">sudoUserClient<span class="token operator">: </span><span data-unresolved-link="com.sudoplatform.sudouser/SudoUserClient///PointingToDeclaration/">SudoUserClient</span><span class="token punctuation">, </span></span><span class="parameter ">blobContainerURI<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/net/Uri.html">Uri</a><span class="token punctuation">, </span></span><span class="parameter ">logger<span class="token operator">: </span><span data-unresolved-link="com.sudoplatform.sudologging/Logger///PointingToDeclaration/">Logger</span><span class="token operator"> = </span>DefaultLogger.instance<span class="token punctuation">, </span></span><span class="parameter ">config<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/org/json/JSONObject.html">JSONObject</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">maxSudos<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">10</span><span class="token punctuation">, </span></span><span class="parameter ">graphQLClient<span class="token operator">: </span><span data-unresolved-link="com.amazonaws.mobileconnectors.appsync/AWSAppSyncClient///PointingToDeclaration/">AWSAppSyncClient</span><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">s3Client<span class="token operator">: </span><a href="../-s3-client/index.html">S3Client</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">queryCache<span class="token operator">: </span><a href="../-query-cache/index.html">QueryCache</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">idGenerator<span class="token operator">: </span><a href="../-id-generator/index.html">IdGenerator</a><span class="token operator"> = </span>DefaultIdGenerator()<span class="token punctuation">, </span></span><span class="parameter ">cryptoProvider<span class="token operator">: </span><a href="../-crypto-provider/index.html">CryptoProvider</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">namespace<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator"> = </span>DEFAULT_KEY_NAMESPACE<span class="token punctuation">, </span></span><span class="parameter ">databaseName<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator"> = </span>AndroidSQLiteStore.DEFAULT_DATABASE_NAME</span></span><span class="token punctuation">)</span> : <a href="../-sudo-profiles-client/index.html">SudoProfilesClient</a></div><p class="paragraph">Default implementation of <a href="../-sudo-profiles-client/index.html">SudoProfilesClient</a> interface.</p><h4 class="">Parameters</h4><div class="table"><div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span><span>context</span></span></u></div></span></div><div><div class="title"><p class="paragraph">Android app context.</p></div></div></div></div><div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span>sudo</span><wbr></wbr><span>User</span><wbr></wbr><span><span>Client</span></span></u></div></span></div><div><div class="title"><p class="paragraph"><code class="lang-kotlin">SudoUserClient</code> instance required to issue authentication tokens and perform cryptographic operations.</p></div></div></div></div><div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span>blob</span><wbr></wbr><span>Container</span><wbr></wbr><span><span>URI</span></span></u></div></span></div><div><div class="title"><p class="paragraph">container URI to which large binary objects will be stored.</p></div></div></div></div><div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span><span>logger</span></span></u></div></span></div><div><div class="title"><p class="paragraph">logger used for logging messages.</p></div></div></div></div><div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span><span>config</span></span></u></div></span></div><div><div class="title"><p class="paragraph">configuration parameters.</p></div></div></div></div><div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span>max</span><wbr></wbr><span><span>Sudos</span></span></u></div></span></div><div><div class="title"><p class="paragraph">maximum number of Sudos to cap the queries to. Defaults to 10.</p></div></div></div></div><div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span>graph</span><wbr></wbr><span><span>QLClient</span></span></u></div></span></div><div><div class="title"><p class="paragraph">optional GraphQL client to use. Mainly used for unit testing.</p></div></div></div></div><div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span><span>s3Client</span></span></u></div></span></div><div><div class="title"><p class="paragraph">optional S3 client to use. Mainly used for unit testing.</p></div></div></div></div><div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span>query</span><wbr></wbr><span><span>Cache</span></span></u></div></span></div><div><div class="title"><p class="paragraph">optional GraphQL query cache. Mainly used for unit testing.</p></div></div></div></div><div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span>id</span><wbr></wbr><span><span>Generator</span></span></u></div></span></div><div><div class="title"><p class="paragraph">optional GUID generator to use. Mainly used for unit testing.</p></div></div></div></div><div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span><span>namespace</span></span></u></div></span></div><div><div class="title"><p class="paragraph">namespace to use for internal data and cryptographic keys. This should be unique</p></div></div></div></div><div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span>database</span><wbr></wbr><span><span>Name</span></span></u></div></span></div><div><div class="title"><p class="paragraph">database name to use for the exportable key store database.</p></div></div></div></div></div></div></div>
   </div>
   <div class="tabbedcontent">
-    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Types">Types</button><button class="section-tab" data-togglable="Constructors">Constructors</button><button class="section-tab" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button><button class="section-tab" data-togglable="Parameters">Parameters</button></div>
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,FUNCTION,PROPERTY">Members</button></div>
     <div class="tabs-section-body">
-      <h4 class="">Parameters</h4>
-      <div data-togglable="Parameters">
-        <div class="platform-hinted WithExtraAttributes" data-platform-hinted="data-platform-hinted" data-togglable="Parameters"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div data-togglable="Parameters"><div class="table" data-togglable="Parameters"><div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release"><div class="main-subrow keyValue WithExtraAttributes"><div class=""><span class="inline-flex"><div><u><span><span>context</span></span></u></div></span></div><div><div class="title"><div data-togglable="Parameters"><p class="paragraph">Android app context.</p></div></div></div></div></div><div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release"><div class="main-subrow keyValue WithExtraAttributes"><div class=""><span class="inline-flex"><div><u><span>sudo</span><wbr></wbr><span>User</span><wbr></wbr><span><span>Client</span></span></u></div></span></div><div><div class="title"><div data-togglable="Parameters"><p class="paragraph"><code class="lang-kotlin">SudoUserClient</code> instance required to issue authentication tokens and perform cryptographic operations.</p></div></div></div></div></div><div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release"><div class="main-subrow keyValue WithExtraAttributes"><div class=""><span class="inline-flex"><div><u><span>blob</span><wbr></wbr><span>Container</span><wbr></wbr><span><span>URI</span></span></u></div></span></div><div><div class="title"><div data-togglable="Parameters"><p class="paragraph">container URI to which large binary objects will be stored.</p></div></div></div></div></div><div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release"><div class="main-subrow keyValue WithExtraAttributes"><div class=""><span class="inline-flex"><div><u><span><span>logger</span></span></u></div></span></div><div><div class="title"><div data-togglable="Parameters"><p class="paragraph">logger used for logging messages.</p></div></div></div></div></div><div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release"><div class="main-subrow keyValue WithExtraAttributes"><div class=""><span class="inline-flex"><div><u><span><span>config</span></span></u></div></span></div><div><div class="title"><div data-togglable="Parameters"><p class="paragraph">configuration parameters.</p></div></div></div></div></div><div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release"><div class="main-subrow keyValue WithExtraAttributes"><div class=""><span class="inline-flex"><div><u><span>max</span><wbr></wbr><span><span>Sudos</span></span></u></div></span></div><div><div class="title"><div data-togglable="Parameters"><p class="paragraph">maximum number of Sudos to cap the queries to. Defaults to 10.</p></div></div></div></div></div><div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release"><div class="main-subrow keyValue WithExtraAttributes"><div class=""><span class="inline-flex"><div><u><span>graph</span><wbr></wbr><span><span>QLClient</span></span></u></div></span></div><div><div class="title"><div data-togglable="Parameters"><p class="paragraph">optional GraphQL client to use. Mainly used for unit testing.</p></div></div></div></div></div><div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release"><div class="main-subrow keyValue WithExtraAttributes"><div class=""><span class="inline-flex"><div><u><span><span>s3Client</span></span></u></div></span></div><div><div class="title"><div data-togglable="Parameters"><p class="paragraph">optional S3 client to use. Mainly used for unit testing.</p></div></div></div></div></div><div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release"><div class="main-subrow keyValue WithExtraAttributes"><div class=""><span class="inline-flex"><div><u><span>query</span><wbr></wbr><span><span>Cache</span></span></u></div></span></div><div><div class="title"><div data-togglable="Parameters"><p class="paragraph">optional GraphQL query cache. Mainly used for unit testing.</p></div></div></div></div></div><div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release"><div class="main-subrow keyValue WithExtraAttributes"><div class=""><span class="inline-flex"><div><u><span>id</span><wbr></wbr><span><span>Generator</span></span></u></div></span></div><div><div class="title"><div data-togglable="Parameters"><p class="paragraph">optional GUID generator to use. Mainly used for unit testing.</p></div></div></div></div></div><div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release"><div class="main-subrow keyValue WithExtraAttributes"><div class=""><span class="inline-flex"><div><u><span><span>namespace</span></span></u></div></span></div><div><div class="title"><div data-togglable="Parameters"><p class="paragraph">namespace to use for internal data and cryptographic keys. This should be unique</p></div></div></div></div></div><div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release"><div class="main-subrow keyValue WithExtraAttributes"><div class=""><span class="inline-flex"><div><u><span>database</span><wbr></wbr><span><span>Name</span></span></u></div></span></div><div><div class="title"><div data-togglable="Parameters"><p class="paragraph">database name to use for the exportable key store database.</p></div></div></div></div></div></div></div></div></div>
-      </div>
-      <h2 class="tabbedcontent">Constructors</h2>
-      <div class="table" data-togglable="Constructors"><a data-name="-1503586884%2FConstructors%2F-1029766263" anchor-label="DefaultSudoProfilesClient" id="-1503586884%2FConstructors%2F-1029766263" data-filterable-set=":sudoprofiles:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
-          <div class="main-subrow keyValue TabbedContent">
-            <div class=""><span class="inline-flex">
-                <div><a href="-default-sudo-profiles-client.html"><span>Default</span><wbr></wbr><span>Sudo</span><wbr></wbr><span>Profiles</span><wbr></wbr><span><span>Client</span></span></a></div>
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="">Constructors</h2>
+        <div class="table"><a data-name="-1503586884%2FConstructors%2F-1029766263" anchor-label="DefaultSudoProfilesClient" id="-1503586884%2FConstructors%2F-1029766263" data-filterable-set=":sudoprofiles:dokkaHtml/release"></a>
+          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-default-sudo-profiles-client.html"><span>Default</span><wbr></wbr><span>Sudo</span><wbr></wbr><span>Profiles</span><wbr></wbr><span><span>Client</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1503586884%2FConstructors%2F-1029766263"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="-default-sudo-profiles-client.html"><span class="token function">DefaultSudoProfilesClient</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">context<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a><span class="token punctuation">, </span></span><span class="parameter ">sudoUserClient<span class="token operator">: </span><span data-unresolved-link="com.sudoplatform.sudouser/SudoUserClient///PointingToDeclaration/">SudoUserClient</span><span class="token punctuation">, </span></span><span class="parameter ">blobContainerURI<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/net/Uri.html">Uri</a><span class="token punctuation">, </span></span><span class="parameter ">logger<span class="token operator">: </span><span data-unresolved-link="com.sudoplatform.sudologging/Logger///PointingToDeclaration/">Logger</span><span class="token operator"> = </span>DefaultLogger.instance<span class="token punctuation">, </span></span><span class="parameter ">config<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/org/json/JSONObject.html">JSONObject</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">maxSudos<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">10</span><span class="token punctuation">, </span></span><span class="parameter ">graphQLClient<span class="token operator">: </span><span data-unresolved-link="com.amazonaws.mobileconnectors.appsync/AWSAppSyncClient///PointingToDeclaration/">AWSAppSyncClient</span><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">s3Client<span class="token operator">: </span><a href="../-s3-client/index.html">S3Client</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">queryCache<span class="token operator">: </span><a href="../-query-cache/index.html">QueryCache</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">idGenerator<span class="token operator">: </span><a href="../-id-generator/index.html">IdGenerator</a><span class="token operator"> = </span>DefaultIdGenerator()<span class="token punctuation">, </span></span><span class="parameter ">cryptoProvider<span class="token operator">: </span><a href="../-crypto-provider/index.html">CryptoProvider</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">namespace<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator"> = </span>DEFAULT_KEY_NAMESPACE<span class="token punctuation">, </span></span><span class="parameter ">databaseName<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator"> = </span>AndroidSQLiteStore.DEFAULT_DATABASE_NAME</span></span><span class="token punctuation">)</span></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">context<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a><span class="token punctuation">, </span></span><span class="parameter ">sudoUserClient<span class="token operator">: </span><span data-unresolved-link="com.sudoplatform.sudouser/SudoUserClient///PointingToDeclaration/">SudoUserClient</span><span class="token punctuation">, </span></span><span class="parameter ">blobContainerURI<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/net/Uri.html">Uri</a><span class="token punctuation">, </span></span><span class="parameter ">logger<span class="token operator">: </span><span data-unresolved-link="com.sudoplatform.sudologging/Logger///PointingToDeclaration/">Logger</span><span class="token operator"> = </span>DefaultLogger.instance<span class="token punctuation">, </span></span><span class="parameter ">config<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/org/json/JSONObject.html">JSONObject</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">maxSudos<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">10</span><span class="token punctuation">, </span></span><span class="parameter ">graphQLClient<span class="token operator">: </span><span data-unresolved-link="com.amazonaws.mobileconnectors.appsync/AWSAppSyncClient///PointingToDeclaration/">AWSAppSyncClient</span><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">s3Client<span class="token operator">: </span><a href="../-s3-client/index.html">S3Client</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">queryCache<span class="token operator">: </span><a href="../-query-cache/index.html">QueryCache</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">idGenerator<span class="token operator">: </span><a href="../-id-generator/index.html">IdGenerator</a><span class="token operator"> = </span>DefaultIdGenerator()<span class="token punctuation">, </span></span><span class="parameter ">cryptoProvider<span class="token operator">: </span><a href="../-crypto-provider/index.html">CryptoProvider</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">namespace<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator"> = </span>DEFAULT_KEY_NAMESPACE<span class="token punctuation">, </span></span><span class="parameter ">databaseName<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator"> = </span>AndroidSQLiteStore.DEFAULT_DATABASE_NAME</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <h2 class="">Types</h2>
-      <div class="table" data-togglable="Types"><a data-name="1094992039%2FClasslikes%2F-1029766263" anchor-label="Companion" id="1094992039%2FClasslikes%2F-1029766263" data-filterable-set=":sudoprofiles:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="-companion/index.html"><span><span>Companion</span></span></a></div>
+      <div data-togglable="TYPE">
+        <h2 class="">Types</h2>
+        <div class="table"><a data-name="1094992039%2FClasslikes%2F-1029766263" anchor-label="Companion" id="1094992039%2FClasslikes%2F-1029766263" data-filterable-set=":sudoprofiles:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-companion/index.html"><span><span>Companion</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1094992039%2FClasslikes%2F-1029766263"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">object </span><a href="-companion/index.html">Companion</a></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">object </span><a href="-companion/index.html">Companion</a></div></div></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <h2 class="">Functions</h2>
-      <div class="table" data-togglable="Functions"><a data-name="334521710%2FFunctions%2F-1029766263" anchor-label="createSudo" id="334521710%2FFunctions%2F-1029766263" data-filterable-set=":sudoprofiles:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="create-sudo.html"><span>create</span><wbr></wbr><span><span>Sudo</span></span></a></div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="334521710%2FFunctions%2F-1029766263" anchor-label="createSudo" id="334521710%2FFunctions%2F-1029766263" data-filterable-set=":sudoprofiles:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="create-sudo.html"><span>create</span><wbr></wbr><span><span>Sudo</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="334521710%2FFunctions%2F-1029766263"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="create-sudo.html"><span class="token function">createSudo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">sudo<span class="token operator">: </span><a href="../-sudo/index.html">Sudo</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-sudo/index.html">Sudo</a></div><div class="brief "><p class="paragraph">Creates a new Sudo</p></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="create-sudo.html"><span class="token function">createSudo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">sudo<span class="token operator">: </span><a href="../-sudo/index.html">Sudo</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-sudo/index.html">Sudo</a></div><div class="brief "><p class="paragraph">Creates a new Sudo</p></div></div></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 <a data-name="-1095457057%2FFunctions%2F-1029766263" anchor-label="deleteSudo" id="-1095457057%2FFunctions%2F-1029766263" data-filterable-set=":sudoprofiles:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="delete-sudo.html"><span>delete</span><wbr></wbr><span><span>Sudo</span></span></a></div>
+          <div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="delete-sudo.html"><span>delete</span><wbr></wbr><span><span>Sudo</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1095457057%2FFunctions%2F-1029766263"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="delete-sudo.html"><span class="token function">deleteSudo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">sudo<span class="token operator">: </span><a href="../-sudo/index.html">Sudo</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Deletes a Sudo.</p></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="delete-sudo.html"><span class="token function">deleteSudo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">sudo<span class="token operator">: </span><a href="../-sudo/index.html">Sudo</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Deletes a Sudo.</p></div></div></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 <a data-name="1796310447%2FFunctions%2F-1029766263" anchor-label="exportEncryptionKeys" id="1796310447%2FFunctions%2F-1029766263" data-filterable-set=":sudoprofiles:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="export-encryption-keys.html"><span>export</span><wbr></wbr><span>Encryption</span><wbr></wbr><span><span>Keys</span></span></a></div>
+          <div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="export-encryption-keys.html"><span>export</span><wbr></wbr><span>Encryption</span><wbr></wbr><span><span>Keys</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1796310447%2FFunctions%2F-1029766263"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="export-encryption-keys.html"><span class="token function">exportEncryptionKeys</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-encryption-key/index.html">EncryptionKey</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Export encryption keys used for encrypting and decrypting Sudo claims.</p></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="export-encryption-keys.html"><span class="token function">exportEncryptionKeys</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-encryption-key/index.html">EncryptionKey</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Export encryption keys used for encrypting and decrypting Sudo claims.</p></div></div></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 <a data-name="2092392537%2FFunctions%2F-1029766263" anchor-label="generateEncryptionKey" id="2092392537%2FFunctions%2F-1029766263" data-filterable-set=":sudoprofiles:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="generate-encryption-key.html"><span>generate</span><wbr></wbr><span>Encryption</span><wbr></wbr><span><span>Key</span></span></a></div>
+          <div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="generate-encryption-key.html"><span>generate</span><wbr></wbr><span>Encryption</span><wbr></wbr><span><span>Key</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2092392537%2FFunctions%2F-1029766263"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="generate-encryption-key.html"><span class="token function">generateEncryptionKey</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">Generate an encryption key to use for encrypting Sudo claims. Any existing keys are not removed to be able to decrypt existing claims but new claims will be encrypted using the newly generated key.</p></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="generate-encryption-key.html"><span class="token function">generateEncryptionKey</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">Generate an encryption key to use for encrypting Sudo claims. Any existing keys are not removed to be able to decrypt existing claims but new claims will be encrypted using the newly generated key.</p></div></div></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 <a data-name="2131502455%2FFunctions%2F-1029766263" anchor-label="getOwnershipProof" id="2131502455%2FFunctions%2F-1029766263" data-filterable-set=":sudoprofiles:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="get-ownership-proof.html"><span>get</span><wbr></wbr><span>Ownership</span><wbr></wbr><span><span>Proof</span></span></a></div>
+          <div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-ownership-proof.html"><span>get</span><wbr></wbr><span>Ownership</span><wbr></wbr><span><span>Proof</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2131502455%2FFunctions%2F-1029766263"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-ownership-proof.html"><span class="token function">getOwnershipProof</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">sudo<span class="token operator">: </span><a href="../-sudo/index.html">Sudo</a><span class="token punctuation">, </span></span><span class="parameter ">audience<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">Retrieves a signed ownership proof for the specified owner. The ownership proof JWT has the following payload. { &quot;jti&quot;: &quot;DBEEF4EB-F84A-4AB7-A45E-02B05B93F5A3&quot;, &quot;owner&quot;: &quot;cd73a478-23bd-4c70-8c2b-1403e2085845&quot;, &quot;iss&quot;: &quot;sudoplatform.sudoservice&quot;, &quot;aud&quot;: &quot;sudoplatform.virtualcardservice&quot;, &quot;exp&quot;: 1578986266, &quot;sub&quot;: &quot;da17f346-cf49-4db4-98c2-862f85515fc4&quot;, &quot;iat&quot;: 1578982666 }</p></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-ownership-proof.html"><span class="token function">getOwnershipProof</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">sudo<span class="token operator">: </span><a href="../-sudo/index.html">Sudo</a><span class="token punctuation">, </span></span><span class="parameter ">audience<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">Retrieves a signed ownership proof for the specified owner. The ownership proof JWT has the following payload. { &quot;jti&quot;: &quot;DBEEF4EB-F84A-4AB7-A45E-02B05B93F5A3&quot;, &quot;owner&quot;: &quot;cd73a478-23bd-4c70-8c2b-1403e2085845&quot;, &quot;iss&quot;: &quot;sudoplatform.sudoservice&quot;, &quot;aud&quot;: &quot;sudoplatform.virtualcardservice&quot;, &quot;exp&quot;: 1578986266, &quot;sub&quot;: &quot;da17f346-cf49-4db4-98c2-862f85515fc4&quot;, &quot;iat&quot;: 1578982666 }</p></div></div></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 <a data-name="-1588993369%2FFunctions%2F-1029766263" anchor-label="getSymmetricKeyId" id="-1588993369%2FFunctions%2F-1029766263" data-filterable-set=":sudoprofiles:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="get-symmetric-key-id.html"><span>get</span><wbr></wbr><span>Symmetric</span><wbr></wbr><span>Key</span><wbr></wbr><span><span>Id</span></span></a></div>
+          <div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-symmetric-key-id.html"><span>get</span><wbr></wbr><span>Symmetric</span><wbr></wbr><span>Key</span><wbr></wbr><span><span>Id</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1588993369%2FFunctions%2F-1029766263"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-symmetric-key-id.html"><span class="token function">getSymmetricKeyId</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Get the current (most recently generated) symmetric key ID used for encryption.</p></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-symmetric-key-id.html"><span class="token function">getSymmetricKeyId</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Get the current (most recently generated) symmetric key ID used for encryption.</p></div></div></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 <a data-name="-1978676395%2FFunctions%2F-1029766263" anchor-label="importEncryptionKeys" id="-1978676395%2FFunctions%2F-1029766263" data-filterable-set=":sudoprofiles:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="import-encryption-keys.html"><span>import</span><wbr></wbr><span>Encryption</span><wbr></wbr><span><span>Keys</span></span></a></div>
+          <div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="import-encryption-keys.html"><span>import</span><wbr></wbr><span>Encryption</span><wbr></wbr><span><span>Keys</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1978676395%2FFunctions%2F-1029766263"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="import-encryption-keys.html"><span class="token function">importEncryptionKeys</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">keys<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-encryption-key/index.html">EncryptionKey</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">currentKeyId<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Import encryption keys to use for encrypting and decrypting Sudo claims. All existing keys will be removed before the new keys are imported.</p></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="import-encryption-keys.html"><span class="token function">importEncryptionKeys</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">keys<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-encryption-key/index.html">EncryptionKey</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">currentKeyId<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Import encryption keys to use for encrypting and decrypting Sudo claims. All existing keys will be removed before the new keys are imported.</p></div></div></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 <a data-name="-734003313%2FFunctions%2F-1029766263" anchor-label="listSudos" id="-734003313%2FFunctions%2F-1029766263" data-filterable-set=":sudoprofiles:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="list-sudos.html"><span>list</span><wbr></wbr><span><span>Sudos</span></span></a></div>
+          <div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="list-sudos.html"><span>list</span><wbr></wbr><span><span>Sudos</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-734003313%2FFunctions%2F-1029766263"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="list-sudos.html"><span class="token function">listSudos</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">option<span class="token operator">: </span><a href="../-list-option/index.html">ListOption</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-sudo/index.html">Sudo</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Retrieves all Sudos owned by the signed in user.</p></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="list-sudos.html"><span class="token function">listSudos</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">option<span class="token operator">: </span><a href="../-list-option/index.html">ListOption</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-sudo/index.html">Sudo</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Retrieves all Sudos owned by the signed in user.</p></div></div></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 <a data-name="-1674452367%2FFunctions%2F-1029766263" anchor-label="reset" id="-1674452367%2FFunctions%2F-1029766263" data-filterable-set=":sudoprofiles:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="reset.html"><span><span>reset</span></span></a></div>
+          <div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="reset.html"><span><span>reset</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1674452367%2FFunctions%2F-1029766263"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="reset.html"><span class="token function">reset</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Reset any internal state and cached content.</p></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="reset.html"><span class="token function">reset</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Reset any internal state and cached content.</p></div></div></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 <a data-name="947047778%2FFunctions%2F-1029766263" anchor-label="subscribeAsync" id="947047778%2FFunctions%2F-1029766263" data-filterable-set=":sudoprofiles:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="subscribe-async.html"><span>subscribe</span><wbr></wbr><span><span>Async</span></span></a></div>
+          <div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="subscribe-async.html"><span>subscribe</span><wbr></wbr><span><span>Async</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="947047778%2FFunctions%2F-1029766263"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="subscribe-async.html"><span class="token function">subscribeAsync</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">subscriber<span class="token operator">: </span><a href="../-sudo-subscriber/index.html">SudoSubscriber</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Subscribes to be notified of new, updated and deleted Sudos. Blob data is not downloaded automatically so the caller is expected to use <code class="lang-kotlin">listSudos</code> API if they need to access any associated blobs.</p></div><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="subscribe-async.html"><span class="token function">subscribeAsync</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">changeType<span class="token operator">: </span><a href="../-sudo-subscriber/-change-type/index.html">SudoSubscriber.ChangeType</a><span class="token punctuation">, </span></span><span class="parameter ">subscriber<span class="token operator">: </span><a href="../-sudo-subscriber/index.html">SudoSubscriber</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Subscribes to be notified of new, updated or deleted Sudos. Blob data is not downloaded automatically so the caller is expected to use <code class="lang-kotlin">listSudos</code> API if they need to access any associated blobs.</p></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="subscribe-async.html"><span class="token function">subscribeAsync</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">subscriber<span class="token operator">: </span><a href="../-sudo-subscriber/index.html">SudoSubscriber</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Subscribes to be notified of new, updated and deleted Sudos. Blob data is not downloaded automatically so the caller is expected to use <code class="lang-kotlin">listSudos</code> API if they need to access any associated blobs.</p></div><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="subscribe-async.html"><span class="token function">subscribeAsync</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">changeType<span class="token operator">: </span><a href="../-sudo-subscriber/-change-type/index.html">SudoSubscriber.ChangeType</a><span class="token punctuation">, </span></span><span class="parameter ">subscriber<span class="token operator">: </span><a href="../-sudo-subscriber/index.html">SudoSubscriber</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Subscribes to be notified of new, updated or deleted Sudos. Blob data is not downloaded automatically so the caller is expected to use <code class="lang-kotlin">listSudos</code> API if they need to access any associated blobs.</p></div></div></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 <a data-name="-1464419882%2FFunctions%2F-1029766263" anchor-label="unsubscribe" id="-1464419882%2FFunctions%2F-1029766263" data-filterable-set=":sudoprofiles:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="unsubscribe.html"><span><span>unsubscribe</span></span></a></div>
+          <div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="unsubscribe.html"><span><span>unsubscribe</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1464419882%2FFunctions%2F-1029766263"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="unsubscribe.html"><span class="token function">unsubscribe</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Unsubscribes the specified subscriber so that it no longer receives change notifications.</p></div><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="unsubscribe.html"><span class="token function">unsubscribe</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">changeType<span class="token operator">: </span><a href="../-sudo-subscriber/-change-type/index.html">SudoSubscriber.ChangeType</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Unsubscribes the specified subscriber so that it no longer receives notifications about new, updated or deleted Sudos.</p></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="unsubscribe.html"><span class="token function">unsubscribe</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Unsubscribes the specified subscriber so that it no longer receives change notifications.</p></div><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="unsubscribe.html"><span class="token function">unsubscribe</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">changeType<span class="token operator">: </span><a href="../-sudo-subscriber/-change-type/index.html">SudoSubscriber.ChangeType</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Unsubscribes the specified subscriber so that it no longer receives notifications about new, updated or deleted Sudos.</p></div></div></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 <a data-name="-1952162070%2FFunctions%2F-1029766263" anchor-label="unsubscribeAll" id="-1952162070%2FFunctions%2F-1029766263" data-filterable-set=":sudoprofiles:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="unsubscribe-all.html"><span>unsubscribe</span><wbr></wbr><span><span>All</span></span></a></div>
+          <div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="unsubscribe-all.html"><span>unsubscribe</span><wbr></wbr><span><span>All</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1952162070%2FFunctions%2F-1029766263"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="unsubscribe-all.html"><span class="token function">unsubscribeAll</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Unsubscribe all subscribers from receiving notifications about new, updated or deleted Sudos.</p></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="unsubscribe-all.html"><span class="token function">unsubscribeAll</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Unsubscribe all subscribers from receiving notifications about new, updated or deleted Sudos.</p></div></div></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 <a data-name="-150009855%2FFunctions%2F-1029766263" anchor-label="updateSudo" id="-150009855%2FFunctions%2F-1029766263" data-filterable-set=":sudoprofiles:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="update-sudo.html"><span>update</span><wbr></wbr><span><span>Sudo</span></span></a></div>
+          <div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="update-sudo.html"><span>update</span><wbr></wbr><span><span>Sudo</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-150009855%2FFunctions%2F-1029766263"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="update-sudo.html"><span class="token function">updateSudo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">sudo<span class="token operator">: </span><a href="../-sudo/index.html">Sudo</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-sudo/index.html">Sudo</a></div><div class="brief "><p class="paragraph">Updates a Sudo.</p></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="update-sudo.html"><span class="token function">updateSudo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">sudo<span class="token operator">: </span><a href="../-sudo/index.html">Sudo</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-sudo/index.html">Sudo</a></div><div class="brief "><p class="paragraph">Updates a Sudo.</p></div></div></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <h2 class="">Properties</h2>
-      <div class="table" data-togglable="Properties"><a data-name="496796232%2FProperties%2F-1029766263" anchor-label="version" id="496796232%2FProperties%2F-1029766263" data-filterable-set=":sudoprofiles:dokkaHtml/release"></a>
-        <div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
-          <div class="main-subrow keyValue ">
-            <div class=""><span class="inline-flex">
-                <div><a href="version.html"><span><span>version</span></span></a></div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="496796232%2FProperties%2F-1029766263" anchor-label="version" id="496796232%2FProperties%2F-1029766263" data-filterable-set=":sudoprofiles:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":sudoprofiles:dokkaHtml/release" data-filterable-set=":sudoprofiles:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="version.html"><span><span>version</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="496796232%2FProperties%2F-1029766263"></span>
-                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                </span></span></div>
-            <div>
-              <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><a data-name="496796232%2FProperties%2F-1029766263" anchor-label="version" id="496796232%2FProperties%2F-1029766263" data-filterable-set=":sudoprofiles:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="version.html">version</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><a data-name="496796232%2FProperties%2F-1029766263" anchor-label="version" id="496796232%2FProperties%2F-1029766263" data-filterable-set=":sudoprofiles:dokkaHtml/release"></a><p class="paragraph">Client version.</p></div></div></div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":sudoprofiles:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="version.html">version</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">Client version.</p></div></div></div>
+                </div>
               </div>
             </div>
           </div>

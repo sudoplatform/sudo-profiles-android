@@ -20,8 +20,8 @@ open class SudoProfileException(message: String? = null, cause: Throwable? = nul
         private const val GRAPHQL_ERROR_SERVER_ERROR = "sudoplatform.sudo.ServerError"
 
         /**
-        * Convert from a GraphQL [Error] into a custom exception of type [SudoProfileException]
-        */
+         * Convert from a GraphQL [Error] into a custom exception of type [SudoProfileException]
+         */
         fun Error.toSudoProfileException(): SudoProfileException {
             val logger = DefaultLogger.instance
             logger.error("GraphQL error received: $this")

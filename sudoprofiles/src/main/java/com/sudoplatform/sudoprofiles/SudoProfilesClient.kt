@@ -69,13 +69,16 @@ interface SudoProfilesClient {
         /**
          * Creates a [Builder] for [SudoProfilesClient].
          */
-        fun builder(context: Context,
-                    sudoUserClient: SudoUserClient,
-                    blobContainerURI: Uri) =
+        fun builder(
+            context: Context,
+            sudoUserClient: SudoUserClient,
+            blobContainerURI: Uri
+        ) =
             Builder(
                 context,
                 sudoUserClient,
-                blobContainerURI)
+                blobContainerURI
+            )
     }
 
     /**
@@ -168,7 +171,6 @@ interface SudoProfilesClient {
          * Constructs and returns an [SudoProfilesClient].
          */
         fun build(): SudoProfilesClient {
-
             val graphQLClient = this.graphQLClient ?: ApiClientManager.getClient(
                 this.context,
                 this.sudoUserClient
@@ -191,12 +193,12 @@ interface SudoProfilesClient {
                 sudoServiceConfig.opt(CONFIG_BUCKET) as String? ?: identityServiceConfig.opt(
                     CONFIG_BUCKET
                 ) as String?
-                ?: throw SudoProfileException.InvalidConfigException("Bucket name missing.")
+                    ?: throw SudoProfileException.InvalidConfigException("Bucket name missing.")
             val region =
                 sudoServiceConfig.opt(CONFIG_REGION) as String? ?: identityServiceConfig.opt(
                     CONFIG_REGION
                 ) as String?
-                ?: throw SudoProfileException.InvalidConfigException("Region missing.")
+                    ?: throw SudoProfileException.InvalidConfigException("Region missing.")
 
             return DefaultSudoProfilesClient(
                 this.context,
@@ -206,10 +208,10 @@ interface SudoProfilesClient {
                 this.config,
                 this.maxSudos,
                 graphQLClient,
-                this.s3Client ?:
-                    DefaultS3Client(this.context, this.sudoUserClient, region, bucket),
-                this.queryCache ?:
-                    DefaultQueryCache(graphQLClient),
+                this.s3Client
+                    ?: DefaultS3Client(this.context, this.sudoUserClient, region, bucket),
+                this.queryCache
+                    ?: DefaultQueryCache(graphQLClient),
                 this.idGenerator,
                 this.cryptoProvider,
                 this.namespace ?: DEFAULT_KEY_NAMESPACE,
@@ -401,7 +403,7 @@ class DefaultSudoProfilesClient constructor(
         private const val DEFAULT_KEY_NAMESPACE = "ss"
     }
 
-    override val version: String = "11.0.0"
+    override val version: String = "12.0.0"
 
     /**
      * GraphQL client used for calling Sudo service API.
@@ -490,8 +492,7 @@ class DefaultSudoProfilesClient constructor(
         this.onDeleteSudoSubscriptionManager = SubscriptionManager()
     }
 
-    override suspend fun createSudo(sudo: Sudo): Sudo
-    {
+    override suspend fun createSudo(sudo: Sudo): Sudo {
         this.logger.info("Creating a Sudo.")
 
         val keyId = this.cryptoProvider.getSymmetricKeyId()
@@ -512,7 +513,7 @@ class DefaultSudoProfilesClient constructor(
             val response = this.graphQLClient.mutate(mutation)
                 .enqueue()
 
-            if(response.hasErrors()) {
+            if (response.hasErrors()) {
                 throw response.errors().first().toSudoProfileException()
             }
 
@@ -528,11 +529,11 @@ class DefaultSudoProfilesClient constructor(
                 throw SudoProfileException.FailedException("Mutation succeeded but output was null.")
             }
         } catch (e: Exception) {
-           throw e.toFailedExceptionOrThrow()
+            throw e.toFailedExceptionOrThrow()
         }
     }
 
-    override suspend fun updateSudo(sudo: Sudo) : Sudo {
+    override suspend fun updateSudo(sudo: Sudo): Sudo {
         this.logger.info("Updating a Sudo.")
 
         val sudoId = sudo.id
@@ -546,7 +547,7 @@ class DefaultSudoProfilesClient constructor(
             val secureS3Objects: MutableList<SecureS3ObjectInput> = mutableListOf()
 
             for ((name, claim) in sudo.claims) {
-                if(claim.visibility === Claim.Visibility.PRIVATE) {
+                if (claim.visibility === Claim.Visibility.PRIVATE) {
                     when (claim.value) {
                         is Claim.Value.BlobValue -> {
                             val file = claim.value.value.normalizeScheme().toFile()
@@ -624,12 +625,12 @@ class DefaultSudoProfilesClient constructor(
             val response = this.graphQLClient.mutate(mutation)
                 .enqueue()
 
-            if(response.hasErrors()) {
+            if (response.hasErrors()) {
                 throw response.errors().first().toSudoProfileException()
             }
 
             val output = response.data()?.updateSudo()
-            if(output != null) {
+            if (output != null) {
                 sudo.id = output.id()
                 sudo.version = output.version()
                 sudo.createdAt = Date(output.createdAtEpochMs().toLong())
@@ -670,7 +671,7 @@ class DefaultSudoProfilesClient constructor(
             val response = this.graphQLClient.mutate(mutation)
                 .enqueue()
 
-            if(response.hasErrors()) {
+            if (response.hasErrors()) {
                 throw response.errors().first().toSudoProfileException()
             }
         } catch (e: Exception) {
@@ -678,7 +679,7 @@ class DefaultSudoProfilesClient constructor(
         }
     }
 
-    override suspend fun listSudos(option: ListOption) : List<Sudo> {
+    override suspend fun listSudos(option: ListOption): List<Sudo> {
         this.logger.info("Listing Sudos.")
 
         try {
@@ -698,7 +699,7 @@ class DefaultSudoProfilesClient constructor(
                 .responseFetcher(responseFetcher)
                 .enqueue()
 
-            if(response.hasErrors()) {
+            if (response.hasErrors()) {
                 throw response.errors().first().toSudoProfileException()
             }
 
@@ -715,7 +716,6 @@ class DefaultSudoProfilesClient constructor(
             }
 
             return sudos
-
         } catch (e: Exception) {
             throw e.toFailedExceptionOrThrow()
         }
@@ -729,7 +729,7 @@ class DefaultSudoProfilesClient constructor(
         this.cryptoProvider.reset()
     }
 
-    override suspend fun getOwnershipProof(sudo: Sudo, audience: String) : String {
+    override suspend fun getOwnershipProof(sudo: Sudo, audience: String): String {
         this.logger.info("Getting a Sudo ownership proof.")
 
         val sudoId = sudo.id
@@ -742,17 +742,16 @@ class DefaultSudoProfilesClient constructor(
                 .audience(audience)
                 .build()
 
-            val mutation = GetOwnershipProofMutation.
-                builder()
+            val mutation = GetOwnershipProofMutation
+                .builder()
                 .input(input)
                 .build()
-
 
             val response = this.graphQLClient.mutate(mutation)
                 .enqueue()
 
-            if(response.hasErrors()) {
-                 throw response.errors().first().toSudoProfileException()
+            if (response.hasErrors()) {
+                throw response.errors().first().toSudoProfileException()
             }
 
             val output = response.data()?.ownershipProof
@@ -761,7 +760,6 @@ class DefaultSudoProfilesClient constructor(
             } else {
                 throw SudoProfileException.FailedException("Mutation succeeded but output was null.")
             }
-
         } catch (e: Exception) {
             throw e.toFailedExceptionOrThrow()
         }
@@ -789,7 +787,6 @@ class DefaultSudoProfilesClient constructor(
             SudoSubscriber.ChangeType.CREATE -> {
                 this.onCreateSudoSubscriptionManager.replaceSubscriber(id, subscriber)
                 if (this.onCreateSudoSubscriptionManager.watcher == null) {
-
                     val subscription = OnCreateSudoSubscription
                         .builder()
                         .owner(owner)
@@ -809,7 +806,6 @@ class DefaultSudoProfilesClient constructor(
             SudoSubscriber.ChangeType.DELETE -> {
                 this.onDeleteSudoSubscriptionManager.replaceSubscriber(id, subscriber)
                 if (this.onDeleteSudoSubscriptionManager.watcher == null) {
-
                     val subscription = OnDeleteSudoSubscription
                         .builder()
                         .owner(owner)
@@ -829,7 +825,6 @@ class DefaultSudoProfilesClient constructor(
             SudoSubscriber.ChangeType.UPDATE -> {
                 this.onUpdateSudoSubscriptionManager.replaceSubscriber(id, subscriber)
                 if (this.onUpdateSudoSubscriptionManager.watcher == null) {
-
                     val subscription = OnUpdateSudoSubscription
                         .builder()
                         .owner(owner)
@@ -1077,7 +1072,8 @@ class DefaultSudoProfilesClient constructor(
                                             this@DefaultSudoProfilesClient.getCachedQueryItems()
                                         if (items != null) {
                                             this@DefaultSudoProfilesClient.replaceCachedQueryItems(
-                                                items.filter { element -> element.id != listSudosQueryItem.id() })
+                                                items.filter { element -> element.id != listSudosQueryItem.id() }
+                                            )
                                         }
 
                                         this@DefaultSudoProfilesClient.onDeleteSudoSubscriptionManager.sudoChanged(
@@ -1097,7 +1093,6 @@ class DefaultSudoProfilesClient constructor(
     }
 
     private fun executeCreateSudoSubscriptionWatcher() {
-
         this@DefaultSudoProfilesClient.onCreateSudoSubscriptionManager.watcher?.execute(
             object :
                 AppSyncSubscriptionCall.Callback<OnCreateSudoSubscription.Data> {
@@ -1198,7 +1193,7 @@ class DefaultSudoProfilesClient constructor(
         )
     }
 
-    private fun mapSudo(updateSudo: UpdateSudoMutation.UpdateSudo) : ListSudosQuery.Item {
+    private fun mapSudo(updateSudo: UpdateSudoMutation.UpdateSudo): ListSudosQuery.Item {
         return ListSudosQuery.Item(
             "Sudo",
             updateSudo.id,
@@ -1290,7 +1285,7 @@ class DefaultSudoProfilesClient constructor(
     }
 
     private suspend fun getSudo(id: String): Sudo? {
-        return listSudos(ListOption.CACHE_ONLY).firstOrNull() { it.id == id}
+        return listSudos(ListOption.CACHE_ONLY).firstOrNull() { it.id == id }
     }
 
     private suspend fun deleteSecureS3Objects(sudoId: String) {
@@ -1417,13 +1412,12 @@ class DefaultSudoProfilesClient constructor(
     }
 
     private suspend fun getCachedQueryItems(): List<ListSudosQuery.Item>? {
-
         val response =
             this.graphQLClient.query(this@DefaultSudoProfilesClient.defaultQuery)
                 .responseFetcher(AppSyncResponseFetchers.CACHE_ONLY)
                 .enqueue()
 
-        if(response.hasErrors()) {
+        if (response.hasErrors()) {
             throw response.errors().first().toSudoProfileException()
         }
 

@@ -6,7 +6,7 @@
 
 package com.sudoplatform.sudoprofiles.exceptions
 
-sealed class S3Exception(message: String? = null, cause: Throwable? = null) :  SudoProfileException(message, cause) {
+sealed class S3Exception(message: String? = null, cause: Throwable? = null) : SudoProfileException(message, cause) {
 
     /**
      * Exception thrown when error occurs uploading items to S3 using the TransferListener

@@ -47,7 +47,6 @@ interface SudoSubscriber {
          * unsubscribed so the consumer must re-subscribe.
          */
         DISCONNECTED
-
     }
 
     /**

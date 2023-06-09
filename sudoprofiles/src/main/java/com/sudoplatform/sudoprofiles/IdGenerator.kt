@@ -20,16 +20,14 @@ interface IdGenerator {
      * @return UUID.
      */
     fun generateId(): String
-
 }
 
 /**
  * Default ID generator implementation.
  */
-class DefaultIdGenerator: IdGenerator {
+class DefaultIdGenerator : IdGenerator {
 
     override fun generateId(): String {
         return UUID.randomUUID().toString().uppercase(Locale.ROOT)
     }
-
 }

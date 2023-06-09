@@ -20,12 +20,12 @@ data class Claim(
     val name: String,
     val visibility: Visibility,
     val value: Value
-): Serializable {
+) : Serializable {
 
     /**
      * Claim value.
      */
-    sealed class Value: Serializable {
+    sealed class Value : Serializable {
         /**
          * String value.
          */
@@ -58,14 +58,13 @@ data class Claim(
          * Claim is only accessible by the user, i.e. it's encrypted using the user's key.
          */
         PRIVATE,
+
         /**
          * Claim is accessible by other users in Sudo platform.
          */
         PUBLIC
     }
-
 }
-
 
 /**
  * Represents a Sudo.
@@ -84,7 +83,7 @@ data class Sudo(
     var updatedAt: Date = Date(0),
     var claims: MutableMap<String, Claim> = mutableMapOf(),
     var metadata: MutableMap<String, String> = mutableMapOf()
-): Serializable {
+) : Serializable {
 
     companion object {
         private const val TITLE = "title"
@@ -167,6 +166,7 @@ data class Sudo(
                 this.claims[AVATAR] = claim
             }
         }
+
     /**
      * External ID associated with this Sudo.
      */
@@ -183,7 +183,7 @@ data class Sudo(
      * @param notes notes.
      * @param avatar avatar image URI.
      */
-    constructor(title: String?, firstName: String?, lastName: String?, label: String?, notes: String?, avatar: Uri?): this() {
+    constructor(title: String?, firstName: String?, lastName: String?, label: String?, notes: String?, avatar: Uri?) : this() {
         this.title = title
         this.firstName = firstName
         this.lastName = lastName
