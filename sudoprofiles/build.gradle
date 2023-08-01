@@ -109,7 +109,7 @@ dependencies {
     implementation 'com.sudoplatform:sudologging:3.0.0'
     implementation 'com.sudoplatform:sudoconfigmanager:6.0.0'
     implementation 'com.sudoplatform:sudouser:17.0.0'
-    implementation 'com.sudoplatform:sudoapiclient:7.0.0'
+    implementation 'com.sudoplatform:sudoapiclient:8.0.0'
 
     // Testing
     testImplementation 'junit:junit:4.13.2'
@@ -124,7 +124,7 @@ dependencies {
     androidTestImplementation 'androidx.test:rules:1.5.0'
     androidTestImplementation 'androidx.test:monitor:1.6.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation 'com.sudoplatform:sudoentitlements:7.0.0'
+    androidTestImplementation 'com.sudoplatform:sudoentitlements:8.0.1'
 }
 
 task jacocoTestReport(type: JacocoReport, dependsOn: "testDebugUnitTest") {

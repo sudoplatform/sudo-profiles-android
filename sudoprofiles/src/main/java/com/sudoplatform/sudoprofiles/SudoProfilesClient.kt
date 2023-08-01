@@ -403,7 +403,7 @@ class DefaultSudoProfilesClient constructor(
         private const val DEFAULT_KEY_NAMESPACE = "ss"
     }
 
-    override val version: String = "12.0.0"
+    override val version: String = "13.0.1"
 
     /**
      * GraphQL client used for calling Sudo service API.
