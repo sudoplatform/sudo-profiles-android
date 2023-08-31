@@ -786,59 +786,47 @@ class DefaultSudoProfilesClient constructor(
         when (changeType) {
             SudoSubscriber.ChangeType.CREATE -> {
                 this.onCreateSudoSubscriptionManager.replaceSubscriber(id, subscriber)
-                if (this.onCreateSudoSubscriptionManager.watcher == null) {
+                if (this.onCreateSudoSubscriptionManager.watcher == null &&
+                    this.onCreateSudoSubscriptionManager.pendingWatcher == null
+                ) {
                     val subscription = OnCreateSudoSubscription
                         .builder()
                         .owner(owner)
                         .build()
 
-                    val watcher = this.graphQLClient.subscribe(subscription)
-
-                    this.onCreateSudoSubscriptionManager.watcher = watcher
+                    this.onCreateSudoSubscriptionManager.pendingWatcher = this.graphQLClient.subscribe(subscription)
 
                     executeCreateSudoSubscriptionWatcher()
-
-                    this.onCreateSudoSubscriptionManager.connectionStatusChanged(
-                        SudoSubscriber.ConnectionState.CONNECTED
-                    )
                 }
             }
             SudoSubscriber.ChangeType.DELETE -> {
                 this.onDeleteSudoSubscriptionManager.replaceSubscriber(id, subscriber)
-                if (this.onDeleteSudoSubscriptionManager.watcher == null) {
+                if (this.onDeleteSudoSubscriptionManager.watcher == null &&
+                    this.onDeleteSudoSubscriptionManager.pendingWatcher == null
+                ) {
                     val subscription = OnDeleteSudoSubscription
                         .builder()
                         .owner(owner)
                         .build()
 
-                    val watcher = this.graphQLClient.subscribe(subscription)
-
-                    this.onDeleteSudoSubscriptionManager.watcher = watcher
+                    this.onDeleteSudoSubscriptionManager.pendingWatcher = this.graphQLClient.subscribe(subscription)
 
                     executeDeleteSudoSubscriptionWatcher()
-
-                    this@DefaultSudoProfilesClient.onDeleteSudoSubscriptionManager.connectionStatusChanged(
-                        SudoSubscriber.ConnectionState.CONNECTED
-                    )
                 }
             }
             SudoSubscriber.ChangeType.UPDATE -> {
                 this.onUpdateSudoSubscriptionManager.replaceSubscriber(id, subscriber)
-                if (this.onUpdateSudoSubscriptionManager.watcher == null) {
+                if (this.onUpdateSudoSubscriptionManager.watcher == null &&
+                    this.onUpdateSudoSubscriptionManager.pendingWatcher == null
+                ) {
                     val subscription = OnUpdateSudoSubscription
                         .builder()
                         .owner(owner)
                         .build()
 
-                    val watcher = this.graphQLClient.subscribe(subscription)
-
-                    this.onUpdateSudoSubscriptionManager.watcher = watcher
+                    this.onUpdateSudoSubscriptionManager.pendingWatcher = this.graphQLClient.subscribe(subscription)
 
                     executeUpdateSudoSubscriptionWatcher()
-
-                    this@DefaultSudoProfilesClient.onUpdateSudoSubscriptionManager.connectionStatusChanged(
-                        SudoSubscriber.ConnectionState.CONNECTED
-                    )
                 }
             }
         }
@@ -892,9 +880,9 @@ class DefaultSudoProfilesClient constructor(
     }
 
     private fun executeUpdateSudoSubscriptionWatcher() {
-        this@DefaultSudoProfilesClient.onUpdateSudoSubscriptionManager.watcher?.execute(
+        this@DefaultSudoProfilesClient.onUpdateSudoSubscriptionManager.pendingWatcher?.execute(
             object :
-                AppSyncSubscriptionCall.Callback<OnUpdateSudoSubscription.Data> {
+                AppSyncSubscriptionCall.StartedCallback<OnUpdateSudoSubscription.Data> {
                 override fun onCompleted() {
                     // Subscription was terminated. Notify the subscribers.
                     this@DefaultSudoProfilesClient.onUpdateSudoSubscriptionManager.connectionStatusChanged(
@@ -989,14 +977,23 @@ class DefaultSudoProfilesClient constructor(
                         }
                     }
                 }
+
+                override fun onStarted() {
+                    this@DefaultSudoProfilesClient
+                        .onUpdateSudoSubscriptionManager
+                        .watcher = this@DefaultSudoProfilesClient.onUpdateSudoSubscriptionManager.pendingWatcher
+                    this@DefaultSudoProfilesClient.onUpdateSudoSubscriptionManager.connectionStatusChanged(
+                        SudoSubscriber.ConnectionState.CONNECTED
+                    )
+                }
             }
         )
     }
 
     private fun executeDeleteSudoSubscriptionWatcher() {
-        this@DefaultSudoProfilesClient.onDeleteSudoSubscriptionManager.watcher?.execute(
+        this@DefaultSudoProfilesClient.onDeleteSudoSubscriptionManager.pendingWatcher?.execute(
             object :
-                AppSyncSubscriptionCall.Callback<OnDeleteSudoSubscription.Data> {
+                AppSyncSubscriptionCall.StartedCallback<OnDeleteSudoSubscription.Data> {
                 override fun onCompleted() {
                     // Subscription was terminated. Notify the subscribers.
                     this@DefaultSudoProfilesClient.onDeleteSudoSubscriptionManager.connectionStatusChanged(
@@ -1088,14 +1085,23 @@ class DefaultSudoProfilesClient constructor(
                         }
                     }
                 }
+
+                override fun onStarted() {
+                    this@DefaultSudoProfilesClient
+                        .onDeleteSudoSubscriptionManager
+                        .watcher = this@DefaultSudoProfilesClient.onDeleteSudoSubscriptionManager.pendingWatcher
+                    this@DefaultSudoProfilesClient.onDeleteSudoSubscriptionManager.connectionStatusChanged(
+                        SudoSubscriber.ConnectionState.CONNECTED
+                    )
+                }
             }
         )
     }
 
     private fun executeCreateSudoSubscriptionWatcher() {
-        this@DefaultSudoProfilesClient.onCreateSudoSubscriptionManager.watcher?.execute(
+        this.onCreateSudoSubscriptionManager.pendingWatcher?.execute(
             object :
-                AppSyncSubscriptionCall.Callback<OnCreateSudoSubscription.Data> {
+                AppSyncSubscriptionCall.StartedCallback<OnCreateSudoSubscription.Data> {
                 override fun onCompleted() {
                     // Subscription was terminated. Notify the subscribers.
                     this@DefaultSudoProfilesClient.onCreateSudoSubscriptionManager.connectionStatusChanged(
@@ -1188,6 +1194,15 @@ class DefaultSudoProfilesClient constructor(
                             this@DefaultSudoProfilesClient.logger.error("Failed to process the subscription response: $e")
                         }
                     }
+                }
+
+                override fun onStarted() {
+                    this@DefaultSudoProfilesClient
+                        .onCreateSudoSubscriptionManager
+                        .watcher = this@DefaultSudoProfilesClient.onCreateSudoSubscriptionManager.pendingWatcher
+                    this@DefaultSudoProfilesClient.onCreateSudoSubscriptionManager.connectionStatusChanged(
+                        SudoSubscriber.ConnectionState.CONNECTED
+                    )
                 }
             }
         )
