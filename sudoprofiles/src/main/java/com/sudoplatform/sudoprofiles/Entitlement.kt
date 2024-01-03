@@ -18,5 +18,5 @@ import java.io.Serializable
  */
 data class Entitlement(
     val name: String,
-    val value: Int
+    val value: Int,
 ) : Serializable

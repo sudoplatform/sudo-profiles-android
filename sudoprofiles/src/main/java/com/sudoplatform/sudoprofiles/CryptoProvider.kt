@@ -42,14 +42,15 @@ data class EncryptionKey(
     /**
      * Key version.
      */
-    val version: Int
+    val version: Int,
 ) : Serializable
 
 /**
  * Supported symmetric key algorithms.
  */
 enum class SymmetricKeyEncryptionAlgorithm(private val stringValue: String) {
-    AES_CBC_PKCS7PADDING("AES/CBC/PKCS7Padding");
+    AES_CBC_PKCS7PADDING("AES/CBC/PKCS7Padding"),
+    ;
 
     companion object {
 
@@ -86,7 +87,7 @@ interface CryptoProvider {
     fun encrypt(
         keyId: String,
         algorithm: SymmetricKeyEncryptionAlgorithm,
-        data: ByteArray
+        data: ByteArray,
     ): ByteArray
 
     /**
@@ -100,7 +101,7 @@ interface CryptoProvider {
     fun decrypt(
         keyId: String,
         algorithm: SymmetricKeyEncryptionAlgorithm,
-        data: ByteArray
+        data: ByteArray,
     ): ByteArray
 
     /**
@@ -157,14 +158,14 @@ class DefaultCryptoProvider(private val keyNamespace: String, private val databa
     override fun encrypt(
         keyId: String,
         algorithm: SymmetricKeyEncryptionAlgorithm,
-        data: ByteArray
+        data: ByteArray,
     ): ByteArray {
         val iv = this.keyManager.createRandomData(AES_BLOCK_SIZE)
         val encryptedData = this.keyManager.encryptWithSymmetricKey(
             keyId,
             data,
             iv,
-            KeyManagerInterface.SymmetricEncryptionAlgorithm.AES_CBC_PKCS7_256
+            KeyManagerInterface.SymmetricEncryptionAlgorithm.AES_CBC_PKCS7_256,
         )
 
         return encryptedData + iv
@@ -173,7 +174,7 @@ class DefaultCryptoProvider(private val keyNamespace: String, private val databa
     override fun decrypt(
         keyId: String,
         algorithm: SymmetricKeyEncryptionAlgorithm,
-        data: ByteArray
+        data: ByteArray,
     ): ByteArray {
         val encryptedData = data.copyOfRange(0, data.count() - AES_BLOCK_SIZE)
         val iv = data.copyOfRange(data.count() - AES_BLOCK_SIZE, data.count())
@@ -182,7 +183,7 @@ class DefaultCryptoProvider(private val keyNamespace: String, private val databa
             keyId,
             encryptedData,
             iv,
-            KeyManagerInterface.SymmetricEncryptionAlgorithm.AES_CBC_PKCS7_256
+            KeyManagerInterface.SymmetricEncryptionAlgorithm.AES_CBC_PKCS7_256,
         )
     }
 
@@ -227,7 +228,7 @@ class DefaultCryptoProvider(private val keyNamespace: String, private val databa
                 this.keyNamespace,
                 Base64.encodeToString(key.key, Base64.NO_WRAP),
                 SymmetricKeyEncryptionAlgorithm.AES_CBC_PKCS7PADDING.toString(),
-                1
+                1,
             )
         }
     }

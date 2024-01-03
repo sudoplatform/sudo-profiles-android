@@ -77,7 +77,7 @@ class DefaultS3Client(
     override val region: String,
     override val bucket: String,
     private val logger: Logger = DefaultLogger.instance,
-    private val idGenerator: IdGenerator = DefaultIdGenerator()
+    private val idGenerator: IdGenerator = DefaultIdGenerator(),
 ) : S3Client {
 
     private val transferUtility: TransferUtility
@@ -162,7 +162,7 @@ class DefaultS3Client(
 
             override fun onProgressChanged(id: Int, bytesCurrent: Long, bytesTotal: Long) {
                 this@DefaultS3Client.logger.debug(
-                    "S3 download progress changed: id=$id, bytesCurrent=$bytesCurrent, bytesTotal=$bytesTotal"
+                    "S3 download progress changed: id=$id, bytesCurrent=$bytesCurrent, bytesTotal=$bytesTotal",
                 )
             }
 

@@ -54,15 +54,15 @@ class DefaultQueryCache(private val graphQLClient: AWSAppSyncClient) : QueryCach
                 ListSudosQuery.ListSudos(
                     "ModelSudoConnection",
                     items,
-                    null
-                )
+                    null,
+                ),
             )
 
         // Currently `GraphQLStoreOperation.Callback` is not public so we have to assume the cache update succeeds and completes
         // quickly.
         this@DefaultQueryCache.graphQLClient.store.write(
             query,
-            data
+            data,
         ).enqueue(null)
     }
 }

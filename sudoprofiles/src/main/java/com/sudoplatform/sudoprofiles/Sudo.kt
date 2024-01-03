@@ -6,8 +6,8 @@
 
 package com.sudoplatform.sudoprofiles
 
-import java.io.Serializable
 import android.net.Uri
+import java.io.Serializable
 import java.util.Date
 
 /**
@@ -19,7 +19,7 @@ import java.util.Date
 data class Claim(
     val name: String,
     val visibility: Visibility,
-    val value: Value
+    val value: Value,
 ) : Serializable {
 
     /**
@@ -62,7 +62,7 @@ data class Claim(
         /**
          * Claim is accessible by other users in Sudo platform.
          */
-        PUBLIC
+        PUBLIC,
     }
 }
 
@@ -82,7 +82,7 @@ data class Sudo(
     var createdAt: Date = Date(0),
     var updatedAt: Date = Date(0),
     var claims: MutableMap<String, Claim> = mutableMapOf(),
-    var metadata: MutableMap<String, String> = mutableMapOf()
+    var metadata: MutableMap<String, String> = mutableMapOf(),
 ) : Serializable {
 
     companion object {

@@ -18,22 +18,22 @@ import com.apollographql.apollo.exception.ApolloException
 import com.sudoplatform.sudoapiclient.ApiClientManager
 import com.sudoplatform.sudoconfigmanager.DefaultSudoConfigManager
 import com.sudoplatform.sudokeymanager.AndroidSQLiteStore
-import com.sudoplatform.sudoprofiles.type.CreateSudoInput
-import com.sudoplatform.sudouser.SudoUserClient
-import org.json.JSONObject
-import java.util.Date
 import com.sudoplatform.sudologging.Logger
 import com.sudoplatform.sudoprofiles.exceptions.SudoProfileException
 import com.sudoplatform.sudoprofiles.exceptions.SudoProfileException.Companion.toSudoProfileException
 import com.sudoplatform.sudoprofiles.extensions.enqueue
+import com.sudoplatform.sudoprofiles.type.CreateSudoInput
 import com.sudoplatform.sudoprofiles.type.DeleteSudoInput
-import com.sudoplatform.sudoprofiles.type.UpdateSudoInput
 import com.sudoplatform.sudoprofiles.type.GetOwnershipProofInput
 import com.sudoplatform.sudoprofiles.type.SecureClaimInput
 import com.sudoplatform.sudoprofiles.type.SecureS3ObjectInput
+import com.sudoplatform.sudoprofiles.type.UpdateSudoInput
+import com.sudoplatform.sudouser.SudoUserClient
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.Dispatchers.IO
+import org.json.JSONObject
+import java.util.Date
 
 /**
  * Options for controlling the behaviour of `listSudos` API.
@@ -52,7 +52,7 @@ enum class ListOption {
     /**
      * Returns Sudos from the local cache if cache is not empty otherwise fetch from the backend.
      */
-    RETURN_CACHED_ELSE_FETCH
+    RETURN_CACHED_ELSE_FETCH,
 }
 
 /**
@@ -72,12 +72,12 @@ interface SudoProfilesClient {
         fun builder(
             context: Context,
             sudoUserClient: SudoUserClient,
-            blobContainerURI: Uri
+            blobContainerURI: Uri,
         ) =
             Builder(
                 context,
                 sudoUserClient,
-                blobContainerURI
+                blobContainerURI,
             )
     }
 
@@ -87,7 +87,7 @@ interface SudoProfilesClient {
     class Builder(
         private val context: Context,
         private val sudoUserClient: SudoUserClient,
-        private val blobContainerURI: Uri
+        private val blobContainerURI: Uri,
     ) {
         private var logger: Logger = DefaultLogger.instance
         private var config: JSONObject? = null
@@ -173,7 +173,7 @@ interface SudoProfilesClient {
         fun build(): SudoProfilesClient {
             val graphQLClient = this.graphQLClient ?: ApiClientManager.getClient(
                 this.context,
-                this.sudoUserClient
+                this.sudoUserClient,
             )
 
             val configManager = DefaultSudoConfigManager(this.context, this.logger)
@@ -191,12 +191,12 @@ interface SudoProfilesClient {
 
             val bucket =
                 sudoServiceConfig.opt(CONFIG_BUCKET) as String? ?: identityServiceConfig.opt(
-                    CONFIG_BUCKET
+                    CONFIG_BUCKET,
                 ) as String?
                     ?: throw SudoProfileException.InvalidConfigException("Bucket name missing.")
             val region =
                 sudoServiceConfig.opt(CONFIG_REGION) as String? ?: identityServiceConfig.opt(
-                    CONFIG_REGION
+                    CONFIG_REGION,
                 ) as String?
                     ?: throw SudoProfileException.InvalidConfigException("Region missing.")
 
@@ -215,7 +215,7 @@ interface SudoProfilesClient {
                 this.idGenerator,
                 this.cryptoProvider,
                 this.namespace ?: DEFAULT_KEY_NAMESPACE,
-                this.databaseName ?: AndroidSQLiteStore.DEFAULT_DATABASE_NAME
+                this.databaseName ?: AndroidSQLiteStore.DEFAULT_DATABASE_NAME,
             )
         }
     }
@@ -379,7 +379,7 @@ interface SudoProfilesClient {
  * @param namespace namespace to use for internal data and cryptographic keys. This should be unique
  * @param databaseName database name to use for the exportable key store database.
  */
-class DefaultSudoProfilesClient constructor(
+class DefaultSudoProfilesClient(
     private val context: Context,
     private val sudoUserClient: SudoUserClient,
     blobContainerURI: Uri,
@@ -392,7 +392,7 @@ class DefaultSudoProfilesClient constructor(
     idGenerator: IdGenerator = DefaultIdGenerator(),
     cryptoProvider: CryptoProvider? = null,
     private val namespace: String = DEFAULT_KEY_NAMESPACE,
-    private val databaseName: String = AndroidSQLiteStore.DEFAULT_DATABASE_NAME
+    private val databaseName: String = AndroidSQLiteStore.DEFAULT_DATABASE_NAME,
 ) : SudoProfilesClient {
 
     companion object {
@@ -403,7 +403,7 @@ class DefaultSudoProfilesClient constructor(
         private const val DEFAULT_KEY_NAMESPACE = "ss"
     }
 
-    override val version: String = "13.0.1"
+    override val version: String = "14.0.0"
 
     /**
      * GraphQL client used for calling Sudo service API.
@@ -467,7 +467,7 @@ class DefaultSudoProfilesClient constructor(
 
         this.graphQLClient = graphQLClient ?: ApiClientManager.getClient(
             context,
-            this.sudoUserClient
+            this.sudoUserClient,
         )
 
         this.s3Client =
@@ -556,14 +556,14 @@ class DefaultSudoProfilesClient constructor(
                             val cacheEntry =
                                 this.blobCache.replace(
                                     data,
-                                    "sudo/$sudoId/${claim.name}"
+                                    "sudo/$sudoId/${claim.name}",
                                 )
 
                             try {
                                 sudo.claims[name] = Claim(
                                     name,
                                     claim.visibility,
-                                    Claim.Value.BlobValue(cacheEntry.toUri())
+                                    Claim.Value.BlobValue(cacheEntry.toUri()),
                                 )
 
                                 val algorithm =
@@ -572,12 +572,12 @@ class DefaultSudoProfilesClient constructor(
                                     this.cryptoProvider.encrypt(
                                         keyId,
                                         algorithm,
-                                        data
+                                        data,
                                     )
 
                                 val key = this.s3Client.upload(
                                     encrypted,
-                                    cacheEntry.id
+                                    cacheEntry.id,
                                 )
 
                                 secureS3Objects.add(
@@ -590,7 +590,7 @@ class DefaultSudoProfilesClient constructor(
                                         .bucket(this.s3Client.bucket)
                                         .region(this.s3Client.region)
                                         .key(key)
-                                        .build()
+                                        .build(),
                                 )
                             } catch (e: Exception) {
                                 this.blobCache.remove(cacheEntry.id)
@@ -601,8 +601,8 @@ class DefaultSudoProfilesClient constructor(
                             secureClaims.add(
                                 this.createSecureString(
                                     name,
-                                    claim.value.value
-                                )
+                                    claim.value.value,
+                                ),
                             )
                         }
                     }
@@ -711,7 +711,7 @@ class DefaultSudoProfilesClient constructor(
                 sudos = this.processListSudos(
                     items,
                     option,
-                    true
+                    true,
                 )
             }
 
@@ -774,13 +774,13 @@ class DefaultSudoProfilesClient constructor(
     override suspend fun subscribeAsync(
         id: String,
         changeType: SudoSubscriber.ChangeType,
-        subscriber: SudoSubscriber
+        subscriber: SudoSubscriber,
     ) {
         this.logger.info("Subscribing for Sudo change notification.")
 
         val owner = this.sudoUserClient.getSubject()
         require(
-            owner != null
+            owner != null,
         ) { "Owner was null. The client may not be signed in." }
 
         when (changeType) {
@@ -886,14 +886,14 @@ class DefaultSudoProfilesClient constructor(
                 override fun onCompleted() {
                     // Subscription was terminated. Notify the subscribers.
                     this@DefaultSudoProfilesClient.onUpdateSudoSubscriptionManager.connectionStatusChanged(
-                        SudoSubscriber.ConnectionState.DISCONNECTED
+                        SudoSubscriber.ConnectionState.DISCONNECTED,
                     )
                 }
 
                 override fun onFailure(e: ApolloException) {
                     // Failed create a subscription. Notify the subscribers.
                     this@DefaultSudoProfilesClient.onUpdateSudoSubscriptionManager.connectionStatusChanged(
-                        SudoSubscriber.ConnectionState.DISCONNECTED
+                        SudoSubscriber.ConnectionState.DISCONNECTED,
                     )
                 }
 
@@ -916,7 +916,7 @@ class DefaultSudoProfilesClient constructor(
                                                 it.version(),
                                                 it.algorithm(),
                                                 it.keyId(),
-                                                it.base64Data()
+                                                it.base64Data(),
                                             )
                                         },
                                         item.objects().map {
@@ -928,27 +928,27 @@ class DefaultSudoProfilesClient constructor(
                                                 it.keyId(),
                                                 it.bucket(),
                                                 it.region(),
-                                                it.key()
+                                                it.key(),
                                             )
                                         },
                                         item.metadata().map {
                                             ListSudosQuery.Metadatum(
                                                 it.__typename(),
                                                 it.name(),
-                                                it.value()
+                                                it.value(),
                                             )
                                         },
                                         item.createdAtEpochMs(),
                                         item.updatedAtEpochMs(),
                                         item.version(),
-                                        item.owner()
+                                        item.owner(),
                                     )
 
                                     val sudos =
                                         this@DefaultSudoProfilesClient.processListSudos(
                                             listOf(listSudosQueryItem),
                                             ListOption.CACHE_ONLY,
-                                            false
+                                            false,
                                         )
 
                                     val sudo = sudos.firstOrNull()
@@ -961,13 +961,13 @@ class DefaultSudoProfilesClient constructor(
                                         if (items != null) {
                                             items.add(listSudosQueryItem)
                                             this@DefaultSudoProfilesClient.replaceCachedQueryItems(
-                                                items
+                                                items,
                                             )
                                         }
 
                                         this@DefaultSudoProfilesClient.onUpdateSudoSubscriptionManager.sudoChanged(
                                             SudoSubscriber.ChangeType.UPDATE,
-                                            sudo
+                                            sudo,
                                         )
                                     }
                                 }
@@ -983,10 +983,10 @@ class DefaultSudoProfilesClient constructor(
                         .onUpdateSudoSubscriptionManager
                         .watcher = this@DefaultSudoProfilesClient.onUpdateSudoSubscriptionManager.pendingWatcher
                     this@DefaultSudoProfilesClient.onUpdateSudoSubscriptionManager.connectionStatusChanged(
-                        SudoSubscriber.ConnectionState.CONNECTED
+                        SudoSubscriber.ConnectionState.CONNECTED,
                     )
                 }
-            }
+            },
         )
     }
 
@@ -997,14 +997,14 @@ class DefaultSudoProfilesClient constructor(
                 override fun onCompleted() {
                     // Subscription was terminated. Notify the subscribers.
                     this@DefaultSudoProfilesClient.onDeleteSudoSubscriptionManager.connectionStatusChanged(
-                        SudoSubscriber.ConnectionState.DISCONNECTED
+                        SudoSubscriber.ConnectionState.DISCONNECTED,
                     )
                 }
 
                 override fun onFailure(e: ApolloException) {
                     // Failed create a subscription. Notify the subscribers.
                     this@DefaultSudoProfilesClient.onDeleteSudoSubscriptionManager.connectionStatusChanged(
-                        SudoSubscriber.ConnectionState.DISCONNECTED
+                        SudoSubscriber.ConnectionState.DISCONNECTED,
                     )
                 }
 
@@ -1027,7 +1027,7 @@ class DefaultSudoProfilesClient constructor(
                                                 it.version(),
                                                 it.algorithm(),
                                                 it.keyId(),
-                                                it.base64Data()
+                                                it.base64Data(),
                                             )
                                         },
                                         item.objects().map {
@@ -1039,27 +1039,27 @@ class DefaultSudoProfilesClient constructor(
                                                 it.keyId(),
                                                 it.bucket(),
                                                 it.region(),
-                                                it.key()
+                                                it.key(),
                                             )
                                         },
                                         item.metadata().map {
                                             ListSudosQuery.Metadatum(
                                                 it.__typename(),
                                                 it.name(),
-                                                it.value()
+                                                it.value(),
                                             )
                                         },
                                         item.createdAtEpochMs(),
                                         item.updatedAtEpochMs(),
                                         item.version(),
-                                        item.owner()
+                                        item.owner(),
                                     )
 
                                     val sudos =
                                         this@DefaultSudoProfilesClient.processListSudos(
                                             listOf(listSudosQueryItem),
                                             ListOption.CACHE_ONLY,
-                                            false
+                                            false,
                                         )
 
                                     val sudo = sudos.firstOrNull()
@@ -1069,13 +1069,13 @@ class DefaultSudoProfilesClient constructor(
                                             this@DefaultSudoProfilesClient.getCachedQueryItems()
                                         if (items != null) {
                                             this@DefaultSudoProfilesClient.replaceCachedQueryItems(
-                                                items.filter { element -> element.id != listSudosQueryItem.id() }
+                                                items.filter { element -> element.id != listSudosQueryItem.id() },
                                             )
                                         }
 
                                         this@DefaultSudoProfilesClient.onDeleteSudoSubscriptionManager.sudoChanged(
                                             SudoSubscriber.ChangeType.DELETE,
-                                            sudo
+                                            sudo,
                                         )
                                     }
                                 }
@@ -1091,10 +1091,10 @@ class DefaultSudoProfilesClient constructor(
                         .onDeleteSudoSubscriptionManager
                         .watcher = this@DefaultSudoProfilesClient.onDeleteSudoSubscriptionManager.pendingWatcher
                     this@DefaultSudoProfilesClient.onDeleteSudoSubscriptionManager.connectionStatusChanged(
-                        SudoSubscriber.ConnectionState.CONNECTED
+                        SudoSubscriber.ConnectionState.CONNECTED,
                     )
                 }
-            }
+            },
         )
     }
 
@@ -1105,14 +1105,14 @@ class DefaultSudoProfilesClient constructor(
                 override fun onCompleted() {
                     // Subscription was terminated. Notify the subscribers.
                     this@DefaultSudoProfilesClient.onCreateSudoSubscriptionManager.connectionStatusChanged(
-                        SudoSubscriber.ConnectionState.DISCONNECTED
+                        SudoSubscriber.ConnectionState.DISCONNECTED,
                     )
                 }
 
                 override fun onFailure(e: ApolloException) {
                     // Failed create a subscription. Notify the subscribers.
                     this@DefaultSudoProfilesClient.onCreateSudoSubscriptionManager.connectionStatusChanged(
-                        SudoSubscriber.ConnectionState.DISCONNECTED
+                        SudoSubscriber.ConnectionState.DISCONNECTED,
                     )
                 }
 
@@ -1135,7 +1135,7 @@ class DefaultSudoProfilesClient constructor(
                                                 it.version(),
                                                 it.algorithm(),
                                                 it.keyId(),
-                                                it.base64Data()
+                                                it.base64Data(),
                                             )
                                         },
                                         item.objects().map {
@@ -1147,27 +1147,27 @@ class DefaultSudoProfilesClient constructor(
                                                 it.keyId(),
                                                 it.bucket(),
                                                 it.region(),
-                                                it.key()
+                                                it.key(),
                                             )
                                         },
                                         item.metadata().map {
                                             ListSudosQuery.Metadatum(
                                                 it.__typename(),
                                                 it.name(),
-                                                it.value()
+                                                it.value(),
                                             )
                                         },
                                         item.createdAtEpochMs(),
                                         item.updatedAtEpochMs(),
                                         item.version(),
-                                        item.owner()
+                                        item.owner(),
                                     )
 
                                     val sudos =
                                         this@DefaultSudoProfilesClient.processListSudos(
                                             listOf(listSudosQueryItem),
                                             ListOption.CACHE_ONLY,
-                                            false
+                                            false,
                                         )
 
                                     val sudo = sudos.firstOrNull()
@@ -1179,13 +1179,13 @@ class DefaultSudoProfilesClient constructor(
                                         if (items != null) {
                                             items.add(listSudosQueryItem)
                                             this@DefaultSudoProfilesClient.replaceCachedQueryItems(
-                                                items
+                                                items,
                                             )
                                         }
 
                                         this@DefaultSudoProfilesClient.onCreateSudoSubscriptionManager.sudoChanged(
                                             SudoSubscriber.ChangeType.CREATE,
-                                            sudo
+                                            sudo,
                                         )
                                     }
                                 }
@@ -1201,10 +1201,10 @@ class DefaultSudoProfilesClient constructor(
                         .onCreateSudoSubscriptionManager
                         .watcher = this@DefaultSudoProfilesClient.onCreateSudoSubscriptionManager.pendingWatcher
                     this@DefaultSudoProfilesClient.onCreateSudoSubscriptionManager.connectionStatusChanged(
-                        SudoSubscriber.ConnectionState.CONNECTED
+                        SudoSubscriber.ConnectionState.CONNECTED,
                     )
                 }
-            }
+            },
         )
     }
 
@@ -1219,7 +1219,7 @@ class DefaultSudoProfilesClient constructor(
                     it.version(),
                     it.algorithm(),
                     it.keyId(),
-                    it.base64Data()
+                    it.base64Data(),
                 )
             },
             updateSudo.objects().map {
@@ -1231,26 +1231,26 @@ class DefaultSudoProfilesClient constructor(
                     it.keyId(),
                     it.bucket(),
                     it.region(),
-                    it.key()
+                    it.key(),
                 )
             },
             updateSudo.metadata().map {
                 ListSudosQuery.Metadatum(
                     "Attribute",
                     it.name(),
-                    it.value()
+                    it.value(),
                 )
             },
             updateSudo.createdAtEpochMs(),
             updateSudo.updatedAtEpochMs(),
             updateSudo.version(),
-            updateSudo.owner()
+            updateSudo.owner(),
         )
     }
 
     private fun createSecureString(
         name: String,
-        value: String
+        value: String,
     ): SecureClaimInput {
         val keyId = this.cryptoProvider.getSymmetricKeyId()
 
@@ -1259,7 +1259,7 @@ class DefaultSudoProfilesClient constructor(
             val encryptedData = this.cryptoProvider.encrypt(
                 keyId,
                 algorithm,
-                value.toByteArray()
+                value.toByteArray(),
             )
 
             return SecureClaimInput
@@ -1279,7 +1279,7 @@ class DefaultSudoProfilesClient constructor(
         name: String,
         keyId: String,
         algorithm: String,
-        base64Data: String
+        base64Data: String,
     ): Claim {
         val algorithmSpec =
             SymmetricKeyEncryptionAlgorithm.fromString(algorithm)
@@ -1289,8 +1289,8 @@ class DefaultSudoProfilesClient constructor(
                 this.cryptoProvider.decrypt(
                     keyId,
                     algorithmSpec,
-                    Base64.decode(base64Data, Base64.DEFAULT)
-                )
+                    Base64.decode(base64Data, Base64.DEFAULT),
+                ),
             )
 
             return Claim(name, Claim.Visibility.PRIVATE, Claim.Value.StringValue(value))
@@ -1300,7 +1300,7 @@ class DefaultSudoProfilesClient constructor(
     }
 
     private suspend fun getSudo(id: String): Sudo? {
-        return listSudos(ListOption.CACHE_ONLY).firstOrNull() { it.id == id }
+        return listSudos(ListOption.CACHE_ONLY).firstOrNull { it.id == id }
     }
 
     private suspend fun deleteSecureS3Objects(sudoId: String) {
@@ -1331,7 +1331,7 @@ class DefaultSudoProfilesClient constructor(
     private suspend fun processListSudos(
         items: List<ListSudosQuery.Item>,
         option: ListOption,
-        processS3Object: Boolean
+        processS3Object: Boolean,
     ): List<Sudo> {
         val sudos: MutableList<Sudo> = mutableListOf()
 
@@ -1340,7 +1340,7 @@ class DefaultSudoProfilesClient constructor(
                 item.id(),
                 item.version,
                 Date(item.createdAtEpochMs().toLong()),
-                Date(item.updatedAtEpochMs().toLong())
+                Date(item.updatedAtEpochMs().toLong()),
             )
 
             sudo.claims = item.claims()
@@ -1349,7 +1349,7 @@ class DefaultSudoProfilesClient constructor(
                         it.name(),
                         it.keyId(),
                         it.algorithm(),
-                        it.base64Data()
+                        it.base64Data(),
                     )
                 }
                 .toMap().toMutableMap()
@@ -1370,7 +1370,7 @@ class DefaultSudoProfilesClient constructor(
                                     Claim(
                                         obj.name,
                                         Claim.Visibility.PRIVATE,
-                                        Claim.Value.BlobValue(entry.toUri())
+                                        Claim.Value.BlobValue(entry.toUri()),
                                     )
                             }
                         } else {
@@ -1379,7 +1379,7 @@ class DefaultSudoProfilesClient constructor(
                     } else {
                         val data =
                             this.s3Client.download(
-                                obj.key
+                                obj.key,
                             )
 
                         val algorithmSpec =
@@ -1389,19 +1389,19 @@ class DefaultSudoProfilesClient constructor(
                                 this.cryptoProvider.decrypt(
                                     obj.keyId,
                                     algorithmSpec,
-                                    data
+                                    data,
                                 )
                             val array = obj.key.split("/").toTypedArray()
                             val entry = blobCache.replace(
                                 decryptedData,
-                                array.last()
+                                array.last(),
                             )
 
                             sudo.claims[obj.name] =
                                 Claim(
                                     obj.name,
                                     Claim.Visibility.PRIVATE,
-                                    Claim.Value.BlobValue(entry.toUri())
+                                    Claim.Value.BlobValue(entry.toUri()),
                                 )
                         } else {
                             throw SudoProfileException.UnsupportedAlgorithmException("Unsupported algorithm found in secure S3 object.")
@@ -1422,7 +1422,7 @@ class DefaultSudoProfilesClient constructor(
         val data = ListSudosQuery.Data(ListSudosQuery.ListSudos("ModelSudoConnection", items, null))
         this.graphQLClient.store.write(
             this.defaultQuery,
-            data
+            data,
         ).enqueue(null)
     }
 

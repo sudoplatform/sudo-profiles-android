@@ -19,7 +19,7 @@ import java.io.FileOutputStream
  */
 class BlobCache(
     containerUri: Uri,
-    private val idGenerator: IdGenerator = DefaultIdGenerator()
+    private val idGenerator: IdGenerator = DefaultIdGenerator(),
 ) {
 
     /**
