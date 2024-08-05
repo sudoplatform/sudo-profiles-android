@@ -1,13 +1,15 @@
 /*
- * Copyright © 2022 Anonyome Labs, Inc. All rights reserved.
+ * Copyright © 2024 Anonyome Labs, Inc. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  */
 
 package com.sudoplatform.sudoprofiles.exceptions
 
-import com.apollographql.apollo.api.Error
+import com.amplifyframework.api.graphql.GraphQLResponse
 import com.sudoplatform.sudoprofiles.DefaultLogger
+import com.sudoplatform.sudouser.exceptions.HTTP_STATUS_CODE_KEY
+import java.net.HttpURLConnection
 
 open class SudoProfileException(message: String? = null, cause: Throwable? = null) : RuntimeException(message, cause) {
 
@@ -22,16 +24,23 @@ open class SudoProfileException(message: String? = null, cause: Throwable? = nul
         /**
          * Convert from a GraphQL [Error] into a custom exception of type [SudoProfileException]
          */
-        fun Error.toSudoProfileException(): SudoProfileException {
+        fun GraphQLResponse.Error.toSudoProfileException(): SudoProfileException {
             val logger = DefaultLogger.instance
             logger.error("GraphQL error received: $this")
 
-            return when (this.customAttributes()[GRAPHQL_ERROR_TYPE]) {
-                GRAPHQL_ERROR_SUDO_NOT_FOUND -> SudoNotFoundException(this.message())
-                GRAPHQL_ERROR_INSUFFICIENT_ENTITLEMENTS_ERROR -> InsufficientEntitlementsException(this.message())
-                GRAPHQL_ERROR_CONDITIONAL_CHECK_FAILED -> VersionMismatchException(this.message())
-                GRAPHQL_ERROR_SERVER_ERROR -> InternalServerException(this.message())
-                else -> GraphQlException(this.message())
+            val httpStatusCode = this.extensions?.get(HTTP_STATUS_CODE_KEY) as Int?
+            if (httpStatusCode == HttpURLConnection.HTTP_UNAUTHORIZED ||
+                httpStatusCode != null && httpStatusCode >= HttpURLConnection.HTTP_INTERNAL_ERROR
+            ) {
+                return GraphQlException(this.message)
+            }
+
+            return when (this.extensions?.get(GRAPHQL_ERROR_TYPE)) {
+                GRAPHQL_ERROR_SUDO_NOT_FOUND -> SudoNotFoundException(this.message)
+                GRAPHQL_ERROR_INSUFFICIENT_ENTITLEMENTS_ERROR -> InsufficientEntitlementsException(this.message)
+                GRAPHQL_ERROR_CONDITIONAL_CHECK_FAILED -> VersionMismatchException(this.message)
+                GRAPHQL_ERROR_SERVER_ERROR -> InternalServerException(this.message)
+                else -> GraphQlException(this.message)
             }
         }
     }
